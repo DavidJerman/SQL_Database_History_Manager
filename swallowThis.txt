@@ -114,7 +114,7 @@ git push origin svizciCokolad    #  $ git push -u svizciCokolad # skreira še up
 4. git status
 
 
-v vsakem primeru ste sedaj v svizciCokolad in so opearcije vezane na branch
+v vsakem primeru ste sedaj v svizciCokolad in so operacije vezane na ta branch
 git add .
 git commit -m "message"
 git push                   #...... gre direktno v branch
