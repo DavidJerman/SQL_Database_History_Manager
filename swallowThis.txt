@@ -1,5 +1,23 @@
 a
-b
+ne pozabi:
+
+a) strukture:
+workind dir
+          git add
+       |----------> staging area   
+                                   git commit
+                      | ----------------------->  local git repo
+                                                       |
+                                                       |           git push
+                                                       |         .................... > gitlab
+
+b) vsakič začni na čisti kopiji oz. naj bo lokalna kopija enaka oddaljeni
+git status
+git pull <REMOTE> <name-of-branch>     (naredi fetch iz <REMOTE> nato merge v lokalni repo)
+
+! https://www.atlassian.com/git/tutorials/syncing/git-pull
+
+  
 c
 ---- test push,merge
 git for windows ima : git bash in simpatičen git GUI : uproabite ga
@@ -9,14 +27,13 @@ sama imam zgolj lupino, torej:
 1. clone celotnega repozitorija (master branch ; kot bi uporabil -b master); repozitorij je javen in bo šlo
 git clone https://gitlab.vegova.si/SerhioN/podjetje-sqmalsys.git
 
-2. dodamo mapo za projekt skupine (xNix)
-mkdir podjetje-sqmalsys/svizciCokolad                    #mapa z imenom skupine
-echo abc > podjetje-sqmalsys/svizciCokolad/refer.ttx     #notri pa testna datoteka refer.ttx z vsebino abc
 
-3. na git hočemo tudi pisati: min vloga za ta repozitorij je 'developer'; potrebna konfiguracija git-a:
+
+2. na git hočemo tudi pisati: min vloga za ta repozitorij je 'developer'; potrebna konfiguracija git-a:
 git config --global --list    # če ne vrne username, ga je potrebno dodati
 git config --local --list
-git config --local user.email "moj.morec@gmail.com" #dodamo zgolj za repo podjetje-sqmalsys
+git config --local user.email "moj.morec@gmail.com" # local: dodamo zgolj za repo podjetje-sqmalsys
+git config --local user.name "Mojca"
 
 git config --local --list    # preveri
 
@@ -24,6 +41,12 @@ bistvene tri zadeve iz tu so:
 remote.origin.url=https://gitlab.vegova.si/SerhioN/podjetje-sqmalsys.git   #remote origin
 branch.master.merge=refs/heads/master                                      #veja v katero zlivamo
 user.email=moj.morec@gmail.com                                             #kdo izvaja operacije
+user.name="Mojca"
+
+
+3. dodamo mapo za projekt skupine (xNix)
+mkdir podjetje-sqmalsys/svizciCokolad                    #mapa z imenom skupine
+echo abc > podjetje-sqmalsys/svizciCokolad/refer.ttx     #notri pa testna datoteka refer.ttx z vsebino abc
 
 4. poglejmo
 $ git status
@@ -35,7 +58,7 @@ Changes to be committed:
         new file:   svizciCokolad/refer.ttx
 
 5. add to stage area
-$ git add svizciCokolad/refer.ttx   #  git add --all  #doda vse spremembe
+$ git add svizciCokolad/refer.ttx   #  doda samo ta fajl  git add --all  #doda vse spremembe
 
 6. zapis na git repo (zapiše vse, kar je v stage področju oz. 'staged') - spremembe gredo v lokalni git repo
 git commit -m "refer.txt initial commit"
@@ -58,6 +81,12 @@ Total 4 (delta 0), reused 0 (delta 0), pack-reused 0
 To https://gitlab.vegova.si/SerhioN/podjetje-sqmalsys.git
    8b13bc1..10496b9  master -> master
 
+8. še :
+git status
+git pull https://gitlab.vegova.si/SerhioN/podjetje-sqmalsys.git
 
+-------------------------------------------------------------
+branch
+-------------------------------------------------------------
 
 
