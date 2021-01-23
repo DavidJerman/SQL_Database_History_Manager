@@ -132,8 +132,8 @@ git push                   #...... gre direktno v branch
 3. rescan                          - kaj se je spremenili
 4. stage changed                   - /lahko izbereš kaj/
 5. napišeš commit message in
-6. commit
---
+6. commit 
+-- 
 7. push na remote origin (gitlab)  - lahko izbereš branch
 
 
