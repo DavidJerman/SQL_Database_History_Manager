@@ -2,3 +2,62 @@ a
 b
 c
 ---- test push,merge
+git for windows ima : git bash in simpatičen git GUI : uproabite ga
+-----
+sama imam zgolj lupino, torej:
+
+1. clone celotnega repozitorija (master branch ; kot bi uporabil -b master); repozitorij je javen in bo šlo
+git clone https://gitlab.vegova.si/SerhioN/podjetje-sqmalsys.git
+
+2. dodamo mapo za projekt skupine (xNix)
+mkdir podjetje-sqmalsys/svizciCokolad                    #mapa z imenom skupine
+echo abc > podjetje-sqmalsys/svizciCokolad/refer.ttx     #notri pa testna datoteka refer.ttx z vsebino abc
+
+3. na git hočemo tudi pisati: min vloga za ta repozitorij je 'developer'; potrebna konfiguracija git-a:
+git config --global --list    # če ne vrne username, ga je potrebno dodati
+git config --local --list
+git config --local user.email "moj.morec@gmail.com" #dodamo zgolj za repo podjetje-sqmalsys
+
+git config --local --list    # preveri
+
+bistvene tri zadeve iz tu so:
+remote.origin.url=https://gitlab.vegova.si/SerhioN/podjetje-sqmalsys.git   #remote origin
+branch.master.merge=refs/heads/master                                      #veja v katero zlivamo
+user.email=moj.morec@gmail.com                                             #kdo izvaja operacije
+
+4. poglejmo
+$ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        new file:   svizciCokolad/refer.ttx
+
+5. add to stage area
+$ git add svizciCokolad/refer.ttx   #  git add --all  #doda vse spremembe
+
+6. zapis na git repo (zapiše vse, kar je v stage področju oz. 'staged') - spremembe gredo v lokalni git repo
+git commit -m "refer.txt initial commit"
+
+[master 10496b9] refer.txt initial commit
+ 1 file changed, 1 insertion(+)
+ create mode 100644 svizciCokolad/refer.ttx
+
+7. postisnemo spremebe na 'upstream' oz. v našem primeru v repo na gitlab
+   opozorilo; git bo povprašal po 'credentials' ; to sta vaš username in geslo
+   username iz @morec je morec in ne e-mail se katerim se v gitlab tudi lahko prijavim
+$ git push
+
+Enumerating objects: 5, done.
+Counting objects: 100% (5/5), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (4/4), 434 bytes | 434.00 KiB/s, done.
+Total 4 (delta 0), reused 0 (delta 0), pack-reused 0
+To https://gitlab.vegova.si/SerhioN/podjetje-sqmalsys.git
+   8b13bc1..10496b9  master -> master
+
+
+
+
