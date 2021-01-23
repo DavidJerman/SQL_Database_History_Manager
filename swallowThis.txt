@@ -1,4 +1,4 @@
-a
+
 ne pozabi:
 
 a) strukture:
@@ -17,10 +17,9 @@ git pull <REMOTE> <name-of-branch>     (naredi fetch iz <REMOTE> nato merge v lo
 
 ! https://www.atlassian.com/git/tutorials/syncing/git-pull
 
-  
-c
+
 ---- test push,merge
-git for windows ima : git bash in simpatičen git GUI : uproabite ga
+git for windows ima : git bash in simpatičen git GUI : uporabite ga
 -----
 sama imam zgolj lupino, torej:
 
@@ -31,13 +30,15 @@ git clone https://gitlab.vegova.si/SerhioN/podjetje-sqmalsys.git
 
 2. na git hočemo tudi pisati: min vloga za ta repozitorij je 'developer'; potrebna konfiguracija git-a:
 git config --global --list    # če ne vrne username, ga je potrebno dodati
+                              # spodaj bo narejeno n lokalni konfiguraciji: samo
+							  # za ta repozitorij
 git config --local --list
 git config --local user.email "moj.morec@gmail.com" # local: dodamo zgolj za repo podjetje-sqmalsys
 git config --local user.name "Mojca"
 
 git config --local --list    # preveri
 
-bistvene tri zadeve iz tu so:
+bistvene tri zadeve od tu so:
 remote.origin.url=https://gitlab.vegova.si/SerhioN/podjetje-sqmalsys.git   #remote origin
 branch.master.merge=refs/heads/master                                      #veja v katero zlivamo
 user.email=moj.morec@gmail.com                                             #kdo izvaja operacije
@@ -118,6 +119,22 @@ v vsakem primeru ste sedaj v svizciCokolad in so operacije vezane na ta branch
 git add .
 git commit -m "message"
 git push                   #...... gre direktno v branch
+
+-------------------------------------------------
+>> developer git shell, git bash
+>>
+>>    gumbi za sprotno delo so vertikalni in pri izvajanju samo
+      slediš sekvenci od zgoraj navzdol
+------------------------------------------------
+1. kot v predhodnem primeru 1-4 , da ne kompliciramo (iz lupine)
+
+2. na nastali mapi podjetje-sqmalsys desno kliknemo z mišem in "git gui here"
+3. rescan                          - kaj se je spremenili
+4. stage changed                   - /lahko izbereš kaj/
+5. napišeš commit message in
+6. commit
+--
+7. push na remote origin (gitlab)  - lahko izbereš branch
 
 
 
