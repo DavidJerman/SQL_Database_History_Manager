@@ -86,7 +86,33 @@ git status
 git pull https://gitlab.vegova.si/SerhioN/podjetje-sqmalsys.git
 
 -------------------------------------------------------------
-branch
+(delovna veja) - branch
 -------------------------------------------------------------
+1. kreira branch z izbranim primerom in takoj preklopi nanjo
+$ git checkout -b svizciCokolad
+Switched to a new branch 'svizciCokolad'
+
+2. preklop med branch-i
+git checkout master   ### git checkout svizciCokolad
+
+git status                  ##pove tudi na kateri veji si
+On branch svizciCokolad
+
+3. no ..
+git add .
+git commit -m "message"
+git push origin svizciCokolad    #  $ git push -u svizciCokolad # skreira še upstream, če ta ni kreiran
+
+----------------------------------------------
+developers : clone branch 
+----------------------------------------------
+1. git clone -b svizciCokolad  https://gitlab.vegova.si/SerhioN/podjetje-sqmalsys.git
+
+v vsakem primeru ste sedaj v svizciCokolad in so opearcije vezane na branch
+git add .
+git commit -m "message"
+git push
+
+
 
 
