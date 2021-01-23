@@ -10,3 +10,9 @@ nadzora
 Kakorkoli, ob zaključku so vsi oddani predlogi v tem repozitoriju, prav tako pa celoten doprinos vsakega posamznika.
 
 Opis in nadaljna navodila/priporočila so v WIki tečaja predmeta RSO04.
+
+a
+-
+swiizzzzzci
+-
+uporabili bomo mapo + branch z našim imenom
