@@ -104,14 +104,20 @@ git commit -m "message"
 git push origin svizciCokolad    #  $ git push -u svizciCokolad # skreira še upstream, če ta ni kreiran
 
 ----------------------------------------------
-developers : clone branch 
+>>>>>>>>>>developers : clone branch only
 ----------------------------------------------
 1. git clone -b svizciCokolad  https://gitlab.vegova.si/SerhioN/podjetje-sqmalsys.git
+2. prestavi se v mapo podjetje-sqmalsys
+3. dodaj svoje podatke
+   git config --local user.email "moj.morec@gmail.com" 
+   git config --local user.name "Mojca"
+4. git status
+
 
 v vsakem primeru ste sedaj v svizciCokolad in so opearcije vezane na branch
 git add .
 git commit -m "message"
-git push
+git push                   #...... gre direktno v branch
 
 
 
