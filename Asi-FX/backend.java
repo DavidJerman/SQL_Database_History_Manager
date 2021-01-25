@@ -1,4 +1,5 @@
 import java.sql.*;
+import java.util.HashMap;
 
 /**
  * Communication with the SQL database log
@@ -9,6 +10,10 @@ import java.sql.*;
 **/
 public class backend {
 
+    Connection connection;
+    String currentDatabase;
+    HashMap<String,String> nameAndIP_map;
+
     /**
      Opis
 
@@ -16,7 +21,7 @@ public class backend {
      @return Vracanje
      @thorws Exception
      **/
-    String[] getTableInfo(String tableName){
+    public String[] getTableInfo(String tableName){
 
         return null;
     }
@@ -29,7 +34,7 @@ public class backend {
      @return Vracanje
      @thorws Exception
      **/
-    String[] getWhoInserted(String tableName){
+    public String[] getWhoInserted(String tableName){
 
         return null;
     }
@@ -41,7 +46,7 @@ public class backend {
      @return Vracanje
      @thorws Exception
      **/
-    String[] getWhenInserted(String dataValue, String userName){
+    public String[] getWhenInserted(String dataValue, String userName){
 
         return null;
     }
@@ -53,44 +58,7 @@ public class backend {
      @return Vracanje
      @thorws Exception
      **/
-    String[] getWhatInserted(String userName){
-
-        return null;
-    }
-
-
-    /**
-     Opis
-
-     @param
-     @return Vracanje
-     @thorws Exception
-     **/
-    String[] getWhoSelected(String tableName){
-
-        return null;
-    }
-
-    /**
-     Opis
-
-     @param
-     @return Vracanje
-     @thorws Exception
-     **/
-    String[] getWhenSelected(String dataValue, String userName){
-
-        return null;
-    }
-
-    /**
-     Opis
-
-     @param
-     @return Vracanje
-     @thorws Exception
-     **/
-    String[] getWhatSelected(String userName){
+    public String[] getWhatInserted(String userName){
 
         return null;
     }
@@ -103,7 +71,7 @@ public class backend {
      @return Vracanje
      @thorws Exception
      **/
-    String[] getWhoUpdated(String tableName){
+    public String[] getWhoSelected(String tableName){
 
         return null;
     }
@@ -115,7 +83,7 @@ public class backend {
      @return Vracanje
      @thorws Exception
      **/
-    String[] getWhenUpdated(String dataValue, String userName){
+    public String[] getWhenSelected(String dataValue, String userName){
 
         return null;
     }
@@ -127,70 +95,7 @@ public class backend {
      @return Vracanje
      @thorws Exception
      **/
-    String[] getWhatUpdated(String userName){
-
-        return null;
-    }
-
-
-    /**
-     Opis
-
-     @param
-     @return Vracanje
-     @thorws Exception
-     **/
-    String[] getWhoDeleted(String tableName){
-
-        return null;
-    }
-
-    /**
-     Opis
-
-     @param
-     @return Vracanje
-     @thorws Exception
-     **/
-    String[] getWhenDeleted(String dataValue, String userName){
-
-        return null;
-    }
-
-    /**
-     Opis
-
-     @param
-     @return Vracanje
-     @thorws Exception
-     **/
-    String[] getWhatDeleted(String userName){
-
-        return null;
-    }
-
-
-
-    /**
-     Opis
-
-     @param
-     @return Vracanje
-     @thorws Exception
-     **/
-    String[] getAllUsers(){
-
-        return null;
-    }
-
-    /**
-     Opis
-
-     @param
-     @return Vracanje
-     @thorws Exception
-     **/
-    String[] getAllTables(){
+    public String[] getWhatSelected(String userName){
 
         return null;
     }
@@ -203,7 +108,107 @@ public class backend {
      @return Vracanje
      @thorws Exception
      **/
-    void setCurrentDatabase(String databaseName){
+    public String[] getWhoUpdated(String tableName){
+
+        return null;
+    }
+
+    /**
+     Opis
+
+     @param
+     @return Vracanje
+     @thorws Exception
+     **/
+    public String[] getWhenUpdated(String dataValue, String userName){
+
+        return null;
+    }
+
+    /**
+     Opis
+
+     @param
+     @return Vracanje
+     @thorws Exception
+     **/
+    public String[] getWhatUpdated(String userName){
+
+        return null;
+    }
+
+
+    /**
+     Opis
+
+     @param
+     @return Vracanje
+     @thorws Exception
+     **/
+    public String[] getWhoDeleted(String tableName){
+
+        return null;
+    }
+
+    /**
+     Opis
+
+     @param
+     @return Vracanje
+     @thorws Exception
+     **/
+    public String[] getWhenDeleted(String dataValue, String userName){
+
+        return null;
+    }
+
+    /**
+     Opis
+
+     @param
+     @return Vracanje
+     @thorws Exception
+     **/
+    public String[] getWhatDeleted(String userName){
+
+        return null;
+    }
+
+
+
+    /**
+     Opis
+
+     @param
+     @return Vracanje
+     @thorws Exception
+     **/
+    public String[] getAllUsers(){
+
+        return null;
+    }
+
+    /**
+     Opis
+
+     @param
+     @return Vracanje
+     @thorws Exception
+     **/
+    public String[] getAllTables(){
+
+        return null;
+    }
+
+
+    /**
+     Opis
+
+     @param
+     @return Vracanje
+     @thorws Exception
+     **/
+    public void setCurrentDatabase(String databaseName){
 
 
     }
@@ -215,10 +220,40 @@ public class backend {
      @return Vracanje
      @thorws Exception
      **/
-    ResultSet getCustomQuery(String sqlSelectStatement){
+    public ResultSet getCustomQuery(String sqlSelectStatement){
 
         return null;
     }
+
+
+
+
+
+
+    /**
+     Opis
+
+     @param
+     @return Vracanje
+     @thorws Exception
+     **/
+    private String crossReferenceIP(){
+
+        return null;
+    }
+
+    /**
+     Opis
+
+     @param
+     @return Vracanje
+     @thorws Exception
+     **/
+    private void setupNameIP_map(){
+
+    }
+
+
 
 
 
