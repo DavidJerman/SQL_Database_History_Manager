@@ -10,9 +10,9 @@ import java.util.HashMap;
 **/
 public class backend {
 
-    Connection connection;
-    String currentDatabase;
-    HashMap<String,String> nameAndIP_map;
+    Connection connection; //Povazava z SQL serverjem
+    String currentDatabase; //Ime baze na kateri trenutno izvajamo operacije
+    HashMap<String,String> nameAndIP_map; //Map imen in ip naslovov
 
     /**
      Opis
