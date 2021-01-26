@@ -245,16 +245,35 @@ public class backend {
      Ustvari hashmap iz IP-jev in avtorjev ustvarjenih poimenovanih tabel
 
      @return hashmap
-     @thorws Exception
      **/
     private void setupNameIP_map(){
 
     }
 
     /**
-     Funkcija preveri če je povezava vspostavljena in jo, če ni vspostavi
+     Funkcija preveri če je povezava vspostavljena in jo, če ni, vspostavi
      **/
-    private void checkConnection(){
+    public void checkConnection(){
+        try {
+            if(connection == null || connection.isClosed()) {
+                try {
+
+                    Class.forName("com.mysql.jdbc.Driver");
+
+                } catch (ClassNotFoundException ex) {
+                    System.out.println("CLassNotFoundException: " + ex.getMessage());
+                    System.exit(1);
+
+                }
+
+                connection = DriverManager.getConnection("jdbc:mysql://193.2.190.23:3306/remote11","remote","remote");
+
+
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
 
     }
 
