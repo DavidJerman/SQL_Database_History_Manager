@@ -12,7 +12,6 @@ public class backend {
 
     Connection connection; //Povazava z SQL serverjem
     String currentDatabase; //Ime baze na kateri trenutno izvajamo operacije
-    HashMap<String,String> nameAndIP_map; //Map imen in ip naslovov
 
     /**
      Opis
@@ -227,28 +226,6 @@ public class backend {
 
 
 
-
-
-
-    /**
-     Funkcija IP pretvori v ime preko avtorjev ustvarjenih poimenovanih tabel
-
-     @param IP
-     @return name
-     **/
-    private String crossReferenceIP(String IP){
-
-        return null;
-    }
-
-    /**
-     Ustvari hashmap iz IP-jev in avtorjev ustvarjenih poimenovanih tabel
-
-     @return hashmap
-     **/
-    private void setupNameIP_map(){
-
-    }
 
     /**
      Funkcija preveri če je povezava vspostavljena in jo, če ni, vspostavi
