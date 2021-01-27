@@ -13,7 +13,7 @@ public class backend {
 
     Connection connection; //Povazava z SQL serverjem
     String currentDatabase; //Ime baze na kateri trenutno izvajamo operacije
-    HashMap<String,String> nameAndIP_map; //Map imen in ip naslovov
+    HashMap<String,String> nameAndIP_map = new HashMap<String,String>(); //Map imen in ip naslovov
 
     /**
      Opis
@@ -238,14 +238,14 @@ public class backend {
      @return name
      **/
     private String crossReferenceIP(String IP){
-
-        return null;
+        if(nameAndIP_map.containsValue(IP)){
+            return nameAndIP_map.get(IP);
+        }
+        return IP;
     }
 
     /**
      Ustvari hashmap iz IP-jev in avtorjev ustvarjenih poimenovanih tabel
-
-     @return hashmap
      **/
     public void setupNameIP_map(){
         checkConnection();//preveri povezavo
@@ -264,10 +264,20 @@ public class backend {
                 String user_host = resultSet.getString(2);
                 String argument = resultSet.getString(6);
 
+                //Izreže ip iz userhost
+                user_host = userhostToIP(user_host);
+
+
+
+                //Odstrani: /* ApplicationName=IntelliJ IDEA 2020.3.1 */ pred create table
+                if(argument.startsWith("/*")){
+                    argument = argument.substring(argument.indexOf("*/")+3);
+                }
+
 
                 try {
                     //Preveri, da se argument začne z CREATE TABLE
-                    if (argument.split(" ")[0].equals("CREATE") && argument.split(" ")[1].equals("TABLE")) {
+                    if (argument.split(" ")[0].toUpperCase().equals("CREATE") && argument.split(" ")[1].toUpperCase().equals("TABLE")) {
                         argument = argument.split(" ")[2];
 
                         //Odstrani '' okoli imena
@@ -276,8 +286,28 @@ public class backend {
                         //Dovoli le T+Priimek+Ime tabele
                         if (!(argument.charAt(0) == 'T'))continue;
 
-                        //////////////////////////////////////////////////////////ZAKAJ JE TAKO MALO CREATE T-Tabel
-                        System.out.println(user_host + " " + argument);
+                        //Obreže T in končno številko
+                        argument = argument.substring(1);
+                        for(int i = 0; i < argument.length(); i++){
+                            if(argument.charAt(i) == '0' ||
+                                argument.charAt(i) == '1' ||
+                                argument.charAt(i) == '2' ||
+                                argument.charAt(i) == '3' ||
+                                argument.charAt(i) == '4' ||
+                                argument.charAt(i) == '5' ||
+                                argument.charAt(i) == '6' ||
+                                argument.charAt(i) == '7' ||
+                                argument.charAt(i) == '8' ||
+                                argument.charAt(i) == '9')
+                            {
+                            argument = argument.substring(0,i);
+                            break;
+                            }
+                        }
+
+                        //Vstavi ime in IP v hashmap
+                        nameAndIP_map.put(user_host,argument);
+
                     } else continue;
 
                 }catch (ArrayIndexOutOfBoundsException e){
@@ -289,6 +319,23 @@ public class backend {
             ex.printStackTrace();
         }
 
+    }
+
+
+    /**
+     Iz user_host izreže IP naslov
+
+     @param user_host
+     @return IP
+     **/
+    private String userhostToIP(String user_host){
+        for(int i = user_host.length()-1; i > 0; i--){
+            if(user_host.charAt(i) == '['){
+                user_host = user_host.substring(i+1,user_host.length()-1);
+                break;
+            }
+        }
+        return user_host;
     }
 
     /**
