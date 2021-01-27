@@ -227,8 +227,25 @@ public class backend {
     }
 
 
+    /**
+     Funkcija izvede sql query in vrne ResultSet
 
+     @param sql
+     @return resultSet
+     **/
+    private ResultSet executeQuery(String sql){
+        checkConnection();//preveri povezavo
 
+        Statement statementmt=null;
+        ResultSet resultSet=null;
+        try {
+            statementmt = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            resultSet = statementmt.executeQuery(sql);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return resultSet;
+    }
 
 
     /**
@@ -248,16 +265,7 @@ public class backend {
      Ustvari hashmap iz IP-jev in avtorjev ustvarjenih poimenovanih tabel
      **/
     public void setupNameIP_map(){
-        checkConnection();//preveri povezavo
-
-        Statement statementmt=null;
-        ResultSet resultSet=null;
-        try {
-            statementmt = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            resultSet = statementmt.executeQuery("CALL tableCreators();");
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
+        ResultSet resultSet = executeQuery("CALL tableCreators();");
 
         try {
             while (resultSet.next()) {
