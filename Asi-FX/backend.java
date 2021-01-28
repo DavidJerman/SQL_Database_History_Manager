@@ -30,8 +30,8 @@ public class backend { //predlagam da se ime razreda začne z veliko začetnico 
      **/
     public backend(String database){
         checkConnection(); //vzpostavi povezavo z bazo ob kreiranju objekta
+        changeDatabase(database);
         this.currentDatabase = database; //nastavi bazo podatkov na tisto, kjer
-
     }
 
 
@@ -226,7 +226,6 @@ public class backend { //predlagam da se ime razreda začne z veliko začetnico 
 
     /**
      Metoda nastavi spremenljivko currentDatabase
-
      @param databaseName ime podatkovne baze, iz katere želimo podatke
      **/
     public void setCurrentDatabase(String databaseName){
@@ -242,6 +241,54 @@ public class backend { //predlagam da se ime razreda začne z veliko začetnico 
     public ResultSet getCustomQuery(String sqlSelectStatement){
         return executeQuery(sqlSelectStatement);
     }
+
+
+    /**
+     * Metoda queryToStringArray vrne dvodimenzionalno tabelo nizov, v kateri se nahaja tabela, ki jo poizvedba vrača
+     * @param sql stavek sql s poizvedbo
+     * @return vrne se dvodimenzionalna tabela nizov, v kateri so v posameznih podtabelah zapisane vrednosti vrstic, ki jih koda vrne
+     */
+    public String[][] queryToStringArray(String sql){ //vrni tabelo nizov (vrednosti po stolpcih (vrsticah)) //nastavi na private
+        String[][] vrni = {{}};
+        try {
+            ResultSet rezultat = executeQuery(sql); //pridobi rezultat poizvedbe
+
+            //-----
+            //inicializacija tabele: pridobi število stolpcev in število vrstic (za kreiranje tabele nizov)
+            int stolpci = rezultat.getMetaData().getColumnCount(); //število stolpcev
+
+            rezultat.last(); //postavi števec rezultata na zadnjo vrstico
+            int vrstice = rezultat.getRow(); //pridobi število zadnje vrstice
+            rezultat.beforeFirst(); //postavi na zacetek
+            //------
+
+            vrni = new String[stolpci][vrstice+1]; //na mesto 0 dodaj se ime stolpca:
+
+            //v tabelo zapiši imena stolpcev:
+            for(int i = 0; i < stolpci; i++){
+                vrni[i][0] = rezultat.getMetaData().getColumnLabel(i+1); //na prva mesta zapiši ime stolpcev
+            }
+
+            int stVrstice = 1; //na mesto 0 se doda ime stolpca
+            while (rezultat.next()) {
+                for (int i = 1; i <= stolpci; i++) {
+                    //ker je lahko vrednost tudi null, je treba to upostevat:
+                    if (rezultat.getObject(i) == null) {
+                        vrni[i-1][stVrstice] = "[NULL]";
+                    } else {
+                        vrni[i-1][stVrstice] = rezultat.getObject(i).toString();
+                    }
+                }
+                stVrstice += 1; //povečaj vrstice za 1
+            }
+
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        return vrni;
+    }
+
 
 
     /**
@@ -364,14 +411,14 @@ public class backend { //predlagam da se ime razreda začne z veliko začetnico 
     }
 
     /**
-     Funkcija preveri če je povezava vspostavljena in jo, če ni, vspostavi
+     Funkcija preveri če je povezava vspostavljena in jo, če ni, vzpostavi
      **/
     private void checkConnection(){
         try {
             if(connection == null || connection.isClosed()) {
                 try {
 
-                    Class.forName("com.mysql.cj.jdbc.Driver"); //če tole dela težave, spremeni iz com.mysql.cj.jdbc.Driver v com.mysql.jdbc.Driver (meni ne deluje, če vmes ni .cj.) <- Gašper Suhadolnik
+                    Class.forName("com.mysql.jdbc.Driver"); //če tole dela težave, spremeni iz com.mysql.cj.jdbc.Driver v com.mysql.jdbc.Driver (meni ne deluje, če vmes ni .cj.) <- Gašper Suhadolnik
 
                 } catch (ClassNotFoundException ex) {
                     System.out.println("CLassNotFoundException: " + ex.getMessage());

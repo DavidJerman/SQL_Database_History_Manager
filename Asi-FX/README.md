@@ -23,6 +23,6 @@ Pomembne povezave: [navodila](https://ekm.vegova.si/ekm1/main/wiki/index.php?cid
 - `28. 1. 2021:`
   - `dodana večina grafičnih elementov (njihova funkcionalnost še ni implementirana)`
   - `dodajanje funkcionalnosti razredu backend.java 
-    (metode: setCurrentDatabase(String database), getCustomQuery(String query), closeConnection(), changeDatabase(String database))`
+    (metode: setCurrentDatabase(String database), getCustomQuery(String query), closeConnection(), changeDatabase(String database), queryToStringArray(String sql))`
   - ` `
 - ` `
