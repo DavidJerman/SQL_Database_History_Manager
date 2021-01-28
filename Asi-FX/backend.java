@@ -9,11 +9,33 @@ import java.util.HashMap;
 @version - 25.1.2021
 @since - 25.1.2021
 **/
-public class backend {
+public class backend { //predlagam da se ime razreda začne z veliko začetnico (ker se ime razreda običajno začne z veliko zač.) <- Gašper Suhadolnik
 
     Connection connection; //Povazava z SQL serverjem
     String currentDatabase; //Ime baze na kateri trenutno izvajamo operacije
     HashMap<String,String> nameAndIP_map = new HashMap<String,String>(); //Map imen in ip naslovov
+
+
+    /**
+     Privzeti konstruktor vzpostavi povezavo s podatkovno bazo in nastavi currentDatabase na privzeto vrednost
+     **/
+    public backend(){
+        checkConnection(); //vzpostavi povezavo ob kreiranju novega objekta razreda backend
+        this.currentDatabase = "remote11"; //privzeta podatkovna baza, s katero se operira, je remote11 (lahko se nastavi tudi katero drugo)
+    }
+
+    /**
+     Nov konstruktor, ki kot parameter prejme ime podatkovne baze, katero želi ob povezavi uporabiti
+     @param database ime podatkovne baze na serverju, do katere želimo dostopati
+     **/
+    public backend(String database){
+        checkConnection(); //vzpostavi povezavo z bazo ob kreiranju objekta
+        this.currentDatabase = database; //nastavi bazo podatkov na tisto, kjer
+
+    }
+
+
+
 
     /**
      Opis
@@ -203,27 +225,22 @@ public class backend {
 
 
     /**
-     Opis
+     Metoda nastavi spremenljivko currentDatabase
 
-     @param
-     @return Vracanje
-     @thorws Exception
+     @param databaseName ime podatkovne baze, iz katere želimo podatke
      **/
     public void setCurrentDatabase(String databaseName){
-
-
+        this.currentDatabase = databaseName;
     }
 
     /**
-     Opis
+     Metoda izvede sql query in vrne objekt tipa ResultSet
 
-     @param
-     @return Vracanje
-     @thorws Exception
+     @param sqlSelectStatement sql query, ki se izvede
+     @return ResultSet
      **/
     public ResultSet getCustomQuery(String sqlSelectStatement){
-
-        return null;
+        return executeQuery(sqlSelectStatement);
     }
 
 
@@ -354,7 +371,7 @@ public class backend {
             if(connection == null || connection.isClosed()) {
                 try {
 
-                    Class.forName("com.mysql.jdbc.Driver");
+                    Class.forName("com.mysql.cj.jdbc.Driver"); //če tole dela težave, spremeni iz com.mysql.cj.jdbc.Driver v com.mysql.jdbc.Driver (meni ne deluje, če vmes ni .cj.) <- Gašper Suhadolnik
 
                 } catch (ClassNotFoundException ex) {
                     System.out.println("CLassNotFoundException: " + ex.getMessage());
@@ -369,13 +386,39 @@ public class backend {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
-
     }
 
+    /**
+     Metoda prekine povezavo s podatkovno bazo
+     **/
+    private void closeConnection(){
+        try {
+            if (connection != null) {
+                connection.close();
+                connection = null;
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
 
+    /**
+     Metoda zamenja trenutno bazo podatkov v tisto, ki je podana skozi parameter
+     * @param database podatkovna baza, ki jo želimo uporabiti
+     */
 
+    public void changeDatabase(String database){
+        currentDatabase = database;
+        checkConnection();//preveri povezavo; če ni povezave, jo naredi in že v štartu spremeni podatkovno bazo
 
+        Statement statement=null;
+        ResultSet resultSet=null;
+        try {
+            statement = connection.createStatement();
+            statement.execute("USE " + database + ";"); //
 
-
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
 }
