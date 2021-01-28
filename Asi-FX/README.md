@@ -12,5 +12,17 @@ Pomembne povezave: [navodila](https://ekm.vegova.si/ekm1/main/wiki/index.php?cid
 ---
 ### Changelog:
 
-- `25. 1. 2021: ustvarjena mapa tega projekta, ustvarjen je ta dokument`
+- `25. 1. 2021:`
+  - `ustvarjena mapa tega projekta, ustvarjen je ta dokument`
+  - `spisano ogrodje za razred backend.java, dodajanje nekaterih privatnih funkcij`
+  - `dodano ogrodje za grafično SQL aplikacijo`
+- `26. 1. 2021:`
+  - `dodajanje funkcionalnosti razredu backend.java (metode checkConnection(), setupNameIp_map())`
+- `27. 1. 2021:`
+  - `dodajanje funkcionalnosti razredu backend.java (metoda executeQuery(String sql))`
+- `28. 1. 2021:`
+  - `dodana večina grafičnih elementov (njihova funkcionalnost še ni implementirana)`
+  - `dodajanje funkcionalnosti razredu backend.java 
+    (metode: setCurrentDatabase(String database), getCustomQuery(String query), closeConnection(), changeDatabase(String database))`
+  - ` `
 - ` `
