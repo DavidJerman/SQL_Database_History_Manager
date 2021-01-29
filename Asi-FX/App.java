@@ -97,11 +97,11 @@ public class App extends Application {
         Label serverPortLabel = new Label("Vrata strežnika:");
         Label serverPortValueLabel = new Label("N/A");
         serverPortValueLabel.setStyle("-fx-background-color: rgb(255,255,255)," +
-                                "linear-gradient(to bottom,#e3e3e3 0%,#cccccc 100%);" +
-                                "-fx-padding: 4px;" +
-                                "-fx-background-radius: 3px;" +
-                                "-fx-border-radius: 3px;" +
-                                "-fx-effect: innershadow(three-pass-box, rgba(0,0,0,0.75),1,0,1,1);");
+                "linear-gradient(to bottom,#e3e3e3 0%,#cccccc 100%);" +
+                "-fx-padding: 4px;" +
+                "-fx-background-radius: 3px;" +
+                "-fx-border-radius: 3px;" +
+                "-fx-effect: innershadow(three-pass-box, rgba(0,0,0,0.75),1,0,1,1);");
         serverPortValueLabel.setMinWidth(150);
         //# GridPane konfiguracija
         GridPane configPane = new GridPane();
@@ -114,6 +114,7 @@ public class App extends Application {
         saveConfigButton.setMinWidth(130);
         Button helpButton = new Button("Pomoč");
         helpButton.setMinWidth(130);
+        // TODO: Dodaj gumb počisti izbiro
         //# GridPane Tabela Info
         GridPane infoPane = new GridPane();
         //## Naslov
@@ -251,6 +252,10 @@ public class App extends Application {
         usersUsernameListView.getSelectionModel().selectedItemProperty().addListener((event) -> {
             // Izpiše vse akcije izbranega uporabnika
         });
+
+        // Desni izbirni GridPane
+        GridPane rightSelectionPane = new GridPane();
+        // TODO: Dodaj desni izbirni GridPane
 
         // Dodajanje elementov v glavni GridPane
         mainPane.add(upperPane, 0, 0, 1, 1);
