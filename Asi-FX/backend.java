@@ -61,7 +61,7 @@ public class backend { //predlagam da se ime razreda začne z veliko začetnico 
      @return Vracanje
      @thorws Exception
      **/
-    public String[] getAllUsers(){
+    public String[] getAllUsers(){   ///DELAM ZDELE (ROK)
 
         return null;
     }
@@ -74,7 +74,7 @@ public class backend { //predlagam da se ime razreda začne z veliko začetnico 
      @return Vracanje
      @thorws Exception
      **/
-    public String[] getAllUsers(String table){
+    public String[] getAllUsers(String table){  ///DELAM ZDELE (ROK)
 
         return null;
     }
@@ -294,7 +294,7 @@ public class backend { //predlagam da se ime razreda začne z veliko začetnico 
      @param user_host
      @return IP
      **/
-    private String userhostToIP(String user_host){
+    public String userhostToIP(String user_host){
         for(int i = user_host.length()-1; i > 0; i--){
             if(user_host.charAt(i) == '['){
                 user_host = user_host.substring(i+1,user_host.length()-1);
