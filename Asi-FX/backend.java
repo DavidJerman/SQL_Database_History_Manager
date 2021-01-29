@@ -56,7 +56,7 @@ public class backend { //predlagam da se ime razreda začne z veliko začetnico 
      * @param table tabela, iz katere je uporabnik ogledoval podatke
      * @return HashMap<String, String> (ključ: datum; vrednost: podatek)
      */
-    public static HashMap<String, String> getDataSelect(String user, String table){ //DELAM GAŠPER (trenutno)
+    public HashMap<String, String> getDataSelect(String user, String table){ //DELAM GAŠPER (trenutno)
         return new HashMap<>();
     }
 
@@ -66,7 +66,7 @@ public class backend { //predlagam da se ime razreda začne z veliko začetnico 
      * @param table tabela, v kateri je uporabnik ažuriral podatke
      * @return HashMap<String, String> (ključ: datum; vrednost: podatek)
      */
-    public static HashMap<String, String> getDataUpdate(String user, String table){ //DELAM GAŠPER
+    public HashMap<String, String> getDataUpdate(String user, String table){ //DELAM GAŠPER
         return new HashMap<>();
     }
 
@@ -76,7 +76,7 @@ public class backend { //predlagam da se ime razreda začne z veliko začetnico 
      * @param table tabela, v katero je uporabnik vstavljal podatke
      * @return HashMap<String, String> (ključ: datum; vrednost: podatek)
      */
-    public static HashMap<String, String> getDataInsert(String user, String table){ //DELAM GAŠPER
+    public HashMap<String, String> getDataInsert(String user, String table){ //DELAM GAŠPER
         return new HashMap<>();
     }
 
@@ -86,7 +86,7 @@ public class backend { //predlagam da se ime razreda začne z veliko začetnico 
      * @param table tabela, iz katere je uporabnik brisal podatke
      * @return HashMap<String, String> (ključ: datum; vrednost: podatek)
      */
-    public static HashMap<String, String> getDataDelete(String user, String table){ //DELAM GAŠPER
+    public HashMap<String, String> getDataDelete(String user, String table){ //DELAM GAŠPER
         return new HashMap<>();
     }
     //--------
