@@ -1,6 +1,8 @@
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.TreeSet;
 
 /**
  * Communication with the SQL database log
@@ -98,29 +100,102 @@ public class backend { //predlagam da se ime razreda začne z veliko začetnico 
 
 
     /**
-     Opis
+     Vrne tabelo IP naslovov vseh uporabnikov
 
-     @param
-     @return Vracanje
-     @thorws Exception
+     @return IP adress
      **/
-    public String[] getAllUsers(){   ///DELAM ZDELE (ROK)
+    public String[] getAllUsersIP(){
+        //Izbere vse različne primere user_host
+        ResultSet resultSet = executeQuery("SELECT DISTINCT user_host FROM mysql.general_log");
 
-        return null;
+        //Izloči podvojitve IP naslovov
+        TreeSet<String> a = new TreeSet<>();
+        try {
+            while (resultSet.next()) {
+                a.add(userhostToIP(resultSet.getString(1)));
+            }
+
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        //Vrne String array
+        String[] arr = new String[a.size()];
+        arr = a.toArray(arr);
+        return Arrays.copyOfRange(arr,1,arr.length);
     }
+
+
+    /**
+     Vrne tabelo vseh poimenovanih uporabnikov
+
+     @return String array of all named users
+     **/
+    public String[] getAllUsersName(){
+        //Preveri da je nameAndIP_map ustvarjen
+        if(nameAndIP_map.isEmpty())setupNameIP_map();
+
+        //Vrne vse poimenovane uporabnike
+        String[] arr = new String[nameAndIP_map.size()];
+        nameAndIP_map.values().toArray(arr);
+        return arr;
+    }
+
 
 
     /**
      Opis
 
-     @param
+     @param table Ime tabele
      @return Vracanje
-     @thorws Exception
      **/
-    public String[] getAllUsers(String table){  ///DELAM ZDELE (ROK)
+    public String[] getAllUsersIP(String table){
+        //Izbere vse različne primere user_host
+        ResultSet resultSet = executeQuery("SELECT DISTINCT user_host FROM mysql.general_log WHERE argument LIKE '%" + table + "%';");
 
-        return null;
+        //Izloči podvojitve IP naslovov
+        TreeSet<String> a = new TreeSet<>();
+        try {
+            while (resultSet.next()) {
+                a.add(userhostToIP(resultSet.getString(1)));
+            }
+
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        //Vrne String array
+        String[] arr = new String[a.size()];
+        arr = a.toArray(arr);
+        return Arrays.copyOfRange(arr,1,arr.length);
     }
+
+
+    /**
+     Vrne tabelo vseh poimenovanih uporabnikov, ki so delali z določeno tabelo
+
+     @return String array of all named users
+     **/
+    public String[] getAllUsersName(String table){
+        //Preveri da je nameAndIP_map ustvarjen
+        if(nameAndIP_map.isEmpty())setupNameIP_map();
+
+        String[] arr = getAllUsersIP(table);
+
+        ArrayList<String> temp = new ArrayList<>();
+
+        for(int i = 0; i < arr.length; i++){
+            if(nameAndIP_map.containsKey(arr[i]) && !temp.contains(arr[i]))temp.add(nameAndIP_map.get(arr[i]));
+        }
+
+        arr = new String[temp.size()];
+        return temp.toArray(arr);
+    }
+
+
+
 
     /**
      Opis
@@ -161,6 +236,7 @@ public class backend { //predlagam da se ime razreda začne z veliko začetnico 
 
     }
 
+
     /**
      Metoda nastavi spremenljivko currentDatabase
      @param databaseName ime podatkovne baze, iz katere želimo podatke
@@ -168,6 +244,7 @@ public class backend { //predlagam da se ime razreda začne z veliko začetnico 
     public void setCurrentDatabase(String databaseName){
         this.currentDatabase = databaseName;
     }
+
 
     /**
      Metoda izvede sql query in vrne objekt tipa ResultSet
