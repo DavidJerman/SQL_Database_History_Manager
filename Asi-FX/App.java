@@ -59,13 +59,13 @@ public class App extends Application {
         customConnectButton.setMinWidth(130);
         //# Handler-ji za gumbe
         connectButton.setOnAction((event) -> {
-
+            // Pošlje backend-u podatke o povezavi in zaprosi za povezavo z sql strežnikom
         });
         disconnectButton.setOnAction((event) -> {
-
+            // Prekine povezavo z sql strežnikom
         });
         customConnectButton.setOnAction((event) -> {
-
+            // Odpre JOption pane za vnos podatkov za povezavo po meri
         });
         //# GridPane povezava info
         GridPane connectInfoPane = new GridPane();
@@ -155,13 +155,13 @@ public class App extends Application {
         deletionDateValueLabel.setMinWidth(150);
         //# Handler-ji za gumbe
         loadConfigButton.setOnAction((event) -> {
-
+            // Naloži podatke o povezavi iz datoteke
         });
         saveConfigButton.setOnAction((event) -> {
-
+            // Shrani podatke o povezavi v datoteko
         });
         helpButton.setOnAction((event) -> {
-
+            // Prikaže pomoč uporabniku
         });
 
         // Spodnji GridPane
@@ -243,13 +243,13 @@ public class App extends Application {
         usersUsernameListView.setMaxHeight(300);
         //# Handler-ji za ListView-je
         tablesListView.getSelectionModel().selectedItemProperty().addListener((event) -> {
-
+            // Backend-u pošlje zahtevo za seznam uporabnikov tabele
         });
         usersIPListView.getSelectionModel().selectedItemProperty().addListener((event) -> {
-
+            // Izpiše vse akcije izbranega uporabnika
         });
         usersUsernameListView.getSelectionModel().selectedItemProperty().addListener((event) -> {
-
+            // Izpiše vse akcije izbranega uporabnika
         });
 
         // Dodajanje elementov v glavni GridPane
