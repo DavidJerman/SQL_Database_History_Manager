@@ -54,12 +54,55 @@ public class backend { //predlagam da se ime razreda začne z veliko začetnico 
     //--------
     /** Metoda vrne objekt HashMap, v katerem se nahajajo podatki, ki si jih je določen uporabnik v podani tabeli ogledoval.
      *
+     * opomba: metoda ima še možnosti izboljšave... (preveč decimalk pri datumu, ...)
+     *
      * @param user uporabnik, ki si je ogledoval podatke v tabeli
      * @param table tabela, iz katere je uporabnik ogledoval podatke
      * @return HashMap<String, String> (ključ: datum; vrednost: podatek)
      */
-    public HashMap<String, String> getDataSelect(String user, String table){ //DELAM GAŠPER (trenutno)
-        return new HashMap<>();
+    public HashMap<String, String> getDataSelect(String user, String table){
+        checkConnection();
+        if(table.contains(".")) table = table.substring(table.indexOf(".")+1);
+
+        String[][] rezultat = queryToStringArray("select event_time, argument from mysql.general_log where argument like 'select%' and user_host like '%"+user+"%' and argument like '%"+ table +"%';"); //'%86.61.30.67%';");
+        HashMap<String, String> vrednosti = new HashMap<>();
+
+        for(int i = 1; i < rezultat[0].length; i++){ //po vrsticah ()
+            String zapisi = rezultat[1][i];
+            zapisi = zapisi.toLowerCase();
+            int j = zapisi.indexOf("from");
+            String value;
+
+            //preveri, ali je stavek standardne oblike, ali ni (ali ima select <> from <>)
+            if(j < 0) {
+                value = zapisi.substring(zapisi.indexOf("select") + 6);
+            }
+            else {
+                value = zapisi.substring(zapisi.indexOf("select") + 6, j);
+            }
+
+            //zamenjaj nekatere stvari v nizu poizvedbe:
+            if(value.contains("*")){
+                value = value.replace("*", "vsi stolpci tabele");
+            }
+            if(value.contains("where")){
+                value = value.replace("where", "kjer:");
+            }
+            if(value.contains("distinct")){
+                value = value.replace("distinct", "razlicni iz");
+            }
+            if(value.contains("count")){
+                value = value.replace("count", "prestej");
+            }
+            if(value.contains(" as ")){
+                value = value.replace(" as ", " kot ");
+            }
+
+            //zapiši vrednost v hashmap
+            vrednosti.put(rezultat[0][i], value);
+        }
+
+        return vrednosti;
     }
 
     /** Metoda vrne objekt HashMap, v katerem se nahajajo podatki, ki jih je določen uporabnik v podani tabeli ažuriral.
@@ -78,7 +121,7 @@ public class backend { //predlagam da se ime razreda začne z veliko začetnico 
      * @param table tabela, v katero je uporabnik vstavljal podatke
      * @return HashMap<String, String> (ključ: datum; vrednost: podatek)
      */
-    public HashMap<String, String> getDataInsert(String user, String table){ //DELAM GAŠPER
+    public HashMap<String, String> getDataInsert(String user, String table){
         return new HashMap<>();
     }
 
@@ -88,7 +131,7 @@ public class backend { //predlagam da se ime razreda začne z veliko začetnico 
      * @param table tabela, iz katere je uporabnik brisal podatke
      * @return HashMap<String, String> (ključ: datum; vrednost: podatek)
      */
-    public HashMap<String, String> getDataDelete(String user, String table){ //DELAM GAŠPER
+    public HashMap<String, String> getDataDelete(String user, String table){
         return new HashMap<>();
     }
     //--------
