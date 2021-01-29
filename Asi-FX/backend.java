@@ -107,12 +107,41 @@ public class backend { //predlagam da se ime razreda začne z veliko začetnico 
 
     /** Metoda vrne objekt HashMap, v katerem se nahajajo podatki, ki jih je določen uporabnik v podani tabeli ažuriral.
      *
+     * opomba: metoda ima možnosti za izboljšavo
+     *
      * @param user uporabnik, ki je ažuriral podatke v tabeli
      * @param table tabela, v kateri je uporabnik ažuriral podatke
      * @return HashMap<String, String> (ključ: datum; vrednost: podatek)
      */
     public HashMap<String, String> getDataUpdate(String user, String table){ //DELAM GAŠPER
-        return new HashMap<>();
+        checkConnection();
+        if(table.contains(".")) table = table.substring(table.indexOf(".")+1);
+
+        String[][] rezultat = queryToStringArray("select event_time, argument from mysql.general_log where user_host like '%"+user+"%' and argument like 'update%' and argument like '%"+ table +"%';"); //'%86.61.30.67%';");
+        HashMap<String, String> vrednosti = new HashMap<>();
+
+        for(int i = 1; i < rezultat[0].length; i++){ //po vrsticah ()
+            String zapisi = rezultat[1][i];
+            zapisi = zapisi.toLowerCase();
+            String value;
+            value = zapisi.substring(zapisi.indexOf("set")+4); //update <table name> SET ... -> poiščemo set, ker za njem sledijo vrednosti
+
+            //zamenjaj nekatere stvari v nizu poizvedbe:
+            value = value.replaceAll("`", ""); //zamenja vse "čudne" narekovaje (`` <- tele)
+            if(value.contains("where")){
+                value = value.replace("where", "kjer:");
+            }
+            if(value.contains("is null")){
+                value = value.replace("is null", "= NULL");
+            }
+            if(value.contains(" and ")){
+                value = value.replace(" and ", " in ");
+            }
+            //zapiši vrednost v hashmap
+            vrednosti.put(rezultat[0][i], value);
+        }
+
+        return vrednosti;
     }
 
     /** Metoda vrne objekt HashMap, v katerem se nahajajo podatki, ki si jih je določen uporabnik v podani tabeli ogledoval.

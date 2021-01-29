@@ -30,5 +30,5 @@ Pomembne povezave: [navodila](https://ekm.vegova.si/ekm1/main/wiki/index.php?cid
     - `dodani preostali grafični elementi, dodano ogrodje za izbirni meni`
     - `dopolnitev komentarjev`
   - `back-end:`
-    - `dodajanje novih metod: getAllTables, getAllUsers, getDataSelect`
+    - `dodajanje novih metod: getAllTables, getAllUsers, getDataSelect, getDataUpdate`
     - `dopolnitev komentarjev`
