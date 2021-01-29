@@ -49,6 +49,49 @@ public class backend { //predlagam da se ime razreda začne z veliko začetnico 
         return null;
     }
 
+    //--------
+    /** Metoda vrne objekt HashMap, v katerem se nahajajo podatki, ki si jih je določen uporabnik v podani tabeli ogledoval.
+     *
+     * @param user uporabnik, ki si je ogledoval podatke v tabeli
+     * @param table tabela, iz katere je uporabnik ogledoval podatke
+     * @return HashMap<String, String> (ključ: datum; vrednost: podatek)
+     */
+    public static HashMap<String, String> getDataSelect(String user, String table){ //DELAM GAŠPER (trenutno)
+        return new HashMap<>();
+    }
+
+    /** Metoda vrne objekt HashMap, v katerem se nahajajo podatki, ki jih je določen uporabnik v podani tabeli ažuriral.
+     *
+     * @param user uporabnik, ki je ažuriral podatke v tabeli
+     * @param table tabela, v kateri je uporabnik ažuriral podatke
+     * @return HashMap<String, String> (ključ: datum; vrednost: podatek)
+     */
+    public static HashMap<String, String> getDataUpdate(String user, String table){ //DELAM GAŠPER
+        return new HashMap<>();
+    }
+
+    /** Metoda vrne objekt HashMap, v katerem se nahajajo podatki, ki si jih je določen uporabnik v podani tabeli ogledoval.
+     *
+     * @param user uporabnik, ki je vstavljal podatke v tabelo
+     * @param table tabela, v katero je uporabnik vstavljal podatke
+     * @return HashMap<String, String> (ključ: datum; vrednost: podatek)
+     */
+    public static HashMap<String, String> getDataInsert(String user, String table){ //DELAM GAŠPER
+        return new HashMap<>();
+    }
+
+    /** Metoda vrne objekt HashMap, v katerem se nahajajo podatki, ki jih je določen uporabnik iz podane tabele brisal.
+     *
+     * @param user uporabnik, ki je brisal podatke iz tabeli
+     * @param table tabela, iz katere je uporabnik brisal podatke
+     * @return HashMap<String, String> (ključ: datum; vrednost: podatek)
+     */
+    public static HashMap<String, String> getDataDelete(String user, String table){ //DELAM GAŠPER
+        return new HashMap<>();
+    }
+    //--------
+
+
 
 
 
