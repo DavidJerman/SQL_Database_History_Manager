@@ -12,7 +12,7 @@ import java.util.HashMap;
 public class backend { //predlagam da se ime razreda začne z veliko začetnico (ker se ime razreda običajno začne z veliko zač.) <- Gašper Suhadolnik
 
     Connection connection; //Povazava z SQL serverjem
-    String currentDatabase; //Ime baze na kateri trenutno izvajamo operacije
+    String currentDatabase = "remote11"; //Ime baze na kateri trenutno izvajamo operacije
     HashMap<String,String> nameAndIP_map = new HashMap<String,String>(); //Map imen in ip naslovov
 
 
@@ -50,152 +50,7 @@ public class backend { //predlagam da se ime razreda začne z veliko začetnico 
     }
 
 
-    /**
-     Opis
 
-     @param
-     @return Vracanje
-     @thorws Exception
-     **/
-    public String[] getWhoInserted(String tableName){
-
-        return null;
-    }
-
-    /**
-     Opis
-
-     @param
-     @return Vracanje
-     @thorws Exception
-     **/
-    public String[] getWhenInserted(String dataValue, String userName){
-
-        return null;
-    }
-
-    /**
-     Opis
-
-     @param
-     @return Vracanje
-     @thorws Exception
-     **/
-    public String[] getWhatInserted(String userName){
-
-        return null;
-    }
-
-
-    /**
-     Opis
-
-     @param
-     @return Vracanje
-     @thorws Exception
-     **/
-    public String[] getWhoSelected(String tableName){
-
-        return null;
-    }
-
-    /**
-     Opis
-
-     @param
-     @return Vracanje
-     @thorws Exception
-     **/
-    public String[] getWhenSelected(String dataValue, String userName){
-
-        return null;
-    }
-
-    /**
-     Opis
-
-     @param
-     @return Vracanje
-     @thorws Exception
-     **/
-    public String[] getWhatSelected(String userName){
-
-        return null;
-    }
-
-
-    /**
-     Opis
-
-     @param
-     @return Vracanje
-     @thorws Exception
-     **/
-    public String[] getWhoUpdated(String tableName){
-
-        return null;
-    }
-
-    /**
-     Opis
-
-     @param
-     @return Vracanje
-     @thorws Exception
-     **/
-    public String[] getWhenUpdated(String dataValue, String userName){
-
-        return null;
-    }
-
-    /**
-     Opis
-
-     @param
-     @return Vracanje
-     @thorws Exception
-     **/
-    public String[] getWhatUpdated(String userName){
-
-        return null;
-    }
-
-
-    /**
-     Opis
-
-     @param
-     @return Vracanje
-     @thorws Exception
-     **/
-    public String[] getWhoDeleted(String tableName){
-
-        return null;
-    }
-
-    /**
-     Opis
-
-     @param
-     @return Vracanje
-     @thorws Exception
-     **/
-    public String[] getWhenDeleted(String dataValue, String userName){
-
-        return null;
-    }
-
-    /**
-     Opis
-
-     @param
-     @return Vracanje
-     @thorws Exception
-     **/
-    public String[] getWhatDeleted(String userName){
-
-        return null;
-    }
 
 
 
@@ -211,6 +66,7 @@ public class backend { //predlagam da se ime razreda začne z veliko začetnico 
         return null;
     }
 
+
     /**
      Opis
 
@@ -218,11 +74,49 @@ public class backend { //predlagam da se ime razreda začne z veliko začetnico 
      @return Vracanje
      @thorws Exception
      **/
-    public String[] getAllTables(){
+    public String[] getAllUsers(String table){
 
         return null;
     }
 
+    /**
+     Opis
+
+     @param
+     @return Vracanje
+     @thorws Exception
+     **/
+    public String[] getAllTablesAllDatabases(){
+        String[][] arr1 = queryToStringArray("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES;");
+
+        String[] arr2 = new String[arr1[0].length - 1];
+        for(int i = 1; i <= arr2.length; i++) {
+            arr2[i - 1] = arr1[0][i];
+        }
+
+
+        return arr2;
+    }
+
+    /**
+     Opis
+
+     @param
+     @return Vracanje
+     @thorws Exception
+     **/
+    public String[] getAllTablesCurrentDatabase(){
+        String[][] arr1 = queryToStringArray("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = '"+ currentDatabase +"';");
+
+        String[] arr2 = new String[arr1[0].length - 1];
+        for(int i = 1; i <= arr2.length; i++) {
+            arr2[i - 1] = arr1[0][i];
+        }
+
+
+        return arr2;
+
+    }
 
     /**
      Metoda nastavi spremenljivko currentDatabase
@@ -313,22 +207,22 @@ public class backend { //predlagam da se ime razreda začne z veliko začetnico 
 
 
     /**
-     Funkcija IP pretvori v ime preko avtorjev ustvarjenih poimenovanih tabel
+     Funkcija IP pretvori v ime preko avtorjev ustvarjenih poimenovanih tabel. Če imena ni vrne null;
 
      @param IP
      @return name
      **/
-    private String crossReferenceIP(String IP){
+    public String crossReferenceIP(String IP){
         if(nameAndIP_map.containsValue(IP)){
             return nameAndIP_map.get(IP);
         }
-        return IP;
+        return null;
     }
 
     /**
      Ustvari hashmap iz IP-jev in avtorjev ustvarjenih poimenovanih tabel
      **/
-    public void setupNameIP_map(){
+    public void setupNameIP_map(){                                                     /////////////////////////////////////Information schema - table creation date
         ResultSet resultSet = executeQuery("CALL tableCreators();");
 
         try {
@@ -355,7 +249,7 @@ public class backend { //predlagam da se ime razreda začne z veliko začetnico 
                         //Odstrani '' okoli imena
                         if (argument.charAt(0) == '`' || argument.charAt(0) == '\'') argument = argument.substring(1, argument.length() - 1);
 
-                        //Dovoli le T+Priimek+Ime tabele
+                        //Dovoli le T+Priimek+Ime+danRojstva tabele
                         if (!(argument.charAt(0) == 'T'))continue;
 
                         //Obreže T in končno številko
@@ -426,7 +320,7 @@ public class backend { //predlagam da se ime razreda začne z veliko začetnico 
 
                 }
 
-                connection = DriverManager.getConnection("jdbc:mysql://193.2.190.23:3306/remote11","remote","remote");
+                connection = DriverManager.getConnection("jdbc:mysql://193.2.190.23:3306/" + currentDatabase,"remote","remote");
 
 
             }
