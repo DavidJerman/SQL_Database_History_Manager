@@ -24,5 +24,11 @@ Pomembne povezave: [navodila](https://ekm.vegova.si/ekm1/main/wiki/index.php?cid
   - `dodana večina grafičnih elementov (njihova funkcionalnost še ni implementirana)`
   - `dodajanje funkcionalnosti razredu backend.java 
     (metode: setCurrentDatabase(String database), getCustomQuery(String query), closeConnection(), changeDatabase(String database), queryToStringArray(String sql))`
-  - ` `
-- ` `
+- `29. 1.2021:`
+  - `Grafični del: `
+    - `spremenjen izgled aplikacije v "temni način"`
+    - `dodani preostali grafični elementi, dodano ogrodje za izbirni meni`
+    - `dopolnitev komentarjev`
+  - `back-end:`
+    - `dodajanje novih metod: getAllTables, getAllUsers, getDataSelect`
+    - `dopolnitev komentarjev`
