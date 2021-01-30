@@ -20,6 +20,15 @@ import javafx.stage.Stage;
 public class App extends Application {
 
     /**
+     * Glavna metoda
+     *
+     * @param args Metoda ne obravnava argumentov
+     */
+    public static void main(String[] args) {
+        launch(args);
+    }
+
+    /**
      * Spremeni lastnosti podanega Button (izgled)
      *
      * @param button Button, ki ga urejamo
@@ -27,15 +36,6 @@ public class App extends Application {
     static void setButtonProperties_GrayBold(Button button) {
         button.setStyle(Colors.LIGHTGRAY_BASE_COLOR);
         button.setFont(Font.font("Segoe", FontWeight.BOLD, 12));
-    }
-
-    /**
-     * Glavna metoda
-     *
-     * @param args Metoda ne obravnava argumentov
-     */
-    public static void main(String[] args) {
-        launch(args);
     }
 
     /**
@@ -135,12 +135,16 @@ public class App extends Application {
         configPane.setPadding(new Insets(10));
         Button loadConfigButton = new Button("Naloži konfiguracijo");
         loadConfigButton.setMinWidth(130);
+        setButtonProperties_GrayBold(loadConfigButton);
         Button saveConfigButton = new Button("Shrani konfiguracijo");
         saveConfigButton.setMinWidth(130);
+        setButtonProperties_GrayBold(saveConfigButton);
         Button helpButton = new Button("Pomoč");
         helpButton.setMinWidth(130);
+        setButtonProperties_GrayBold(helpButton);
         Button clearButton = new Button("Počisti izbiro");
         clearButton.setMinWidth(130);
+        setButtonProperties_GrayBold(clearButton);
         //# GridPane Tabela Info
         GridPane infoPane = new GridPane();
         infoPane.setStyle(Colors.BLACK_BG_COLOR +
@@ -204,6 +208,7 @@ public class App extends Application {
         insertionUsernameLabel.setPadding(new Insets(0, 0, 10, 5));
         TableView<String[]> insertionTableView = new TableView<>();
         insertionTableView.setPlaceholder(new Label("Podatki še niso bili izbrani."));
+        insertionTableView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
         insertionTableView.setMinWidth(MINGRIDWIDTH);
         insertionTableView.setMaxHeight(MAXGRIDHEIGHT);
         //# Ogledovanje GridPane
@@ -217,6 +222,7 @@ public class App extends Application {
         viewUsernameLabel.setPadding(new Insets(0, 0, 10, 5));
         TableView<String[]> viewTableView = new TableView<>();
         viewTableView.setPlaceholder(new Label("Podatki še niso bili izbrani."));
+        viewTableView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
         viewTableView.setMinWidth(MINGRIDWIDTH);
         viewTableView.setMaxHeight(MAXGRIDHEIGHT);
         //# Ažuriranje GridPane
@@ -230,6 +236,7 @@ public class App extends Application {
         updateUsernameLabel.setPadding(new Insets(0, 0, 10, 5));
         TableView<String[]> updateTableView = new TableView<>();
         updateTableView.setPlaceholder(new Label("Podatki še niso bili izbrani."));
+        updateTableView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
         updateTableView.setMinWidth(MINGRIDWIDTH);
         updateTableView.setMaxHeight(MAXGRIDHEIGHT);
         //# Brisanje GridPane
@@ -243,6 +250,7 @@ public class App extends Application {
         deletionUsernameLabel.setPadding(new Insets(0, 0, 10, 5));
         TableView<String[]> deletionTableView = new TableView<>();
         deletionTableView.setPlaceholder(new Label("Podatki še niso bili izbrani."));
+        deletionTableView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
         deletionTableView.setMinWidth(MINGRIDWIDTH);
         deletionTableView.setMaxHeight(MAXGRIDHEIGHT);
 
@@ -261,18 +269,21 @@ public class App extends Application {
         tablesLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         ListView<String> tablesListView = new ListView<>();
         tablesListView.setMaxHeight(125);
+        tablesListView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
         //# Seznam vseh uporabnikov (IP)
         Label usersIPLabel = new Label("Vsi uporabniki (IP):");
         usersIPLabel.setPadding(new Insets(10, 0, 10, 0));
         usersIPLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         ListView<String> usersIPListView = new ListView<>();
         usersIPListView.setMaxHeight(300);
+        usersIPListView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
         //# Seznam vseh uporabnikov (username)
         Label usersUsernameLabel = new Label("Vsi uporabniki (uporabniško ime):");
         usersUsernameLabel.setPadding(new Insets(10, 0, 10, 0));
         usersUsernameLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         ListView<String> usersUsernameListView = new ListView<>();
         usersUsernameListView.setMaxHeight(300);
+        usersUsernameListView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
         //# Handler-ji za ListView-je
         tablesListView.getSelectionModel().selectedItemProperty().addListener((event) -> {
             // Backend-u pošlje zahtevo za seznam uporabnikov tabele
@@ -293,18 +304,21 @@ public class App extends Application {
         tablesSelectionLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         ListView<String> tablesSelectionListView = new ListView<>();
         tablesSelectionListView.setMaxHeight(125);
+        tablesSelectionListView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
         //# Seznam uporabnikov (IP)
         Label usersIPSelectionLabel = new Label("Uporabniki izbrane tabele (IP):");
         usersIPSelectionLabel.setPadding(new Insets(10, 0, 10, 0));
         usersIPSelectionLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         ListView<String> usersIPSelectionListView = new ListView<>();
         usersIPSelectionListView.setMaxHeight(300);
+        usersIPSelectionListView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
         //# Seznam uporabnikov (username)
         Label usersUsernameSelectionLabel = new Label("Uporabniki izbrane tabele (uporab. ime):");
         usersUsernameSelectionLabel.setPadding(new Insets(10, 0, 10, 0));
         usersUsernameSelectionLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         ListView<String> usersUsernameSelectionListView = new ListView<>();
         usersUsernameSelectionListView.setMaxHeight(300);
+        usersUsernameSelectionListView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
 
         // Dodajanje elementov v glavni GridPane
         mainPane.add(upperPane, 0, 0, 1, 1);
@@ -411,7 +425,7 @@ public class App extends Application {
         /**
          * Svetlo siv gumb
          */
-        static String LIGHTGRAY_BASE_COLOR = "-fx-base: rgb(150, 150, 150);";
+        static String LIGHTGRAY_BASE_COLOR = "-fx-base: rgb(180, 180, 180);";
         /**
          * Belo besedilo
          */
@@ -421,5 +435,9 @@ public class App extends Application {
          */
         static String WHITE_BG_COLOR_LINEARGRADIENT = "-fx-background-color: rgb(255,255,255)," +
                 " linear-gradient(to bottom,#e3e3e3 0%,#cccccc 100%);";
+        /**
+         * Sivo ozadje
+         */
+        static String LIGHTGRAY_BG_COLOR = "-fx-background-color: rgb(195, 195, 195)";
     }
 }
