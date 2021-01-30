@@ -184,8 +184,9 @@ public class App extends Application {
         // Izbira nastavitve
         Resource.title_img = new ImageView("images/database_logo_white.png");
         Resource.title_img.setFitHeight(25);
-        Resource.title_img.setFitWidth(25);
-        Resource.menu = new Menu(Texts.APP_TITLE, Resource.title_img);
+        Resource.title_img.setFitWidth(50);
+        // TODO: Spremeni barvo teksta v menu
+        Resource.menu = new Menu("", Resource.title_img);
         //# MenuItem Izhod
         Resource.exitMenuItem = new MenuItem(Texts.EXIT);
         Resource.exitMenuItem.setOnAction((event) -> Platform.exit());
@@ -559,7 +560,6 @@ class Colors {
  * Razred vsebuje aplikacijska besedila
  */
 class Texts {
-    final static String APP_TITLE = "Upravljalnik podatkovnih baz";
     final static String NA = "N/A";
     final static String NO_DATA_SELECTED = "Podatki še niso bili izbrani.";
     final static String CONNECT = "Poveži se";
