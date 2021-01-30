@@ -60,7 +60,7 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) {
         // Lastnosti Primary Stage
-        primaryStage.setTitle("SQL Upravljalnik");
+        primaryStage.setTitle(Texts.APP_TITLE);
 
         // Glavni GridPane
         GridPane mainPane = new GridPane();
@@ -80,13 +80,16 @@ public class App extends Application {
         connectPane.setVgap(11);
         connectPane.setHgap(11);
         connectPane.setPadding(new Insets(10));
-        Button connectButton = new Button("Poveži se");
+        //## Povezava
+        Button connectButton = new Button(Texts.CONNECT);
         setButtonProperties_GrayBold(connectButton);
         connectButton.setMinWidth(130);
-        Button disconnectButton = new Button("Prekini povezavo");
+        //## Prekinitev povezave
+        Button disconnectButton = new Button(Texts.DISCONNECT);
         disconnectButton.setMinWidth(130);
         setButtonProperties_GrayBold(disconnectButton);
-        Button customConnectButton = new Button("Povezava po meri");
+        //## Povezava po meri
+        Button customConnectButton = new Button(Texts.CUSTOM_CONNECT);
         setButtonProperties_GrayBold(customConnectButton);
         customConnectButton.setMinWidth(130);
         //# Handler-ji za gumbe
@@ -105,44 +108,52 @@ public class App extends Application {
                 "-fx-background-radius: 5px;" +
                 "-fx-background-insets: 2px;");
         //## Naslov
-        Label connectionInfoTitleLabel = new Label("Informacije o strežniku:");
+        Label connectionInfoTitleLabel = new Label(Texts.SERVER_INFO);
         connectionInfoTitleLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         connectionInfoTitleLabel.setPadding(new Insets(0, 0, 10, 0));
         //## Informacije o tabeli
         connectInfoPane.setVgap(10);
         connectInfoPane.setHgap(10);
         connectInfoPane.setPadding(new Insets(10));
-        Label usernameLabel = new Label("Uporabnik:");
+        //### Uporabnik
+        Label usernameLabel = new Label(Texts.SERVER_USER);
         usernameLabel.setStyle(Colors.WHITE_TEXT_COLOR);
-        Label usernameValueLabel = new Label("N/A");
+        Label usernameValueLabel = new Label(Texts.NA);
         setLabelProperties_InfoLabel(usernameValueLabel);
-        Label serverIPLabel = new Label("IP strežnika:");
+        //### IP naslov strežnika
+        Label serverIPLabel = new Label(Texts.SERVER_IP);
         serverIPLabel.setStyle(Colors.WHITE_TEXT_COLOR);
-        Label serverIPValueLabel = new Label("N/A");
+        Label serverIPValueLabel = new Label(Texts.NA);
         setLabelProperties_InfoLabel(serverIPValueLabel);
-        Label serverPortLabel = new Label("Vrata strežnika:");
+        //### Vrata strežnika
+        Label serverPortLabel = new Label(Texts.SERVER_PORT);
         serverPortLabel.setStyle(Colors.WHITE_TEXT_COLOR);
-        Label serverPortValueLabel = new Label("N/A");
+        Label serverPortValueLabel = new Label(Texts.NA);
         setLabelProperties_InfoLabel(serverPortValueLabel);
-        Label databaseLabel = new Label("Podatk. baza:");
+        //### Podatkovna baza strežnika
+        Label databaseLabel = new Label(Texts.SERVER_DATABASE);
         databaseLabel.setStyle(Colors.WHITE_TEXT_COLOR);
-        Label databaseValueLabel = new Label("N/A");
+        Label databaseValueLabel = new Label(Texts.NA);
         setLabelProperties_InfoLabel(databaseValueLabel);
         //# GridPane konfiguracija
         GridPane configPane = new GridPane();
         configPane.setVgap(11);
         configPane.setHgap(11);
         configPane.setPadding(new Insets(10));
-        Button loadConfigButton = new Button("Naloži konfiguracijo");
+        //## Naloži konfiguracijo
+        Button loadConfigButton = new Button(Texts.LOAD_CONFIG);
         loadConfigButton.setMinWidth(130);
         setButtonProperties_GrayBold(loadConfigButton);
-        Button saveConfigButton = new Button("Shrani konfiguracijo");
+        //## Shrani konfiguracijo
+        Button saveConfigButton = new Button(Texts.SAVE_CONFIG);
         saveConfigButton.setMinWidth(130);
         setButtonProperties_GrayBold(saveConfigButton);
-        Button helpButton = new Button("Pomoč");
+        //## Pomoč
+        Button helpButton = new Button(Texts.HELP);
         helpButton.setMinWidth(130);
         setButtonProperties_GrayBold(helpButton);
-        Button clearButton = new Button("Počisti izbiro");
+        //## Počisti izbiro
+        Button clearButton = new Button(Texts.CLEAR_SELECTION);
         clearButton.setMinWidth(130);
         setButtonProperties_GrayBold(clearButton);
         //# GridPane Tabela Info
@@ -152,27 +163,27 @@ public class App extends Application {
                 "-fx-background-insets: 2px;");
         infoPane.setPadding(new Insets(0, 10, 0, 0));
         //## Naslov
-        Label infoTitleLabel = new Label("Informacije o izbrani tabeli:");
+        Label infoTitleLabel = new Label(Texts.TABLE_INFO);
         infoTitleLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         infoTitleLabel.setPadding(new Insets(10));
         //## Informacije o tabeli
         // Avtor Tabele
-        Label authorLabel = new Label("Avtor:");
+        Label authorLabel = new Label(Texts.TABLE_AUTHOR);
         authorLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         authorLabel.setPadding(new Insets(10));
-        Label authorValueLabel = new Label("N/A");
+        Label authorValueLabel = new Label(Texts.NA);
         setLabelProperties_InfoLabel(authorValueLabel);
         // Datum nastanka
-        Label creationDateLabel = new Label("Datum nastanka:");
+        Label creationDateLabel = new Label(Texts.TABLE_CREATION_DATE);
         creationDateLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         creationDateLabel.setPadding(new Insets(10));
-        Label creationDateValueLabel = new Label("N/A");
+        Label creationDateValueLabel = new Label(Texts.NA);
         setLabelProperties_InfoLabel(creationDateValueLabel);
         // Datum zaprtja
-        Label deletionDateLabel = new Label("Datum izbrisa:");
+        Label deletionDateLabel = new Label(Texts.TABLE_DELETION_DATE);
         deletionDateLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         deletionDateLabel.setPadding(new Insets(10));
-        Label deletionDateValueLabel = new Label("N/A");
+        Label deletionDateValueLabel = new Label(Texts.NA);
         setLabelProperties_InfoLabel(deletionDateValueLabel);
         //# Handler-ji za gumbe
         loadConfigButton.setOnAction((event) -> {
@@ -200,56 +211,56 @@ public class App extends Application {
         //# Vstavljanje GridPane
         GridPane insertionPane = new GridPane();
         insertionPane.setPadding(new Insets(10));
-        Label insertionLabel = new Label("Vstavljanja:");
-        Label insertionUsernameLabel = new Label("N/A");
+        Label insertionLabel = new Label(Texts.INSERTIONS);
+        Label insertionUsernameLabel = new Label(Texts.NA);
         insertionLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         insertionUsernameLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         insertionLabel.setPadding(new Insets(0, 0, 10, 0));
         insertionUsernameLabel.setPadding(new Insets(0, 0, 10, 5));
         TableView<String[]> insertionTableView = new TableView<>();
-        insertionTableView.setPlaceholder(new Label("Podatki še niso bili izbrani."));
+        insertionTableView.setPlaceholder(new Label(Texts.NO_DATA_SELECTED));
         insertionTableView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
         insertionTableView.setMinWidth(MINGRIDWIDTH);
         insertionTableView.setMaxHeight(MAXGRIDHEIGHT);
         //# Ogledovanje GridPane
         GridPane viewPane = new GridPane();
         viewPane.setPadding(new Insets(10));
-        Label viewLabel = new Label("Ogledovanja:");
-        Label viewUsernameLabel = new Label("N/A");
+        Label viewLabel = new Label(Texts.VIEWS);
+        Label viewUsernameLabel = new Label(Texts.NA);
         viewLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         viewUsernameLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         viewLabel.setPadding(new Insets(0, 0, 10, 0));
         viewUsernameLabel.setPadding(new Insets(0, 0, 10, 5));
         TableView<String[]> viewTableView = new TableView<>();
-        viewTableView.setPlaceholder(new Label("Podatki še niso bili izbrani."));
+        viewTableView.setPlaceholder(new Label(Texts.NO_DATA_SELECTED));
         viewTableView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
         viewTableView.setMinWidth(MINGRIDWIDTH);
         viewTableView.setMaxHeight(MAXGRIDHEIGHT);
         //# Ažuriranje GridPane
         GridPane updatePane = new GridPane();
         updatePane.setPadding(new Insets(10));
-        Label updateLabel = new Label("Ažuriranja:");
-        Label updateUsernameLabel = new Label("N/A");
+        Label updateLabel = new Label(Texts.UPDATES);
+        Label updateUsernameLabel = new Label(Texts.NA);
         updateLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         updateUsernameLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         updateLabel.setPadding(new Insets(0, 0, 10, 0));
         updateUsernameLabel.setPadding(new Insets(0, 0, 10, 5));
         TableView<String[]> updateTableView = new TableView<>();
-        updateTableView.setPlaceholder(new Label("Podatki še niso bili izbrani."));
+        updateTableView.setPlaceholder(new Label(Texts.NO_DATA_SELECTED));
         updateTableView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
         updateTableView.setMinWidth(MINGRIDWIDTH);
         updateTableView.setMaxHeight(MAXGRIDHEIGHT);
         //# Brisanje GridPane
         GridPane deletionPane = new GridPane();
         deletionPane.setPadding(new Insets(10));
-        Label deletionLabel = new Label("Brisanja:");
-        Label deletionUsernameLabel = new Label("N/A");
+        Label deletionLabel = new Label(Texts.DELETIONS);
+        Label deletionUsernameLabel = new Label(Texts.NA);
         deletionLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         deletionUsernameLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         deletionLabel.setPadding(new Insets(0, 0, 10, 0));
         deletionUsernameLabel.setPadding(new Insets(0, 0, 10, 5));
         TableView<String[]> deletionTableView = new TableView<>();
-        deletionTableView.setPlaceholder(new Label("Podatki še niso bili izbrani."));
+        deletionTableView.setPlaceholder(new Label(Texts.NO_DATA_SELECTED));
         deletionTableView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
         deletionTableView.setMinWidth(MINGRIDWIDTH);
         deletionTableView.setMaxHeight(MAXGRIDHEIGHT);
@@ -264,21 +275,21 @@ public class App extends Application {
         GridPane rightPane = new GridPane();
         rightPane.setPadding(new Insets(20, 20, 20, 20));
         //# Seznam vseh tabel
-        Label tablesLabel = new Label("Vse tabele:");
+        Label tablesLabel = new Label(Texts.ALL_TABLES);
         tablesLabel.setPadding(new Insets(0, 0, 10, 0));
         tablesLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         ListView<String> tablesListView = new ListView<>();
         tablesListView.setMaxHeight(125);
         tablesListView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
         //# Seznam vseh uporabnikov (IP)
-        Label usersIPLabel = new Label("Vsi uporabniki (IP):");
+        Label usersIPLabel = new Label(Texts.ALL_USERS_IP);
         usersIPLabel.setPadding(new Insets(10, 0, 10, 0));
         usersIPLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         ListView<String> usersIPListView = new ListView<>();
         usersIPListView.setMaxHeight(300);
         usersIPListView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
         //# Seznam vseh uporabnikov (username)
-        Label usersUsernameLabel = new Label("Vsi uporabniki (uporabniško ime):");
+        Label usersUsernameLabel = new Label(Texts.ALL_USERS_USERNAME);
         usersUsernameLabel.setPadding(new Insets(10, 0, 10, 0));
         usersUsernameLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         ListView<String> usersUsernameListView = new ListView<>();
@@ -299,21 +310,21 @@ public class App extends Application {
         GridPane rightSelectionPane = new GridPane();
         rightSelectionPane.setPadding(new Insets(20, 20, 20, 0));
         //# Seznam tabel
-        Label tablesSelectionLabel = new Label("Tabele izbranega uporabnika:");
+        Label tablesSelectionLabel = new Label(Texts.SELECTED_TABLES);
         tablesSelectionLabel.setPadding(new Insets(0, 0, 10, 0));
         tablesSelectionLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         ListView<String> tablesSelectionListView = new ListView<>();
         tablesSelectionListView.setMaxHeight(125);
         tablesSelectionListView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
         //# Seznam uporabnikov (IP)
-        Label usersIPSelectionLabel = new Label("Uporabniki izbrane tabele (IP):");
+        Label usersIPSelectionLabel = new Label(Texts.SELECTED_USERS_IP);
         usersIPSelectionLabel.setPadding(new Insets(10, 0, 10, 0));
         usersIPSelectionLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         ListView<String> usersIPSelectionListView = new ListView<>();
         usersIPSelectionListView.setMaxHeight(300);
         usersIPSelectionListView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
         //# Seznam uporabnikov (username)
-        Label usersUsernameSelectionLabel = new Label("Uporabniki izbrane tabele (uporab. ime):");
+        Label usersUsernameSelectionLabel = new Label(Texts.SELECTED_USERS_USERNAME);
         usersUsernameSelectionLabel.setPadding(new Insets(10, 0, 10, 0));
         usersUsernameSelectionLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         ListView<String> usersUsernameSelectionListView = new ListView<>();
@@ -413,31 +424,48 @@ public class App extends Application {
     /**
      * Razred vsebuje barve uporabljene v aplikaciji
      */
-    static class Colors {
-        /**
-         * Črno ozadje
-         */
+    private static class Colors {
         static String BLACK_BG_COLOR = "-fx-background-color: rgb(43,43,45);";
-        /**
-         * Sivo ozadje
-         */
         static String GRAY_BG_COLOR = "-fx-background-color: rgb(60,63,65);";
-        /**
-         * Svetlo siv gumb
-         */
         static String LIGHTGRAY_BASE_COLOR = "-fx-base: rgb(180, 180, 180);";
-        /**
-         * Belo besedilo
-         */
         static String WHITE_TEXT_COLOR = "-fx-text-fill: rgb(250,250,250)";
-        /**
-         * Belo ozadje z linearnim gradientom
-         */
         static String WHITE_BG_COLOR_LINEARGRADIENT = "-fx-background-color: rgb(255,255,255)," +
                 " linear-gradient(to bottom,#e3e3e3 0%,#cccccc 100%);";
-        /**
-         * Sivo ozadje
-         */
         static String LIGHTGRAY_BG_COLOR = "-fx-background-color: rgb(195, 195, 195)";
+    }
+
+    /**
+     * Razred vsebuje aplikacijska besedila
+     */
+    private static class Texts {
+        static String APP_TITLE = "Upravljalnik podatkovnih baz";
+        static String NA = "N/A";
+        static String NO_DATA_SELECTED = "Podatki še niso bili izbrani.";
+        static String CONNECT = "Poveži se";
+        static String DISCONNECT = "Prekini povezavo";
+        static String CUSTOM_CONNECT = "Povezava po meri";
+        static String SERVER_INFO = "Informacije o strežniku:";
+        static String SERVER_USER = "Uporabnik:";
+        static String SERVER_IP = "IP strežnika:";
+        static String SERVER_PORT = "Vrata strežnika:";
+        static String SERVER_DATABASE = "Podatk. baza:";
+        static String LOAD_CONFIG = "Naloži konfiguracijo";
+        static String SAVE_CONFIG = "Shrani konfiguracijo";
+        static String HELP = "Pomoč";
+        static String CLEAR_SELECTION = "Počisti izbiro";
+        static String TABLE_INFO = "Informacije o izbrani tabeli:";
+        static String TABLE_AUTHOR = "Avtor:";
+        static String TABLE_CREATION_DATE = "Datum nastanka:";
+        static String TABLE_DELETION_DATE = "Datum izbrisa:";
+        static String INSERTIONS = "Vstavljanja:";
+        static String UPDATES = "Ažuriranja:";
+        static String VIEWS = "Ogledovanja:";
+        static String DELETIONS = "Brisanja:";
+        static String ALL_TABLES = "Vse tabele:";
+        static String ALL_USERS_IP = "Vsi uporabniki (IP):";
+        static String ALL_USERS_USERNAME = "Vsi uporabniki (uporabniško ime):";
+        static String SELECTED_TABLES = "Tabele izbranega uporabnika:";
+        static String SELECTED_USERS_IP = "Uporabniki izbrane tabele (IP):";
+        static String SELECTED_USERS_USERNAME = "Uporabniki izbrane tabele (uporab. ime):";
     }
 }
