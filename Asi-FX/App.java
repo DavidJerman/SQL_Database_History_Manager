@@ -3,6 +3,7 @@ import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -57,14 +58,118 @@ public class App extends Application {
      * Spremeni temo aplikacije v temno
      */
     static void setToDarkTheme() {
-
+        Resource.menuBar.setStyle(Colors.TRUEBLACK_BG_COLOR);
+        Resource.title_img.setImage(new Image("images/database_logo_white.png"));
+        Resource.menu.setStyle(Colors.TRUEBLACK_BG_COLOR);
+        Resource.mainPane.setStyle(Colors.BLACK_BG_COLOR);
+        Resource.upperPane.setStyle(Colors.GRAY_BG_COLOR +
+                "-fx-background-radius: 5px;" +
+                "-fx-background-insets: 2px;");
+        Resource.connectInfoPane.setStyle(Colors.BLACK_BG_COLOR +
+                "-fx-background-radius: 5px;" +
+                "-fx-background-insets: 2px;");
+        Resource.connectionInfoTitleLabel.setStyle(Colors.WHITE_TEXT_COLOR);
+        Resource.usernameLabel.setStyle(Colors.WHITE_TEXT_COLOR);
+        Resource.serverIPLabel.setStyle(Colors.WHITE_TEXT_COLOR);
+        Resource.serverPortLabel.setStyle(Colors.WHITE_TEXT_COLOR);
+        Resource.databaseLabel.setStyle(Colors.WHITE_TEXT_COLOR);
+        Resource.infoPane.setStyle(Colors.BLACK_BG_COLOR +
+                "-fx-background-radius: 5px;" +
+                "-fx-background-insets: 2px;");
+        Resource.infoTitleLabel.setStyle(Colors.WHITE_TEXT_COLOR);
+        Resource.authorLabel.setStyle(Colors.WHITE_TEXT_COLOR);
+        Resource.creationDateLabel.setStyle(Colors.WHITE_TEXT_COLOR);
+        Resource.deletionDateLabel.setStyle(Colors.WHITE_TEXT_COLOR);
+        Resource.lowerPane.setStyle(Colors.GRAY_BG_COLOR +
+                "-fx-background-radius: 5px;" +
+                "-fx-background-insets: 2px;");
+        Resource.insertionLabel.setStyle(Colors.WHITE_TEXT_COLOR);
+        Resource.insertionUsernameLabel.setStyle(Colors.WHITE_TEXT_COLOR);
+        Resource.insertionTableView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
+        Resource.viewLabel.setStyle(Colors.WHITE_TEXT_COLOR);
+        Resource.viewUsernameLabel.setStyle(Colors.WHITE_TEXT_COLOR);
+        Resource.viewTableView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
+        Resource.updateLabel.setStyle(Colors.WHITE_TEXT_COLOR);
+        Resource.updateUsernameLabel.setStyle(Colors.WHITE_TEXT_COLOR);
+        Resource.updateTableView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
+        Resource.deletionLabel.setStyle(Colors.WHITE_TEXT_COLOR);
+        Resource.deletionUsernameLabel.setStyle(Colors.WHITE_TEXT_COLOR);
+        Resource.deletionTableView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
+        Resource.rightSuperPane.setStyle(Colors.GRAY_BG_COLOR +
+                "-fx-background-radius: 5px;" +
+                "-fx-background-insets: 2px;");
+        Resource.tablesLabel.setStyle(Colors.WHITE_TEXT_COLOR);
+        Resource.tablesListView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
+        Resource.usersIPLabel.setStyle(Colors.WHITE_TEXT_COLOR);
+        Resource.usersIPListView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
+        Resource.usersUsernameLabel.setStyle(Colors.WHITE_TEXT_COLOR);
+        Resource.usersUsernameListView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
+        Resource.tablesSelectionLabel.setStyle(Colors.WHITE_TEXT_COLOR);
+        Resource.tablesSelectionListView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
+        Resource.usersIPSelectionLabel.setStyle(Colors.WHITE_TEXT_COLOR);
+        Resource.usersIPSelectionListView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
+        Resource.usersUsernameSelectionLabel.setStyle(Colors.WHITE_TEXT_COLOR);
+        Resource.usersUsernameSelectionListView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
+        Resource.menuMainContainer.setStyle(Colors.TRUEBLACK_BG_COLOR);
     }
 
     /**
      * Spremeni temo aplikacije v svetlo
      */
     static void setToLightTheme() {
-
+        Resource.menuBar.setStyle(Colors.BEIGE_BG_COLOR);
+        Resource.title_img.setImage(new Image("images/database_logo_black.png"));
+        Resource.menu.setStyle(Colors.BEIGE_BG_COLOR);
+        Resource.mainPane.setStyle(Colors.TRUEWHITE_BG_COLOR);
+        Resource.upperPane.setStyle(Colors.BEIGE_BG_COLOR +
+                "-fx-background-radius: 5px;" +
+                "-fx-background-insets: 2px;");
+        Resource.connectInfoPane.setStyle(Colors.WHITE_BG_COLOR +
+                "-fx-background-radius: 5px;" +
+                "-fx-background-insets: 2px;");
+        Resource.connectionInfoTitleLabel.setStyle(Colors.BLACK_TEXT_COLOR);
+        Resource.usernameLabel.setStyle(Colors.BLACK_TEXT_COLOR);
+        Resource.serverIPLabel.setStyle(Colors.BLACK_TEXT_COLOR);
+        Resource.serverPortLabel.setStyle(Colors.BLACK_TEXT_COLOR);
+        Resource.databaseLabel.setStyle(Colors.BLACK_TEXT_COLOR);
+        Resource.infoPane.setStyle(Colors.WHITE_BG_COLOR +
+                "-fx-background-radius: 5px;" +
+                "-fx-background-insets: 2px;");
+        Resource.infoTitleLabel.setStyle(Colors.BLACK_TEXT_COLOR);
+        Resource.authorLabel.setStyle(Colors.BLACK_TEXT_COLOR);
+        Resource.creationDateLabel.setStyle(Colors.BLACK_TEXT_COLOR);
+        Resource.deletionDateLabel.setStyle(Colors.BLACK_TEXT_COLOR);
+        Resource.lowerPane.setStyle(Colors.BEIGE_BG_COLOR +
+                "-fx-background-radius: 5px;" +
+                "-fx-background-insets: 2px;");
+        Resource.insertionLabel.setStyle(Colors.BLACK_TEXT_COLOR);
+        Resource.insertionUsernameLabel.setStyle(Colors.BLACK_TEXT_COLOR);
+        Resource.insertionTableView.setStyle(Colors.TRUEWHITE_BG_COLOR);
+        Resource.viewLabel.setStyle(Colors.BLACK_TEXT_COLOR);
+        Resource.viewUsernameLabel.setStyle(Colors.BLACK_TEXT_COLOR);
+        Resource.viewTableView.setStyle(Colors.TRUEWHITE_BG_COLOR);
+        Resource.updateLabel.setStyle(Colors.BLACK_TEXT_COLOR);
+        Resource.updateUsernameLabel.setStyle(Colors.BLACK_TEXT_COLOR);
+        Resource.updateTableView.setStyle(Colors.TRUEWHITE_BG_COLOR);
+        Resource.deletionLabel.setStyle(Colors.BLACK_TEXT_COLOR);
+        Resource.deletionUsernameLabel.setStyle(Colors.BLACK_TEXT_COLOR);
+        Resource.deletionTableView.setStyle(Colors.TRUEWHITE_BG_COLOR);
+        Resource.rightSuperPane.setStyle(Colors.BEIGE_BG_COLOR +
+                "-fx-background-radius: 5px;" +
+                "-fx-background-insets: 2px;");
+        Resource.tablesLabel.setStyle(Colors.BLACK_TEXT_COLOR);
+        Resource.tablesListView.setStyle(Colors.TRUEWHITE_BG_COLOR);
+        Resource.usersIPLabel.setStyle(Colors.BLACK_TEXT_COLOR);
+        Resource.usersIPListView.setStyle(Colors.TRUEWHITE_BG_COLOR);
+        Resource.usersUsernameLabel.setStyle(Colors.BLACK_TEXT_COLOR);
+        Resource.usersUsernameListView.setStyle(Colors.TRUEWHITE_BG_COLOR);
+        Resource.tablesSelectionLabel.setStyle(Colors.BLACK_TEXT_COLOR);
+        Resource.tablesSelectionListView.setStyle(Colors.TRUEWHITE_BG_COLOR);
+        Resource.usersIPSelectionLabel.setStyle(Colors.BLACK_TEXT_COLOR);
+        Resource.usersIPSelectionListView.setStyle(Colors.TRUEWHITE_BG_COLOR);
+        Resource.usersUsernameSelectionLabel.setStyle(Colors.BLACK_TEXT_COLOR);
+        Resource.usersUsernameSelectionListView.setStyle(Colors.TRUEWHITE_BG_COLOR);
+        Resource.menuMainContainer.setStyle(Colors.BEIGE_BG_COLOR);
     }
 
     /**
@@ -76,13 +181,11 @@ public class App extends Application {
     public void start(Stage primaryStage) {
         // Meni
         Resource.menuBar = new MenuBar();
-        Resource.menuBar.setStyle(Colors.TRUEBLACK_BG_COLOR);
         // Izbira nastavitve
-        Resource.img = new ImageView("images/database_logo_white.png");
-        Resource.img.setFitHeight(25);
-        Resource.img.setFitWidth(25);
-        Resource.menu = new Menu(Texts.APP_TITLE, Resource.img);
-        Resource.menu.setStyle(Colors.TRUEBLACK_BG_COLOR);
+        Resource.title_img = new ImageView("images/database_logo_white.png");
+        Resource.title_img.setFitHeight(25);
+        Resource.title_img.setFitWidth(25);
+        Resource.menu = new Menu(Texts.APP_TITLE, Resource.title_img);
         //# MenuItem Izhod
         Resource.exitMenuItem = new MenuItem(Texts.EXIT);
         Resource.exitMenuItem.setOnAction((event) -> Platform.exit());
@@ -92,8 +195,9 @@ public class App extends Application {
         Resource.themeMenu = new Menu(Texts.APLICCATION_THEME);
         //### Teme aplikacije
         Resource.darkThemeMenuItem = new MenuItem(Texts.DARK_THEME);
-
+        Resource.darkThemeMenuItem.setOnAction((event) -> setToDarkTheme());
         Resource.lightThemeMenuItem = new MenuItem(Texts.LIGHT_THEME);
+        Resource.lightThemeMenuItem.setOnAction((event) -> setToLightTheme());
         // Dodajanje elementov v meni
         Resource.menu.getItems().addAll(Resource.exitMenuItem, Resource.settingsMenu);
         Resource.settingsMenu.getItems().addAll(Resource.themeMenu);
@@ -106,14 +210,10 @@ public class App extends Application {
         Resource.mainPane.setVgap(5);
         Resource.mainPane.setHgap(5);
         Resource.mainPane.setPadding(new Insets(20));
-        Resource.mainPane.setStyle(Colors.BLACK_BG_COLOR);
 
         // Zgornji GridPane
         Resource.upperPane = new GridPane();
         Resource.upperPane.setPadding(new Insets(10, 10, 10, 5));
-        Resource.upperPane.setStyle(Colors.GRAY_BG_COLOR +
-                "-fx-background-radius: 5px;" +
-                "-fx-background-insets: 2px;");
         //# GridPane povezava
         Resource.connectPane = new GridPane();
         Resource.connectPane.setVgap(11);
@@ -143,12 +243,8 @@ public class App extends Application {
         });
         //# GridPane povezava info
         Resource.connectInfoPane = new GridPane();
-        Resource.connectInfoPane.setStyle(Colors.BLACK_BG_COLOR +
-                "-fx-background-radius: 5px;" +
-                "-fx-background-insets: 2px;");
         //## Naslov
         Resource.connectionInfoTitleLabel = new Label(Texts.SERVER_INFO);
-        Resource.connectionInfoTitleLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         Resource.connectionInfoTitleLabel.setPadding(new Insets(0, 0, 10, 0));
         //## Informacije o tabeli
         Resource.connectInfoPane.setVgap(10);
@@ -156,22 +252,18 @@ public class App extends Application {
         Resource.connectInfoPane.setPadding(new Insets(10));
         //### Uporabnik
         Resource.usernameLabel = new Label(Texts.SERVER_USER);
-        Resource.usernameLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         Resource.usernameValueLabel = new Label(Texts.NA);
         setLabelProperties_InfoLabel(Resource.usernameValueLabel);
         //### IP naslov strežnika
         Resource.serverIPLabel = new Label(Texts.SERVER_IP);
-        Resource.serverIPLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         Resource.serverIPValueLabel = new Label(Texts.NA);
         setLabelProperties_InfoLabel(Resource.serverIPValueLabel);
         //### Vrata strežnika
         Resource.serverPortLabel = new Label(Texts.SERVER_PORT);
-        Resource.serverPortLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         Resource.serverPortValueLabel = new Label(Texts.NA);
         setLabelProperties_InfoLabel(Resource.serverPortValueLabel);
         //### Podatkovna baza strežnika
         Resource.databaseLabel = new Label(Texts.SERVER_DATABASE);
-        Resource.databaseLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         Resource.databaseValueLabel = new Label(Texts.NA);
         setLabelProperties_InfoLabel(Resource.databaseValueLabel);
         //# GridPane konfiguracija
@@ -197,30 +289,23 @@ public class App extends Application {
         setButtonProperties_GrayBold(Resource.clearButton);
         //# GridPane Tabela Info
         Resource.infoPane = new GridPane();
-        Resource.infoPane.setStyle(Colors.BLACK_BG_COLOR +
-                "-fx-background-radius: 5px;" +
-                "-fx-background-insets: 2px;");
         Resource.infoPane.setPadding(new Insets(0, 10, 0, 0));
         //## Naslov
         Resource.infoTitleLabel = new Label(Texts.TABLE_INFO);
-        Resource.infoTitleLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         Resource.infoTitleLabel.setPadding(new Insets(10));
         //## Informacije o tabeli
         // Avtor Tabele
         Resource.authorLabel = new Label(Texts.TABLE_AUTHOR);
-        Resource.authorLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         Resource.authorLabel.setPadding(new Insets(10));
         Resource.authorValueLabel = new Label(Texts.NA);
         setLabelProperties_InfoLabel(Resource.authorValueLabel);
         // Datum nastanka
         Resource.creationDateLabel = new Label(Texts.TABLE_CREATION_DATE);
-        Resource.creationDateLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         Resource.creationDateLabel.setPadding(new Insets(10));
         Resource.creationDateValueLabel = new Label(Texts.NA);
         setLabelProperties_InfoLabel(Resource.creationDateValueLabel);
         // Datum zaprtja
         Resource.deletionDateLabel = new Label(Texts.TABLE_DELETION_DATE);
-        Resource.deletionDateLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         Resource.deletionDateLabel.setPadding(new Insets(10));
         Resource.deletionDateValueLabel = new Label(Texts.NA);
         setLabelProperties_InfoLabel(Resource.deletionDateValueLabel);
@@ -241,9 +326,6 @@ public class App extends Application {
         // Spodnji GridPane
         Resource.lowerPane = new GridPane();
         Resource.lowerPane.setPadding(new Insets(10));
-        Resource.lowerPane.setStyle(Colors.GRAY_BG_COLOR +
-                "-fx-background-radius: 5px;" +
-                "-fx-background-insets: 2px;");
         //## Maksimalna višina GridPane
         int MAXGRIDHEIGHT = 300;
         int MINGRIDWIDTH = 395;
@@ -252,13 +334,10 @@ public class App extends Application {
         Resource.insertionPane.setPadding(new Insets(10));
         Resource.insertionLabel = new Label(Texts.INSERTIONS);
         Resource.insertionUsernameLabel = new Label(Texts.NA);
-        Resource.insertionLabel.setStyle(Colors.WHITE_TEXT_COLOR);
-        Resource.insertionUsernameLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         Resource.insertionLabel.setPadding(new Insets(0, 0, 10, 0));
         Resource.insertionUsernameLabel.setPadding(new Insets(0, 0, 10, 5));
         Resource.insertionTableView = new TableView<>();
         Resource.insertionTableView.setPlaceholder(new Label(Texts.NO_DATA_SELECTED));
-        Resource.insertionTableView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
         Resource.insertionTableView.setMinWidth(MINGRIDWIDTH);
         Resource.insertionTableView.setMaxHeight(MAXGRIDHEIGHT);
         //# Ogledovanje GridPane
@@ -266,13 +345,10 @@ public class App extends Application {
         Resource.viewPane.setPadding(new Insets(10));
         Resource.viewLabel = new Label(Texts.VIEWS);
         Resource.viewUsernameLabel = new Label(Texts.NA);
-        Resource.viewLabel.setStyle(Colors.WHITE_TEXT_COLOR);
-        Resource.viewUsernameLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         Resource.viewLabel.setPadding(new Insets(0, 0, 10, 0));
         Resource.viewUsernameLabel.setPadding(new Insets(0, 0, 10, 5));
         Resource.viewTableView = new TableView<>();
         Resource.viewTableView.setPlaceholder(new Label(Texts.NO_DATA_SELECTED));
-        Resource.viewTableView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
         Resource.viewTableView.setMinWidth(MINGRIDWIDTH);
         Resource.viewTableView.setMaxHeight(MAXGRIDHEIGHT);
         //# Ažuriranje GridPane
@@ -280,13 +356,10 @@ public class App extends Application {
         Resource.updatePane.setPadding(new Insets(10));
         Resource.updateLabel = new Label(Texts.UPDATES);
         Resource.updateUsernameLabel = new Label(Texts.NA);
-        Resource.updateLabel.setStyle(Colors.WHITE_TEXT_COLOR);
-        Resource.updateUsernameLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         Resource.updateLabel.setPadding(new Insets(0, 0, 10, 0));
         Resource.updateUsernameLabel.setPadding(new Insets(0, 0, 10, 5));
         Resource.updateTableView = new TableView<>();
         Resource.updateTableView.setPlaceholder(new Label(Texts.NO_DATA_SELECTED));
-        Resource.updateTableView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
         Resource.updateTableView.setMinWidth(MINGRIDWIDTH);
         Resource.updateTableView.setMaxHeight(MAXGRIDHEIGHT);
         //# Brisanje GridPane
@@ -294,21 +367,15 @@ public class App extends Application {
         Resource.deletionPane.setPadding(new Insets(10));
         Resource.deletionLabel = new Label(Texts.DELETIONS);
         Resource.deletionUsernameLabel = new Label(Texts.NA);
-        Resource.deletionLabel.setStyle(Colors.WHITE_TEXT_COLOR);
-        Resource.deletionUsernameLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         Resource.deletionLabel.setPadding(new Insets(0, 0, 10, 0));
         Resource.deletionUsernameLabel.setPadding(new Insets(0, 0, 10, 5));
         Resource.deletionTableView = new TableView<>();
         Resource.deletionTableView.setPlaceholder(new Label(Texts.NO_DATA_SELECTED));
-        Resource.deletionTableView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
         Resource.deletionTableView.setMinWidth(MINGRIDWIDTH);
         Resource.deletionTableView.setMaxHeight(MAXGRIDHEIGHT);
 
         // Desni starševski GridPane
         Resource.rightSuperPane = new GridPane();
-        Resource.rightSuperPane.setStyle(Colors.GRAY_BG_COLOR +
-                "-fx-background-radius: 5px;" +
-                "-fx-background-insets: 2px;");
 
         // Desni Grid Pane
         Resource.rightPane = new GridPane();
@@ -316,24 +383,18 @@ public class App extends Application {
         //# Seznam vseh tabel
         Resource.tablesLabel = new Label(Texts.ALL_TABLES);
         Resource.tablesLabel.setPadding(new Insets(0, 0, 10, 0));
-        Resource.tablesLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         Resource.tablesListView = new ListView<>();
         Resource.tablesListView.setMaxHeight(125);
-        Resource.tablesListView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
         //# Seznam vseh uporabnikov (IP)
         Resource.usersIPLabel = new Label(Texts.ALL_USERS_IP);
         Resource.usersIPLabel.setPadding(new Insets(10, 0, 10, 0));
-        Resource.usersIPLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         Resource.usersIPListView = new ListView<>();
         Resource.usersIPListView.setMaxHeight(300);
-        Resource.usersIPListView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
         //# Seznam vseh uporabnikov (username)
         Resource.usersUsernameLabel = new Label(Texts.ALL_USERS_USERNAME);
         Resource.usersUsernameLabel.setPadding(new Insets(10, 0, 10, 0));
-        Resource.usersUsernameLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         Resource.usersUsernameListView = new ListView<>();
         Resource.usersUsernameListView.setMaxHeight(300);
-        Resource.usersUsernameListView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
         //# Handler-ji za ListView-je
         Resource.tablesListView.getSelectionModel().selectedItemProperty().addListener((event) -> {
             // Backend-u pošlje zahtevo za seznam uporabnikov tabele
@@ -351,24 +412,18 @@ public class App extends Application {
         //# Seznam tabel
         Resource.tablesSelectionLabel = new Label(Texts.SELECTED_TABLES);
         Resource.tablesSelectionLabel.setPadding(new Insets(0, 0, 10, 0));
-        Resource.tablesSelectionLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         Resource.tablesSelectionListView = new ListView<>();
         Resource.tablesSelectionListView.setMaxHeight(125);
-        Resource.tablesSelectionListView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
         //# Seznam uporabnikov (IP)
         Resource.usersIPSelectionLabel = new Label(Texts.SELECTED_USERS_IP);
         Resource.usersIPSelectionLabel.setPadding(new Insets(10, 0, 10, 0));
-        Resource.usersIPSelectionLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         Resource.usersIPSelectionListView = new ListView<>();
         Resource.usersIPSelectionListView.setMaxHeight(300);
-        Resource.usersIPSelectionListView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
         //# Seznam uporabnikov (username)
         Resource.usersUsernameSelectionLabel = new Label(Texts.SELECTED_USERS_USERNAME);
         Resource.usersUsernameSelectionLabel.setPadding(new Insets(10, 0, 10, 0));
-        Resource.usersUsernameSelectionLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         Resource.usersUsernameSelectionListView = new ListView<>();
         Resource.usersUsernameSelectionListView.setMaxHeight(300);
-        Resource.usersUsernameSelectionListView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
 
         // Dodajanje elementov v glavni GridPane
         Resource.mainPane.add(Resource.upperPane, 0, 0, 1, 1);
@@ -452,7 +507,7 @@ public class App extends Application {
 
         // Glavna scena
         // VBox For Menu + GridPane
-        VBox menuMainContainer = new VBox();
+        Resource.menuMainContainer = new VBox();
         GridPane menuContainer = new GridPane();
         menuContainer.add(Resource.menuBar, 0, 0);
         //# Premikanje okna aplikacije s handler-ji
@@ -466,11 +521,12 @@ public class App extends Application {
             primaryStage.setY(event.getScreenY() + dragDelta.y);
         });
         //# Ostalo
-        menuMainContainer.setStyle(Colors.TRUEBLACK_BG_COLOR);
         menuContainer.setPadding(new Insets(10, 0, 10, 0));
-        menuMainContainer.getChildren().addAll(menuContainer, Resource.mainPane);
+        Resource.menuMainContainer.getChildren().addAll(menuContainer, Resource.mainPane);
+        // Nastavitev aplikacije na temno kot privzeto
+        setToDarkTheme();
         // Ostale nastavitve, okno po meri
-        Scene mainScene = new Scene(menuMainContainer);
+        Scene mainScene = new Scene(Resource.menuMainContainer);
         primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.setScene(mainScene);
         primaryStage.show();
@@ -489,10 +545,14 @@ class Colors {
     final static String BLACK_BG_COLOR = "-fx-background-color: rgb(43, 43, 45);";
     final static String GRAY_BG_COLOR = "-fx-background-color: rgb(60, 63, 65);";
     final static String LIGHTGRAY_BASE_COLOR = "-fx-base: rgb(180, 180, 180);";
-    final static String WHITE_TEXT_COLOR = "-fx-text-fill: rgb(250, 250, 250)";
+    final static String WHITE_TEXT_COLOR = "-fx-text-fill: rgb(250, 250, 250);";
     final static String WHITE_BG_COLOR_LINEARGRADIENT = "-fx-background-color: rgb(255, 255, 255)," +
             " linear-gradient(to bottom, #e3e3e3 0%, #cccccc 100%);";
-    final static String LIGHTGRAY_BG_COLOR = "-fx-background-color: rgb(195, 195, 195)";
+    final static String BEIGE_BG_COLOR = "-fx-background-color: rgb(253,242,211);";
+    final static String WHITE_BG_COLOR = "-fx-background-color: rgb(250, 250, 250);";
+    final static String TRUEWHITE_BG_COLOR = "-fx-background-color: rgb(255, 255, 255);";
+    final static String LIGHTGRAY_BG_COLOR = "-fx-background-color: rgb(195, 195, 195);";
+    final static String BLACK_TEXT_COLOR = "-fx-text-fill: rgb(10, 10, 10);";
 }
 
 /**
@@ -547,7 +607,7 @@ class Delta {
  */
 class Resource {
     static MenuBar menuBar;
-    static ImageView img;
+    static ImageView title_img;
     static Menu menu;
     static MenuItem exitMenuItem;
     static Menu settingsMenu;
@@ -615,4 +675,5 @@ class Resource {
     static ListView<String> usersIPSelectionListView;
     static Label usersUsernameSelectionLabel;
     static ListView<String> usersUsernameSelectionListView;
+    static VBox menuMainContainer;
 }
