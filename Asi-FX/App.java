@@ -185,7 +185,6 @@ public class App extends Application {
         Resource.title_img = new ImageView("images/database_logo_white.png");
         Resource.title_img.setFitHeight(25);
         Resource.title_img.setFitWidth(50);
-        // TODO: Spremeni barvo teksta v menu
         Resource.menu = new Menu("", Resource.title_img);
         //# MenuItem Izhod
         Resource.exitMenuItem = new MenuItem(Texts.EXIT);
