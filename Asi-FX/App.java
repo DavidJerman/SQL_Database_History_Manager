@@ -1,14 +1,15 @@
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  * Grafični vmesnik aplikacije oz. front-end
@@ -53,419 +54,565 @@ public class App extends Application {
     }
 
     /**
+     * Spremeni temo aplikacije v temno
+     */
+    static void setToDarkTheme() {
+
+    }
+
+    /**
+     * Spremeni temo aplikacije v svetlo
+     */
+    static void setToLightTheme() {
+
+    }
+
+    /**
      * Štartna funkcija aplikacije
      *
-     * @param primaryStage Primary Stage
+     * @param primaryStage Primary StageU
      */
     @Override
     public void start(Stage primaryStage) {
-        // Lastnosti Primary Stage
-        primaryStage.setTitle(Texts.APP_TITLE);
+        // Meni
+        Resource.menuBar = new MenuBar();
+        Resource.menuBar.setStyle(Colors.TRUEBLACK_BG_COLOR);
+        // Izbira nastavitve
+        Resource.img = new ImageView("images/database_logo_white.png");
+        Resource.img.setFitHeight(25);
+        Resource.img.setFitWidth(25);
+        Resource.menu = new Menu(Texts.APP_TITLE, Resource.img);
+        Resource.menu.setStyle(Colors.TRUEBLACK_BG_COLOR);
+        //# MenuItem Izhod
+        Resource.exitMenuItem = new MenuItem(Texts.EXIT);
+        Resource.exitMenuItem.setOnAction((event) -> Platform.exit());
+        //# Menu Nastavitve
+        Resource.settingsMenu = new Menu(Texts.SETTINGS);
+        //## Tema aplikacije
+        Resource.themeMenu = new Menu(Texts.APLICCATION_THEME);
+        //### Teme aplikacije
+        Resource.darkThemeMenuItem = new MenuItem(Texts.DARK_THEME);
+
+        Resource.lightThemeMenuItem = new MenuItem(Texts.LIGHT_THEME);
+        // Dodajanje elementov v meni
+        Resource.menu.getItems().addAll(Resource.exitMenuItem, Resource.settingsMenu);
+        Resource.settingsMenu.getItems().addAll(Resource.themeMenu);
+        Resource.themeMenu.getItems().addAll(Resource.darkThemeMenuItem, Resource.lightThemeMenuItem);
+        // Dodaj vse elemente v meni
+        Resource.menuBar.getMenus().addAll(Resource.menu);
 
         // Glavni GridPane
-        GridPane mainPane = new GridPane();
-        mainPane.setVgap(5);
-        mainPane.setHgap(5);
-        mainPane.setPadding(new Insets(20));
-        mainPane.setStyle(Colors.BLACK_BG_COLOR);
+        Resource.mainPane = new GridPane();
+        Resource.mainPane.setVgap(5);
+        Resource.mainPane.setHgap(5);
+        Resource.mainPane.setPadding(new Insets(20));
+        Resource.mainPane.setStyle(Colors.BLACK_BG_COLOR);
 
         // Zgornji GridPane
-        GridPane upperPane = new GridPane();
-        upperPane.setPadding(new Insets(10, 10, 10, 5));
-        upperPane.setStyle(Colors.GRAY_BG_COLOR +
+        Resource.upperPane = new GridPane();
+        Resource.upperPane.setPadding(new Insets(10, 10, 10, 5));
+        Resource.upperPane.setStyle(Colors.GRAY_BG_COLOR +
                 "-fx-background-radius: 5px;" +
                 "-fx-background-insets: 2px;");
         //# GridPane povezava
-        GridPane connectPane = new GridPane();
-        connectPane.setVgap(11);
-        connectPane.setHgap(11);
-        connectPane.setPadding(new Insets(10));
+        Resource.connectPane = new GridPane();
+        Resource.connectPane.setVgap(11);
+        Resource.connectPane.setHgap(11);
+        Resource.connectPane.setPadding(new Insets(10));
         //## Povezava
-        Button connectButton = new Button(Texts.CONNECT);
-        setButtonProperties_GrayBold(connectButton);
-        connectButton.setMinWidth(130);
+        Resource.connectButton = new Button(Texts.CONNECT);
+        setButtonProperties_GrayBold(Resource.connectButton);
+        Resource.connectButton.setMinWidth(130);
         //## Prekinitev povezave
-        Button disconnectButton = new Button(Texts.DISCONNECT);
-        disconnectButton.setMinWidth(130);
-        setButtonProperties_GrayBold(disconnectButton);
+        Resource.disconnectButton = new Button(Texts.DISCONNECT);
+        Resource.disconnectButton.setMinWidth(130);
+        setButtonProperties_GrayBold(Resource.disconnectButton);
         //## Povezava po meri
-        Button customConnectButton = new Button(Texts.CUSTOM_CONNECT);
-        setButtonProperties_GrayBold(customConnectButton);
-        customConnectButton.setMinWidth(130);
+        Resource.customConnectButton = new Button(Texts.CUSTOM_CONNECT);
+        setButtonProperties_GrayBold(Resource.customConnectButton);
+        Resource.customConnectButton.setMinWidth(130);
         //# Handler-ji za gumbe
-        connectButton.setOnAction((event) -> {
+        Resource.connectButton.setOnAction((event) -> {
             // Pošlje backend-u podatke o povezavi in zaprosi za povezavo z sql strežnikom
         });
-        disconnectButton.setOnAction((event) -> {
+        Resource.disconnectButton.setOnAction((event) -> {
             // Prekine povezavo z sql strežnikom
         });
-        customConnectButton.setOnAction((event) -> {
+        Resource.customConnectButton.setOnAction((event) -> {
             // Odpre JOption pane za vnos podatkov za povezavo po meri
         });
         //# GridPane povezava info
-        GridPane connectInfoPane = new GridPane();
-        connectInfoPane.setStyle(Colors.BLACK_BG_COLOR +
+        Resource.connectInfoPane = new GridPane();
+        Resource.connectInfoPane.setStyle(Colors.BLACK_BG_COLOR +
                 "-fx-background-radius: 5px;" +
                 "-fx-background-insets: 2px;");
         //## Naslov
-        Label connectionInfoTitleLabel = new Label(Texts.SERVER_INFO);
-        connectionInfoTitleLabel.setStyle(Colors.WHITE_TEXT_COLOR);
-        connectionInfoTitleLabel.setPadding(new Insets(0, 0, 10, 0));
+        Resource.connectionInfoTitleLabel = new Label(Texts.SERVER_INFO);
+        Resource.connectionInfoTitleLabel.setStyle(Colors.WHITE_TEXT_COLOR);
+        Resource.connectionInfoTitleLabel.setPadding(new Insets(0, 0, 10, 0));
         //## Informacije o tabeli
-        connectInfoPane.setVgap(10);
-        connectInfoPane.setHgap(10);
-        connectInfoPane.setPadding(new Insets(10));
+        Resource.connectInfoPane.setVgap(10);
+        Resource.connectInfoPane.setHgap(10);
+        Resource.connectInfoPane.setPadding(new Insets(10));
         //### Uporabnik
-        Label usernameLabel = new Label(Texts.SERVER_USER);
-        usernameLabel.setStyle(Colors.WHITE_TEXT_COLOR);
-        Label usernameValueLabel = new Label(Texts.NA);
-        setLabelProperties_InfoLabel(usernameValueLabel);
+        Resource.usernameLabel = new Label(Texts.SERVER_USER);
+        Resource.usernameLabel.setStyle(Colors.WHITE_TEXT_COLOR);
+        Resource.usernameValueLabel = new Label(Texts.NA);
+        setLabelProperties_InfoLabel(Resource.usernameValueLabel);
         //### IP naslov strežnika
-        Label serverIPLabel = new Label(Texts.SERVER_IP);
-        serverIPLabel.setStyle(Colors.WHITE_TEXT_COLOR);
-        Label serverIPValueLabel = new Label(Texts.NA);
-        setLabelProperties_InfoLabel(serverIPValueLabel);
+        Resource.serverIPLabel = new Label(Texts.SERVER_IP);
+        Resource.serverIPLabel.setStyle(Colors.WHITE_TEXT_COLOR);
+        Resource.serverIPValueLabel = new Label(Texts.NA);
+        setLabelProperties_InfoLabel(Resource.serverIPValueLabel);
         //### Vrata strežnika
-        Label serverPortLabel = new Label(Texts.SERVER_PORT);
-        serverPortLabel.setStyle(Colors.WHITE_TEXT_COLOR);
-        Label serverPortValueLabel = new Label(Texts.NA);
-        setLabelProperties_InfoLabel(serverPortValueLabel);
+        Resource.serverPortLabel = new Label(Texts.SERVER_PORT);
+        Resource.serverPortLabel.setStyle(Colors.WHITE_TEXT_COLOR);
+        Resource.serverPortValueLabel = new Label(Texts.NA);
+        setLabelProperties_InfoLabel(Resource.serverPortValueLabel);
         //### Podatkovna baza strežnika
-        Label databaseLabel = new Label(Texts.SERVER_DATABASE);
-        databaseLabel.setStyle(Colors.WHITE_TEXT_COLOR);
-        Label databaseValueLabel = new Label(Texts.NA);
-        setLabelProperties_InfoLabel(databaseValueLabel);
+        Resource.databaseLabel = new Label(Texts.SERVER_DATABASE);
+        Resource.databaseLabel.setStyle(Colors.WHITE_TEXT_COLOR);
+        Resource.databaseValueLabel = new Label(Texts.NA);
+        setLabelProperties_InfoLabel(Resource.databaseValueLabel);
         //# GridPane konfiguracija
-        GridPane configPane = new GridPane();
-        configPane.setVgap(11);
-        configPane.setHgap(11);
-        configPane.setPadding(new Insets(10));
+        Resource.configPane = new GridPane();
+        Resource.configPane.setVgap(11);
+        Resource.configPane.setHgap(11);
+        Resource.configPane.setPadding(new Insets(10));
         //## Naloži konfiguracijo
-        Button loadConfigButton = new Button(Texts.LOAD_CONFIG);
-        loadConfigButton.setMinWidth(130);
-        setButtonProperties_GrayBold(loadConfigButton);
+        Resource.loadConfigButton = new Button(Texts.LOAD_CONFIG);
+        Resource.loadConfigButton.setMinWidth(130);
+        setButtonProperties_GrayBold(Resource.loadConfigButton);
         //## Shrani konfiguracijo
-        Button saveConfigButton = new Button(Texts.SAVE_CONFIG);
-        saveConfigButton.setMinWidth(130);
-        setButtonProperties_GrayBold(saveConfigButton);
+        Resource.saveConfigButton = new Button(Texts.SAVE_CONFIG);
+        Resource.saveConfigButton.setMinWidth(130);
+        setButtonProperties_GrayBold(Resource.saveConfigButton);
         //## Pomoč
-        Button helpButton = new Button(Texts.HELP);
-        helpButton.setMinWidth(130);
-        setButtonProperties_GrayBold(helpButton);
+        Resource.helpButton = new Button(Texts.HELP);
+        Resource.helpButton.setMinWidth(130);
+        setButtonProperties_GrayBold(Resource.helpButton);
         //## Počisti izbiro
-        Button clearButton = new Button(Texts.CLEAR_SELECTION);
-        clearButton.setMinWidth(130);
-        setButtonProperties_GrayBold(clearButton);
+        Resource.clearButton = new Button(Texts.CLEAR_SELECTION);
+        Resource.clearButton.setMinWidth(130);
+        setButtonProperties_GrayBold(Resource.clearButton);
         //# GridPane Tabela Info
-        GridPane infoPane = new GridPane();
-        infoPane.setStyle(Colors.BLACK_BG_COLOR +
+        Resource.infoPane = new GridPane();
+        Resource.infoPane.setStyle(Colors.BLACK_BG_COLOR +
                 "-fx-background-radius: 5px;" +
                 "-fx-background-insets: 2px;");
-        infoPane.setPadding(new Insets(0, 10, 0, 0));
+        Resource.infoPane.setPadding(new Insets(0, 10, 0, 0));
         //## Naslov
-        Label infoTitleLabel = new Label(Texts.TABLE_INFO);
-        infoTitleLabel.setStyle(Colors.WHITE_TEXT_COLOR);
-        infoTitleLabel.setPadding(new Insets(10));
+        Resource.infoTitleLabel = new Label(Texts.TABLE_INFO);
+        Resource.infoTitleLabel.setStyle(Colors.WHITE_TEXT_COLOR);
+        Resource.infoTitleLabel.setPadding(new Insets(10));
         //## Informacije o tabeli
         // Avtor Tabele
-        Label authorLabel = new Label(Texts.TABLE_AUTHOR);
-        authorLabel.setStyle(Colors.WHITE_TEXT_COLOR);
-        authorLabel.setPadding(new Insets(10));
-        Label authorValueLabel = new Label(Texts.NA);
-        setLabelProperties_InfoLabel(authorValueLabel);
+        Resource.authorLabel = new Label(Texts.TABLE_AUTHOR);
+        Resource.authorLabel.setStyle(Colors.WHITE_TEXT_COLOR);
+        Resource.authorLabel.setPadding(new Insets(10));
+        Resource.authorValueLabel = new Label(Texts.NA);
+        setLabelProperties_InfoLabel(Resource.authorValueLabel);
         // Datum nastanka
-        Label creationDateLabel = new Label(Texts.TABLE_CREATION_DATE);
-        creationDateLabel.setStyle(Colors.WHITE_TEXT_COLOR);
-        creationDateLabel.setPadding(new Insets(10));
-        Label creationDateValueLabel = new Label(Texts.NA);
-        setLabelProperties_InfoLabel(creationDateValueLabel);
+        Resource.creationDateLabel = new Label(Texts.TABLE_CREATION_DATE);
+        Resource.creationDateLabel.setStyle(Colors.WHITE_TEXT_COLOR);
+        Resource.creationDateLabel.setPadding(new Insets(10));
+        Resource.creationDateValueLabel = new Label(Texts.NA);
+        setLabelProperties_InfoLabel(Resource.creationDateValueLabel);
         // Datum zaprtja
-        Label deletionDateLabel = new Label(Texts.TABLE_DELETION_DATE);
-        deletionDateLabel.setStyle(Colors.WHITE_TEXT_COLOR);
-        deletionDateLabel.setPadding(new Insets(10));
-        Label deletionDateValueLabel = new Label(Texts.NA);
-        setLabelProperties_InfoLabel(deletionDateValueLabel);
+        Resource.deletionDateLabel = new Label(Texts.TABLE_DELETION_DATE);
+        Resource.deletionDateLabel.setStyle(Colors.WHITE_TEXT_COLOR);
+        Resource.deletionDateLabel.setPadding(new Insets(10));
+        Resource.deletionDateValueLabel = new Label(Texts.NA);
+        setLabelProperties_InfoLabel(Resource.deletionDateValueLabel);
         //# Handler-ji za gumbe
-        loadConfigButton.setOnAction((event) -> {
+        Resource.loadConfigButton.setOnAction((event) -> {
             // Naloži podatke o povezavi iz datoteke
         });
-        saveConfigButton.setOnAction((event) -> {
+        Resource.saveConfigButton.setOnAction((event) -> {
             // Shrani podatke o povezavi v datoteko
         });
-        helpButton.setOnAction((event) -> {
+        Resource.helpButton.setOnAction((event) -> {
             // Prikaže pomoč uporabniku
         });
-        clearButton.setOnAction((event) -> {
+        Resource.clearButton.setOnAction((event) -> {
             // Počisti izbiro
         });
 
         // Spodnji GridPane
-        GridPane lowerPane = new GridPane();
-        lowerPane.setPadding(new Insets(10));
-        lowerPane.setStyle(Colors.GRAY_BG_COLOR +
+        Resource.lowerPane = new GridPane();
+        Resource.lowerPane.setPadding(new Insets(10));
+        Resource.lowerPane.setStyle(Colors.GRAY_BG_COLOR +
                 "-fx-background-radius: 5px;" +
                 "-fx-background-insets: 2px;");
         //## Maksimalna višina GridPane
         int MAXGRIDHEIGHT = 300;
         int MINGRIDWIDTH = 395;
         //# Vstavljanje GridPane
-        GridPane insertionPane = new GridPane();
-        insertionPane.setPadding(new Insets(10));
-        Label insertionLabel = new Label(Texts.INSERTIONS);
-        Label insertionUsernameLabel = new Label(Texts.NA);
-        insertionLabel.setStyle(Colors.WHITE_TEXT_COLOR);
-        insertionUsernameLabel.setStyle(Colors.WHITE_TEXT_COLOR);
-        insertionLabel.setPadding(new Insets(0, 0, 10, 0));
-        insertionUsernameLabel.setPadding(new Insets(0, 0, 10, 5));
-        TableView<String[]> insertionTableView = new TableView<>();
-        insertionTableView.setPlaceholder(new Label(Texts.NO_DATA_SELECTED));
-        insertionTableView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
-        insertionTableView.setMinWidth(MINGRIDWIDTH);
-        insertionTableView.setMaxHeight(MAXGRIDHEIGHT);
+        Resource.insertionPane = new GridPane();
+        Resource.insertionPane.setPadding(new Insets(10));
+        Resource.insertionLabel = new Label(Texts.INSERTIONS);
+        Resource.insertionUsernameLabel = new Label(Texts.NA);
+        Resource.insertionLabel.setStyle(Colors.WHITE_TEXT_COLOR);
+        Resource.insertionUsernameLabel.setStyle(Colors.WHITE_TEXT_COLOR);
+        Resource.insertionLabel.setPadding(new Insets(0, 0, 10, 0));
+        Resource.insertionUsernameLabel.setPadding(new Insets(0, 0, 10, 5));
+        Resource.insertionTableView = new TableView<>();
+        Resource.insertionTableView.setPlaceholder(new Label(Texts.NO_DATA_SELECTED));
+        Resource.insertionTableView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
+        Resource.insertionTableView.setMinWidth(MINGRIDWIDTH);
+        Resource.insertionTableView.setMaxHeight(MAXGRIDHEIGHT);
         //# Ogledovanje GridPane
-        GridPane viewPane = new GridPane();
-        viewPane.setPadding(new Insets(10));
-        Label viewLabel = new Label(Texts.VIEWS);
-        Label viewUsernameLabel = new Label(Texts.NA);
-        viewLabel.setStyle(Colors.WHITE_TEXT_COLOR);
-        viewUsernameLabel.setStyle(Colors.WHITE_TEXT_COLOR);
-        viewLabel.setPadding(new Insets(0, 0, 10, 0));
-        viewUsernameLabel.setPadding(new Insets(0, 0, 10, 5));
-        TableView<String[]> viewTableView = new TableView<>();
-        viewTableView.setPlaceholder(new Label(Texts.NO_DATA_SELECTED));
-        viewTableView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
-        viewTableView.setMinWidth(MINGRIDWIDTH);
-        viewTableView.setMaxHeight(MAXGRIDHEIGHT);
+        Resource.viewPane = new GridPane();
+        Resource.viewPane.setPadding(new Insets(10));
+        Resource.viewLabel = new Label(Texts.VIEWS);
+        Resource.viewUsernameLabel = new Label(Texts.NA);
+        Resource.viewLabel.setStyle(Colors.WHITE_TEXT_COLOR);
+        Resource.viewUsernameLabel.setStyle(Colors.WHITE_TEXT_COLOR);
+        Resource.viewLabel.setPadding(new Insets(0, 0, 10, 0));
+        Resource.viewUsernameLabel.setPadding(new Insets(0, 0, 10, 5));
+        Resource.viewTableView = new TableView<>();
+        Resource.viewTableView.setPlaceholder(new Label(Texts.NO_DATA_SELECTED));
+        Resource.viewTableView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
+        Resource.viewTableView.setMinWidth(MINGRIDWIDTH);
+        Resource.viewTableView.setMaxHeight(MAXGRIDHEIGHT);
         //# Ažuriranje GridPane
-        GridPane updatePane = new GridPane();
-        updatePane.setPadding(new Insets(10));
-        Label updateLabel = new Label(Texts.UPDATES);
-        Label updateUsernameLabel = new Label(Texts.NA);
-        updateLabel.setStyle(Colors.WHITE_TEXT_COLOR);
-        updateUsernameLabel.setStyle(Colors.WHITE_TEXT_COLOR);
-        updateLabel.setPadding(new Insets(0, 0, 10, 0));
-        updateUsernameLabel.setPadding(new Insets(0, 0, 10, 5));
-        TableView<String[]> updateTableView = new TableView<>();
-        updateTableView.setPlaceholder(new Label(Texts.NO_DATA_SELECTED));
-        updateTableView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
-        updateTableView.setMinWidth(MINGRIDWIDTH);
-        updateTableView.setMaxHeight(MAXGRIDHEIGHT);
+        Resource.updatePane = new GridPane();
+        Resource.updatePane.setPadding(new Insets(10));
+        Resource.updateLabel = new Label(Texts.UPDATES);
+        Resource.updateUsernameLabel = new Label(Texts.NA);
+        Resource.updateLabel.setStyle(Colors.WHITE_TEXT_COLOR);
+        Resource.updateUsernameLabel.setStyle(Colors.WHITE_TEXT_COLOR);
+        Resource.updateLabel.setPadding(new Insets(0, 0, 10, 0));
+        Resource.updateUsernameLabel.setPadding(new Insets(0, 0, 10, 5));
+        Resource.updateTableView = new TableView<>();
+        Resource.updateTableView.setPlaceholder(new Label(Texts.NO_DATA_SELECTED));
+        Resource.updateTableView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
+        Resource.updateTableView.setMinWidth(MINGRIDWIDTH);
+        Resource.updateTableView.setMaxHeight(MAXGRIDHEIGHT);
         //# Brisanje GridPane
-        GridPane deletionPane = new GridPane();
-        deletionPane.setPadding(new Insets(10));
-        Label deletionLabel = new Label(Texts.DELETIONS);
-        Label deletionUsernameLabel = new Label(Texts.NA);
-        deletionLabel.setStyle(Colors.WHITE_TEXT_COLOR);
-        deletionUsernameLabel.setStyle(Colors.WHITE_TEXT_COLOR);
-        deletionLabel.setPadding(new Insets(0, 0, 10, 0));
-        deletionUsernameLabel.setPadding(new Insets(0, 0, 10, 5));
-        TableView<String[]> deletionTableView = new TableView<>();
-        deletionTableView.setPlaceholder(new Label(Texts.NO_DATA_SELECTED));
-        deletionTableView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
-        deletionTableView.setMinWidth(MINGRIDWIDTH);
-        deletionTableView.setMaxHeight(MAXGRIDHEIGHT);
+        Resource.deletionPane = new GridPane();
+        Resource.deletionPane.setPadding(new Insets(10));
+        Resource.deletionLabel = new Label(Texts.DELETIONS);
+        Resource.deletionUsernameLabel = new Label(Texts.NA);
+        Resource.deletionLabel.setStyle(Colors.WHITE_TEXT_COLOR);
+        Resource.deletionUsernameLabel.setStyle(Colors.WHITE_TEXT_COLOR);
+        Resource.deletionLabel.setPadding(new Insets(0, 0, 10, 0));
+        Resource.deletionUsernameLabel.setPadding(new Insets(0, 0, 10, 5));
+        Resource.deletionTableView = new TableView<>();
+        Resource.deletionTableView.setPlaceholder(new Label(Texts.NO_DATA_SELECTED));
+        Resource.deletionTableView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
+        Resource.deletionTableView.setMinWidth(MINGRIDWIDTH);
+        Resource.deletionTableView.setMaxHeight(MAXGRIDHEIGHT);
 
         // Desni starševski GridPane
-        GridPane rightSuperPane = new GridPane();
-        rightSuperPane.setStyle(Colors.GRAY_BG_COLOR +
+        Resource.rightSuperPane = new GridPane();
+        Resource.rightSuperPane.setStyle(Colors.GRAY_BG_COLOR +
                 "-fx-background-radius: 5px;" +
                 "-fx-background-insets: 2px;");
 
         // Desni Grid Pane
-        GridPane rightPane = new GridPane();
-        rightPane.setPadding(new Insets(20, 20, 20, 20));
+        Resource.rightPane = new GridPane();
+        Resource.rightPane.setPadding(new Insets(20, 20, 20, 20));
         //# Seznam vseh tabel
-        Label tablesLabel = new Label(Texts.ALL_TABLES);
-        tablesLabel.setPadding(new Insets(0, 0, 10, 0));
-        tablesLabel.setStyle(Colors.WHITE_TEXT_COLOR);
-        ListView<String> tablesListView = new ListView<>();
-        tablesListView.setMaxHeight(125);
-        tablesListView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
+        Resource.tablesLabel = new Label(Texts.ALL_TABLES);
+        Resource.tablesLabel.setPadding(new Insets(0, 0, 10, 0));
+        Resource.tablesLabel.setStyle(Colors.WHITE_TEXT_COLOR);
+        Resource.tablesListView = new ListView<>();
+        Resource.tablesListView.setMaxHeight(125);
+        Resource.tablesListView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
         //# Seznam vseh uporabnikov (IP)
-        Label usersIPLabel = new Label(Texts.ALL_USERS_IP);
-        usersIPLabel.setPadding(new Insets(10, 0, 10, 0));
-        usersIPLabel.setStyle(Colors.WHITE_TEXT_COLOR);
-        ListView<String> usersIPListView = new ListView<>();
-        usersIPListView.setMaxHeight(300);
-        usersIPListView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
+        Resource.usersIPLabel = new Label(Texts.ALL_USERS_IP);
+        Resource.usersIPLabel.setPadding(new Insets(10, 0, 10, 0));
+        Resource.usersIPLabel.setStyle(Colors.WHITE_TEXT_COLOR);
+        Resource.usersIPListView = new ListView<>();
+        Resource.usersIPListView.setMaxHeight(300);
+        Resource.usersIPListView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
         //# Seznam vseh uporabnikov (username)
-        Label usersUsernameLabel = new Label(Texts.ALL_USERS_USERNAME);
-        usersUsernameLabel.setPadding(new Insets(10, 0, 10, 0));
-        usersUsernameLabel.setStyle(Colors.WHITE_TEXT_COLOR);
-        ListView<String> usersUsernameListView = new ListView<>();
-        usersUsernameListView.setMaxHeight(300);
-        usersUsernameListView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
+        Resource.usersUsernameLabel = new Label(Texts.ALL_USERS_USERNAME);
+        Resource.usersUsernameLabel.setPadding(new Insets(10, 0, 10, 0));
+        Resource.usersUsernameLabel.setStyle(Colors.WHITE_TEXT_COLOR);
+        Resource.usersUsernameListView = new ListView<>();
+        Resource.usersUsernameListView.setMaxHeight(300);
+        Resource.usersUsernameListView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
         //# Handler-ji za ListView-je
-        tablesListView.getSelectionModel().selectedItemProperty().addListener((event) -> {
+        Resource.tablesListView.getSelectionModel().selectedItemProperty().addListener((event) -> {
             // Backend-u pošlje zahtevo za seznam uporabnikov tabele
         });
-        usersIPListView.getSelectionModel().selectedItemProperty().addListener((event) -> {
+        Resource.usersIPListView.getSelectionModel().selectedItemProperty().addListener((event) -> {
             // Izpiše vse akcije izbranega uporabnika
         });
-        usersUsernameListView.getSelectionModel().selectedItemProperty().addListener((event) -> {
+        Resource.usersUsernameListView.getSelectionModel().selectedItemProperty().addListener((event) -> {
             // Izpiše vse akcije izbranega uporabnika
         });
 
         // Desni izbirni GridPane
-        GridPane rightSelectionPane = new GridPane();
-        rightSelectionPane.setPadding(new Insets(20, 20, 20, 0));
+        Resource.rightSelectionPane = new GridPane();
+        Resource.rightSelectionPane.setPadding(new Insets(20, 20, 20, 0));
         //# Seznam tabel
-        Label tablesSelectionLabel = new Label(Texts.SELECTED_TABLES);
-        tablesSelectionLabel.setPadding(new Insets(0, 0, 10, 0));
-        tablesSelectionLabel.setStyle(Colors.WHITE_TEXT_COLOR);
-        ListView<String> tablesSelectionListView = new ListView<>();
-        tablesSelectionListView.setMaxHeight(125);
-        tablesSelectionListView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
+        Resource.tablesSelectionLabel = new Label(Texts.SELECTED_TABLES);
+        Resource.tablesSelectionLabel.setPadding(new Insets(0, 0, 10, 0));
+        Resource.tablesSelectionLabel.setStyle(Colors.WHITE_TEXT_COLOR);
+        Resource.tablesSelectionListView = new ListView<>();
+        Resource.tablesSelectionListView.setMaxHeight(125);
+        Resource.tablesSelectionListView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
         //# Seznam uporabnikov (IP)
-        Label usersIPSelectionLabel = new Label(Texts.SELECTED_USERS_IP);
-        usersIPSelectionLabel.setPadding(new Insets(10, 0, 10, 0));
-        usersIPSelectionLabel.setStyle(Colors.WHITE_TEXT_COLOR);
-        ListView<String> usersIPSelectionListView = new ListView<>();
-        usersIPSelectionListView.setMaxHeight(300);
-        usersIPSelectionListView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
+        Resource.usersIPSelectionLabel = new Label(Texts.SELECTED_USERS_IP);
+        Resource.usersIPSelectionLabel.setPadding(new Insets(10, 0, 10, 0));
+        Resource.usersIPSelectionLabel.setStyle(Colors.WHITE_TEXT_COLOR);
+        Resource.usersIPSelectionListView = new ListView<>();
+        Resource.usersIPSelectionListView.setMaxHeight(300);
+        Resource.usersIPSelectionListView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
         //# Seznam uporabnikov (username)
-        Label usersUsernameSelectionLabel = new Label(Texts.SELECTED_USERS_USERNAME);
-        usersUsernameSelectionLabel.setPadding(new Insets(10, 0, 10, 0));
-        usersUsernameSelectionLabel.setStyle(Colors.WHITE_TEXT_COLOR);
-        ListView<String> usersUsernameSelectionListView = new ListView<>();
-        usersUsernameSelectionListView.setMaxHeight(300);
-        usersUsernameSelectionListView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
+        Resource.usersUsernameSelectionLabel = new Label(Texts.SELECTED_USERS_USERNAME);
+        Resource.usersUsernameSelectionLabel.setPadding(new Insets(10, 0, 10, 0));
+        Resource.usersUsernameSelectionLabel.setStyle(Colors.WHITE_TEXT_COLOR);
+        Resource.usersUsernameSelectionListView = new ListView<>();
+        Resource.usersUsernameSelectionListView.setMaxHeight(300);
+        Resource.usersUsernameSelectionListView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
 
         // Dodajanje elementov v glavni GridPane
-        mainPane.add(upperPane, 0, 0, 1, 1);
-        mainPane.add(lowerPane, 0, 1, 1, 1);
-        mainPane.add(rightSuperPane, 1, 0, 1, 2);
+        Resource.mainPane.add(Resource.upperPane, 0, 0, 1, 1);
+        Resource.mainPane.add(Resource.lowerPane, 0, 1, 1, 1);
+        Resource.mainPane.add(Resource.rightSuperPane, 1, 0, 1, 2);
 
         // Dodajanje elementov v zgornji GridPane
-        upperPane.add(connectPane, 0, 0, 1, 1);
-        upperPane.add(connectInfoPane, 1, 0, 1, 1);
-        upperPane.add(configPane, 2, 0, 1, 1);
-        upperPane.add(infoPane, 3, 0, 1, 1);
+        Resource.upperPane.add(Resource.connectPane, 0, 0, 1, 1);
+        Resource.upperPane.add(Resource.connectInfoPane, 1, 0, 1, 1);
+        Resource.upperPane.add(Resource.configPane, 2, 0, 1, 1);
+        Resource.upperPane.add(Resource.infoPane, 3, 0, 1, 1);
         //# Dodajanje elementov v povezava GridPane
-        connectPane.add(connectButton, 0, 0, 1, 1);
-        connectPane.add(disconnectButton, 0, 1, 1, 1);
-        connectPane.add(customConnectButton, 0, 2, 1, 1);
+        Resource.connectPane.add(Resource.connectButton, 0, 0, 1, 1);
+        Resource.connectPane.add(Resource.disconnectButton, 0, 1, 1, 1);
+        Resource.connectPane.add(Resource.customConnectButton, 0, 2, 1, 1);
         //# Dodajanje elementov v povezava info GridPane
-        connectInfoPane.add(connectionInfoTitleLabel, 0, 0, 2, 1);
-        connectInfoPane.add(usernameLabel, 0, 1, 1, 1);
-        connectInfoPane.add(usernameValueLabel, 1, 1, 1, 1);
-        connectInfoPane.add(serverIPLabel, 0, 2, 1, 1);
-        connectInfoPane.add(serverIPValueLabel, 1, 2, 1, 1);
-        connectInfoPane.add(serverPortLabel, 0, 3, 1, 1);
-        connectInfoPane.add(serverPortValueLabel, 1, 3, 1, 1);
-        connectInfoPane.add(databaseLabel, 0, 4, 1, 1);
-        connectInfoPane.add(databaseValueLabel, 1, 4, 1, 1);
+        Resource.connectInfoPane.add(Resource.connectionInfoTitleLabel, 0, 0, 2, 1);
+        Resource.connectInfoPane.add(Resource.usernameLabel, 0, 1, 1, 1);
+        Resource.connectInfoPane.add(Resource.usernameValueLabel, 1, 1, 1, 1);
+        Resource.connectInfoPane.add(Resource.serverIPLabel, 0, 2, 1, 1);
+        Resource.connectInfoPane.add(Resource.serverIPValueLabel, 1, 2, 1, 1);
+        Resource.connectInfoPane.add(Resource.serverPortLabel, 0, 3, 1, 1);
+        Resource.connectInfoPane.add(Resource.serverPortValueLabel, 1, 3, 1, 1);
+        Resource.connectInfoPane.add(Resource.databaseLabel, 0, 4, 1, 1);
+        Resource.connectInfoPane.add(Resource.databaseValueLabel, 1, 4, 1, 1);
         //# Dodajanje elementov v konfiguracija GridPane
-        configPane.add(loadConfigButton, 0, 0, 1, 1);
-        configPane.add(saveConfigButton, 0, 1, 1, 1);
-        configPane.add(helpButton, 0, 2, 1, 1);
-        configPane.add(clearButton, 0, 3, 1, 1);
+        Resource.configPane.add(Resource.loadConfigButton, 0, 0, 1, 1);
+        Resource.configPane.add(Resource.saveConfigButton, 0, 1, 1, 1);
+        Resource.configPane.add(Resource.helpButton, 0, 2, 1, 1);
+        Resource.configPane.add(Resource.clearButton, 0, 3, 1, 1);
         //# Dodajanje elementov v table info GridPane
-        infoPane.add(infoTitleLabel, 0, 0, 2, 1);
-        infoPane.add(authorLabel, 0, 1, 1, 1);
-        infoPane.add(authorValueLabel, 1, 1, 1, 1);
-        infoPane.add(creationDateLabel, 0, 2, 1, 1);
-        infoPane.add(creationDateValueLabel, 1, 2, 1, 1);
-        infoPane.add(deletionDateLabel, 0, 3, 1, 1);
-        infoPane.add(deletionDateValueLabel, 1, 3, 1, 1);
+        Resource.infoPane.add(Resource.infoTitleLabel, 0, 0, 2, 1);
+        Resource.infoPane.add(Resource.authorLabel, 0, 1, 1, 1);
+        Resource.infoPane.add(Resource.authorValueLabel, 1, 1, 1, 1);
+        Resource.infoPane.add(Resource.creationDateLabel, 0, 2, 1, 1);
+        Resource.infoPane.add(Resource.creationDateValueLabel, 1, 2, 1, 1);
+        Resource.infoPane.add(Resource.deletionDateLabel, 0, 3, 1, 1);
+        Resource.infoPane.add(Resource.deletionDateValueLabel, 1, 3, 1, 1);
 
         // Dodajanje elementov v spodnji GridPane
-        lowerPane.add(insertionPane, 0, 0, 1, 1);
-        lowerPane.add(updatePane, 1, 0, 1, 1);
-        lowerPane.add(viewPane, 0, 1, 1, 1);
-        lowerPane.add(deletionPane, 1, 1, 1, 1);
+        Resource.lowerPane.add(Resource.insertionPane, 0, 0, 1, 1);
+        Resource.lowerPane.add(Resource.updatePane, 1, 0, 1, 1);
+        Resource.lowerPane.add(Resource.viewPane, 0, 1, 1, 1);
+        Resource.lowerPane.add(Resource.deletionPane, 1, 1, 1, 1);
         //# Dodajanje elementov v vstavljanje GridPane
-        insertionPane.add(insertionLabel, 0, 0, 1, 1);
-        insertionPane.add(insertionUsernameLabel, 1, 0, 1, 1);
-        insertionPane.add(insertionTableView, 0, 1, 2, 1);
+        Resource.insertionPane.add(Resource.insertionLabel, 0, 0, 1, 1);
+        Resource.insertionPane.add(Resource.insertionUsernameLabel, 1, 0, 1, 1);
+        Resource.insertionPane.add(Resource.insertionTableView, 0, 1, 2, 1);
         //# Dodajanje elementov v ažuriranje GridPane
-        updatePane.add(updateLabel, 0, 0, 1, 1);
-        updatePane.add(updateUsernameLabel, 1, 0, 1, 1);
-        updatePane.add(updateTableView, 0, 1, 2, 1);
+        Resource.updatePane.add(Resource.updateLabel, 0, 0, 1, 1);
+        Resource.updatePane.add(Resource.updateUsernameLabel, 1, 0, 1, 1);
+        Resource.updatePane.add(Resource.updateTableView, 0, 1, 2, 1);
         //# Dodajanje elementov v ogledovanje GridPane
-        viewPane.add(viewLabel, 0, 0, 1, 1);
-        viewPane.add(viewUsernameLabel, 1, 0, 1, 1);
-        viewPane.add(viewTableView, 0, 1, 2, 1);
+        Resource.viewPane.add(Resource.viewLabel, 0, 0, 1, 1);
+        Resource.viewPane.add(Resource.viewUsernameLabel, 1, 0, 1, 1);
+        Resource.viewPane.add(Resource.viewTableView, 0, 1, 2, 1);
         //# Dodajanje elementov v brisanje GridPane
-        deletionPane.add(deletionLabel, 0, 0, 1, 1);
-        deletionPane.add(deletionUsernameLabel, 1, 0, 1, 1);
-        deletionPane.add(deletionTableView, 0, 1, 2, 1);
+        Resource.deletionPane.add(Resource.deletionLabel, 0, 0, 1, 1);
+        Resource.deletionPane.add(Resource.deletionUsernameLabel, 1, 0, 1, 1);
+        Resource.deletionPane.add(Resource.deletionTableView, 0, 1, 2, 1);
 
         // Dodajanje elementov v desni starševski GridPane
-        rightSuperPane.add(rightPane, 0, 0, 1, 1);
-        rightSuperPane.add(rightSelectionPane, 1, 0, 1, 1);
+        Resource.rightSuperPane.add(Resource.rightPane, 0, 0, 1, 1);
+        Resource.rightSuperPane.add(Resource.rightSelectionPane, 1, 0, 1, 1);
 
         // Dodajanje elementov v desni GridPane
-        rightPane.add(tablesLabel, 0, 0, 1, 1);
-        rightPane.add(tablesListView, 0, 1, 1, 1);
-        rightPane.add(usersIPLabel, 0, 2, 1, 1);
-        rightPane.add(usersIPListView, 0, 3, 1, 1);
-        rightPane.add(usersUsernameLabel, 0, 4, 1, 1);
-        rightPane.add(usersUsernameListView, 0, 5, 1, 1);
+        Resource.rightPane.add(Resource.tablesLabel, 0, 0, 1, 1);
+        Resource.rightPane.add(Resource.tablesListView, 0, 1, 1, 1);
+        Resource.rightPane.add(Resource.usersIPLabel, 0, 2, 1, 1);
+        Resource.rightPane.add(Resource.usersIPListView, 0, 3, 1, 1);
+        Resource.rightPane.add(Resource.usersUsernameLabel, 0, 4, 1, 1);
+        Resource.rightPane.add(Resource.usersUsernameListView, 0, 5, 1, 1);
 
         // Dodajanje elementov v desni izbirni GridPane
-        rightSelectionPane.add(tablesSelectionLabel, 0, 0, 1, 1);
-        rightSelectionPane.add(tablesSelectionListView, 0, 1, 1, 1);
-        rightSelectionPane.add(usersIPSelectionLabel, 0, 2, 1, 1);
-        rightSelectionPane.add(usersIPSelectionListView, 0, 3, 1, 1);
-        rightSelectionPane.add(usersUsernameSelectionLabel, 0, 4, 1, 1);
-        rightSelectionPane.add(usersUsernameSelectionListView, 0, 5, 1, 1);
+        Resource.rightSelectionPane.add(Resource.tablesSelectionLabel, 0, 0, 1, 1);
+        Resource.rightSelectionPane.add(Resource.tablesSelectionListView, 0, 1, 1, 1);
+        Resource.rightSelectionPane.add(Resource.usersIPSelectionLabel, 0, 2, 1, 1);
+        Resource.rightSelectionPane.add(Resource.usersIPSelectionListView, 0, 3, 1, 1);
+        Resource.rightSelectionPane.add(Resource.usersUsernameSelectionLabel, 0, 4, 1, 1);
+        Resource.rightSelectionPane.add(Resource.usersUsernameSelectionListView, 0, 5, 1, 1);
 
         // Glavna scena
-        Scene mainScene = new Scene(mainPane);
+        // VBox For Menu + GridPane
+        VBox menuMainContainer = new VBox();
+        GridPane menuContainer = new GridPane();
+        menuContainer.add(Resource.menuBar, 0, 0);
+        //# Premikanje okna aplikacije s handler-ji
+        final Delta dragDelta = new Delta();
+        menuContainer.setOnMousePressed((event) -> {
+            dragDelta.x = primaryStage.getX() - event.getScreenX();
+            dragDelta.y = primaryStage.getY() - event.getScreenY();
+        });
+        menuContainer.setOnMouseDragged((event) -> {
+            primaryStage.setX(event.getScreenX() + dragDelta.x);
+            primaryStage.setY(event.getScreenY() + dragDelta.y);
+        });
+        //# Ostalo
+        menuMainContainer.setStyle(Colors.TRUEBLACK_BG_COLOR);
+        menuContainer.setPadding(new Insets(10, 0, 10, 0));
+        menuMainContainer.getChildren().addAll(menuContainer, Resource.mainPane);
+        // Ostale nastavitve, okno po meri
+        Scene mainScene = new Scene(menuMainContainer);
+        primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.setScene(mainScene);
         primaryStage.show();
-        primaryStage.setMaxHeight(lowerPane.getHeight() + upperPane.getHeight());
-        primaryStage.setMinHeight(lowerPane.getHeight() + upperPane.getHeight());
-        primaryStage.setMaxWidth(lowerPane.getWidth() + rightSuperPane.getWidth());
-        primaryStage.setMinWidth(lowerPane.getWidth() + rightSuperPane.getWidth());
+        primaryStage.setMaxHeight(Resource.lowerPane.getHeight() + Resource.upperPane.getHeight());
+        primaryStage.setMinHeight(Resource.lowerPane.getHeight() + Resource.upperPane.getHeight());
+        primaryStage.setMaxWidth(Resource.lowerPane.getWidth() + Resource.rightSuperPane.getWidth());
+        primaryStage.setMinWidth(Resource.lowerPane.getWidth() + Resource.rightSuperPane.getWidth());
     }
+}
 
-    /**
-     * Razred vsebuje barve uporabljene v aplikaciji
-     */
-    private static class Colors {
-        static String BLACK_BG_COLOR = "-fx-background-color: rgb(43,43,45);";
-        static String GRAY_BG_COLOR = "-fx-background-color: rgb(60,63,65);";
-        static String LIGHTGRAY_BASE_COLOR = "-fx-base: rgb(180, 180, 180);";
-        static String WHITE_TEXT_COLOR = "-fx-text-fill: rgb(250,250,250)";
-        static String WHITE_BG_COLOR_LINEARGRADIENT = "-fx-background-color: rgb(255,255,255)," +
-                " linear-gradient(to bottom,#e3e3e3 0%,#cccccc 100%);";
-        static String LIGHTGRAY_BG_COLOR = "-fx-background-color: rgb(195, 195, 195)";
-    }
+/**
+ * Razred vsebuje barve uporabljene v aplikaciji
+ */
+class Colors {
+    final static String TRUEBLACK_BG_COLOR = "-fx-background-color: rgb(10, 10, 10);";
+    final static String BLACK_BG_COLOR = "-fx-background-color: rgb(43, 43, 45);";
+    final static String GRAY_BG_COLOR = "-fx-background-color: rgb(60, 63, 65);";
+    final static String LIGHTGRAY_BASE_COLOR = "-fx-base: rgb(180, 180, 180);";
+    final static String WHITE_TEXT_COLOR = "-fx-text-fill: rgb(250, 250, 250)";
+    final static String WHITE_BG_COLOR_LINEARGRADIENT = "-fx-background-color: rgb(255, 255, 255)," +
+            " linear-gradient(to bottom, #e3e3e3 0%, #cccccc 100%);";
+    final static String LIGHTGRAY_BG_COLOR = "-fx-background-color: rgb(195, 195, 195)";
+}
 
-    /**
-     * Razred vsebuje aplikacijska besedila
-     */
-    private static class Texts {
-        static String APP_TITLE = "Upravljalnik podatkovnih baz";
-        static String NA = "N/A";
-        static String NO_DATA_SELECTED = "Podatki še niso bili izbrani.";
-        static String CONNECT = "Poveži se";
-        static String DISCONNECT = "Prekini povezavo";
-        static String CUSTOM_CONNECT = "Povezava po meri";
-        static String SERVER_INFO = "Informacije o strežniku:";
-        static String SERVER_USER = "Uporabnik:";
-        static String SERVER_IP = "IP strežnika:";
-        static String SERVER_PORT = "Vrata strežnika:";
-        static String SERVER_DATABASE = "Podatk. baza:";
-        static String LOAD_CONFIG = "Naloži konfiguracijo";
-        static String SAVE_CONFIG = "Shrani konfiguracijo";
-        static String HELP = "Pomoč";
-        static String CLEAR_SELECTION = "Počisti izbiro";
-        static String TABLE_INFO = "Informacije o izbrani tabeli:";
-        static String TABLE_AUTHOR = "Avtor:";
-        static String TABLE_CREATION_DATE = "Datum nastanka:";
-        static String TABLE_DELETION_DATE = "Datum izbrisa:";
-        static String INSERTIONS = "Vstavljanja:";
-        static String UPDATES = "Ažuriranja:";
-        static String VIEWS = "Ogledovanja:";
-        static String DELETIONS = "Brisanja:";
-        static String ALL_TABLES = "Vse tabele:";
-        static String ALL_USERS_IP = "Vsi uporabniki (IP):";
-        static String ALL_USERS_USERNAME = "Vsi uporabniki (uporabniško ime):";
-        static String SELECTED_TABLES = "Tabele izbranega uporabnika:";
-        static String SELECTED_USERS_IP = "Uporabniki izbrane tabele (IP):";
-        static String SELECTED_USERS_USERNAME = "Uporabniki izbrane tabele (uporab. ime):";
-    }
+/**
+ * Razred vsebuje aplikacijska besedila
+ */
+class Texts {
+    final static String APP_TITLE = "Upravljalnik podatkovnih baz";
+    final static String NA = "N/A";
+    final static String NO_DATA_SELECTED = "Podatki še niso bili izbrani.";
+    final static String CONNECT = "Poveži se";
+    final static String DISCONNECT = "Prekini povezavo";
+    final static String CUSTOM_CONNECT = "Povezava po meri";
+    final static String SERVER_INFO = "Informacije o strežniku:";
+    final static String SERVER_USER = "Uporabnik:";
+    final static String SERVER_IP = "IP strežnika:";
+    final static String SERVER_PORT = "Vrata strežnika:";
+    final static String SERVER_DATABASE = "Podatk. baza:";
+    final static String LOAD_CONFIG = "Naloži konfiguracijo";
+    final static String SAVE_CONFIG = "Shrani konfiguracijo";
+    final static String HELP = "Pomoč";
+    final static String CLEAR_SELECTION = "Počisti izbiro";
+    final static String TABLE_INFO = "Informacije o izbrani tabeli:";
+    final static String TABLE_AUTHOR = "Avtor:";
+    final static String TABLE_CREATION_DATE = "Datum nastanka:";
+    final static String TABLE_DELETION_DATE = "Datum izbrisa:";
+    final static String INSERTIONS = "Vstavljanja:";
+    final static String UPDATES = "Ažuriranja:";
+    final static String VIEWS = "Ogledovanja:";
+    final static String DELETIONS = "Brisanja:";
+    final static String ALL_TABLES = "Vse tabele:";
+    final static String ALL_USERS_IP = "Vsi uporabniki (IP):";
+    final static String ALL_USERS_USERNAME = "Vsi uporabniki (uporabniško ime):";
+    final static String SELECTED_TABLES = "Tabele izbranega uporabnika:";
+    final static String SELECTED_USERS_IP = "Uporabniki izbrane tabele (IP):";
+    final static String SELECTED_USERS_USERNAME = "Uporabniki izbrane tabele (uporab. ime):";
+    final static String EXIT = "Izhod";
+    final static String SETTINGS = "Nastavitve";
+    final static String APLICCATION_THEME = "Tema aplikacije";
+    final static String DARK_THEME = "Temno";
+    final static String LIGHT_THEME = "Svetlo";
+}
+
+/**
+ * Sprememba premika kazalca miške
+ */
+class Delta {
+    double x, y;
+}
+
+/**
+ * Resursi
+ */
+class Resource {
+    static MenuBar menuBar;
+    static ImageView img;
+    static Menu menu;
+    static MenuItem exitMenuItem;
+    static Menu settingsMenu;
+    static Menu themeMenu;
+    static MenuItem darkThemeMenuItem;
+    static MenuItem lightThemeMenuItem;
+    static GridPane mainPane;
+    static GridPane upperPane;
+    static GridPane connectPane;
+    static Button connectButton;
+    static Button disconnectButton;
+    static Button customConnectButton;
+    static GridPane connectInfoPane;
+    static Label connectionInfoTitleLabel;
+    static Label usernameLabel;
+    static Label usernameValueLabel;
+    static Label serverIPLabel;
+    static Label serverIPValueLabel;
+    static Label serverPortLabel;
+    static Label serverPortValueLabel;
+    static Label databaseLabel;
+    static Label databaseValueLabel;
+    static GridPane configPane;
+    static Button loadConfigButton;
+    static Button saveConfigButton;
+    static Button helpButton;
+    static Button clearButton;
+    static GridPane infoPane;
+    static Label infoTitleLabel;
+    static Label authorLabel;
+    static Label authorValueLabel;
+    static Label creationDateLabel;
+    static Label creationDateValueLabel;
+    static Label deletionDateLabel;
+    static Label deletionDateValueLabel;
+    static GridPane lowerPane;
+    static GridPane insertionPane;
+    static Label insertionLabel;
+    static Label insertionUsernameLabel;
+    static TableView<String[]> insertionTableView;
+    static GridPane viewPane;
+    static Label viewLabel;
+    static Label viewUsernameLabel;
+    static TableView<String[]> viewTableView;
+    static GridPane updatePane;
+    static Label updateLabel;
+    static Label updateUsernameLabel;
+    static TableView<String[]> updateTableView;
+    static GridPane deletionPane;
+    static Label deletionLabel;
+    static Label deletionUsernameLabel;
+    static TableView<String[]> deletionTableView;
+    static GridPane rightSuperPane;
+    static GridPane rightPane;
+    static Label tablesLabel;
+    static ListView<String> tablesListView;
+    static Label usersIPLabel;
+    static ListView<String> usersIPListView;
+    static Label usersUsernameLabel;
+    static ListView<String> usersUsernameListView;
+    static GridPane rightSelectionPane;
+    static Label tablesSelectionLabel;
+    static ListView<String> tablesSelectionListView;
+    static Label usersIPSelectionLabel;
+    static ListView<String> usersIPSelectionListView;
+    static Label usersUsernameSelectionLabel;
+    static ListView<String> usersUsernameSelectionListView;
 }
