@@ -6,16 +6,28 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 /**
  * Grafični vmesnik aplikacije oz. front-end
  *
  * @author David Jerman
- * @version 2021.01.28
+ * @version 2021.01.30
  * @since 2021.01.25
  */
 public class App extends Application {
+
+    /**
+     * Spremeni lastnosti podanega Button (izgled)
+     *
+     * @param button Button, ki ga urejamo
+     */
+    static void setButtonProperties_GrayBold(Button button) {
+        button.setStyle(Colors.LIGHTGRAY_BASE_COLOR);
+        button.setFont(Font.font("Segoe", FontWeight.BOLD, 12));
+    }
 
     /**
      * Glavna metoda
@@ -24,6 +36,20 @@ public class App extends Application {
      */
     public static void main(String[] args) {
         launch(args);
+    }
+
+    /**
+     * Spremeni lastnosti podanega Label (izgled)
+     *
+     * @param label Label, ki ga urejamo
+     */
+    static void setLabelProperties_InfoLabel(Label label) {
+        label.setStyle(Colors.WHITE_BG_COLOR_LINEARGRADIENT +
+                "-fx-padding: 4px;" +
+                "-fx-background-radius: 3px;" +
+                "-fx-border-radius: 3px;" +
+                "-fx-effect: innershadow(three-pass-box, rgba(0,0,0,0.75),1,0,1,1);");
+        label.setMinWidth(150);
     }
 
     /**
@@ -41,12 +67,12 @@ public class App extends Application {
         mainPane.setVgap(5);
         mainPane.setHgap(5);
         mainPane.setPadding(new Insets(20));
-        mainPane.setStyle("-fx-background-color: rgb(43,43,45);");
+        mainPane.setStyle(Colors.BLACK_BG_COLOR);
 
         // Zgornji GridPane
         GridPane upperPane = new GridPane();
         upperPane.setPadding(new Insets(10, 10, 10, 5));
-        upperPane.setStyle("-fx-background-color: rgb(60,63,65);" +
+        upperPane.setStyle(Colors.GRAY_BG_COLOR +
                 "-fx-background-radius: 5px;" +
                 "-fx-background-insets: 2px;");
         //# GridPane povezava
@@ -55,10 +81,13 @@ public class App extends Application {
         connectPane.setHgap(11);
         connectPane.setPadding(new Insets(10));
         Button connectButton = new Button("Poveži se");
+        setButtonProperties_GrayBold(connectButton);
         connectButton.setMinWidth(130);
         Button disconnectButton = new Button("Prekini povezavo");
         disconnectButton.setMinWidth(130);
+        setButtonProperties_GrayBold(disconnectButton);
         Button customConnectButton = new Button("Povezava po meri");
+        setButtonProperties_GrayBold(customConnectButton);
         customConnectButton.setMinWidth(130);
         //# Handler-ji za gumbe
         connectButton.setOnAction((event) -> {
@@ -72,57 +101,33 @@ public class App extends Application {
         });
         //# GridPane povezava info
         GridPane connectInfoPane = new GridPane();
-        connectInfoPane.setStyle("-fx-background-color: rgb(43,43,44);" +
+        connectInfoPane.setStyle(Colors.BLACK_BG_COLOR +
                 "-fx-background-radius: 5px;" +
                 "-fx-background-insets: 2px;");
         //## Naslov
         Label connectionInfoTitleLabel = new Label("Informacije o strežniku:");
-        connectionInfoTitleLabel.setStyle("-fx-text-fill: rgb(250,250,250)");
+        connectionInfoTitleLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         connectionInfoTitleLabel.setPadding(new Insets(0, 0, 10, 0));
         //## Informacije o tabeli
         connectInfoPane.setVgap(10);
         connectInfoPane.setHgap(10);
         connectInfoPane.setPadding(new Insets(10));
         Label usernameLabel = new Label("Uporabnik:");
-        usernameLabel.setStyle("-fx-text-fill: rgb(250,250,250)");
+        usernameLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         Label usernameValueLabel = new Label("N/A");
-        usernameValueLabel.setStyle("-fx-background-color: rgb(255,255,255)," +
-                                    "linear-gradient(to bottom,#e3e3e3 0%,#cccccc 100%);" +
-                                    "-fx-padding: 4px;" +
-                                    "-fx-background-radius: 3px;" +
-                                    "-fx-border-radius: 3px;" +
-                                    "-fx-effect: innershadow(three-pass-box, rgba(0,0,0,0.75),1,0,1,1);");
-        usernameValueLabel.setMinWidth(150);
+        setLabelProperties_InfoLabel(usernameValueLabel);
         Label serverIPLabel = new Label("IP strežnika:");
-        serverIPLabel.setStyle("-fx-text-fill: rgb(250,250,250)");
+        serverIPLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         Label serverIPValueLabel = new Label("N/A");
-        serverIPValueLabel.setStyle("-fx-background-color: rgb(255,255,255)," +
-                                    "linear-gradient(to bottom,#e3e3e3 0%,#cccccc 100%);" +
-                                    "-fx-padding: 4px;" +
-                                    "-fx-background-radius: 3px;" +
-                                    "-fx-border-radius: 3px;" +
-                                    "-fx-effect: innershadow(three-pass-box, rgba(0,0,0,0.75),1,0,1,1);");
-        serverIPValueLabel.setMinWidth(150);
+        setLabelProperties_InfoLabel(serverIPValueLabel);
         Label serverPortLabel = new Label("Vrata strežnika:");
-        serverPortLabel.setStyle("-fx-text-fill: rgb(250,250,250)");
+        serverPortLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         Label serverPortValueLabel = new Label("N/A");
-        serverPortValueLabel.setStyle("-fx-background-color: rgb(255,255,255)," +
-                "linear-gradient(to bottom,#e3e3e3 0%,#cccccc 100%);" +
-                "-fx-padding: 4px;" +
-                "-fx-background-radius: 3px;" +
-                "-fx-border-radius: 3px;" +
-                "-fx-effect: innershadow(three-pass-box, rgba(0,0,0,0.75),1,0,1,1);");
-        serverPortValueLabel.setMinWidth(150);
+        setLabelProperties_InfoLabel(serverPortValueLabel);
         Label databaseLabel = new Label("Podatk. baza:");
-        databaseLabel.setStyle("-fx-text-fill: rgb(250,250,250)");
+        databaseLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         Label databaseValueLabel = new Label("N/A");
-        databaseValueLabel.setStyle("-fx-background-color: rgb(255,255,255)," +
-                "linear-gradient(to bottom,#e3e3e3 0%,#cccccc 100%);" +
-                "-fx-padding: 4px;" +
-                "-fx-background-radius: 3px;" +
-                "-fx-border-radius: 3px;" +
-                "-fx-effect: innershadow(three-pass-box, rgba(0,0,0,0.75),1,0,1,1);");
-        databaseValueLabel.setMinWidth(150);
+        setLabelProperties_InfoLabel(databaseValueLabel);
         //# GridPane konfiguracija
         GridPane configPane = new GridPane();
         configPane.setVgap(11);
@@ -138,51 +143,33 @@ public class App extends Application {
         clearButton.setMinWidth(130);
         //# GridPane Tabela Info
         GridPane infoPane = new GridPane();
-        infoPane.setStyle("-fx-background-color: rgb(43,43,44);" +
+        infoPane.setStyle(Colors.BLACK_BG_COLOR +
                 "-fx-background-radius: 5px;" +
                 "-fx-background-insets: 2px;");
         infoPane.setPadding(new Insets(0, 10, 0, 0));
         //## Naslov
         Label infoTitleLabel = new Label("Informacije o izbrani tabeli:");
-        infoTitleLabel.setStyle("-fx-text-fill: rgb(250,250,250)");
+        infoTitleLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         infoTitleLabel.setPadding(new Insets(10));
         //## Informacije o tabeli
         // Avtor Tabele
         Label authorLabel = new Label("Avtor:");
-        authorLabel.setStyle("-fx-text-fill: rgb(250,250,250)");
+        authorLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         authorLabel.setPadding(new Insets(10));
         Label authorValueLabel = new Label("N/A");
-        authorValueLabel.setStyle("-fx-background-color: rgb(255,255,255)," +
-                                  "linear-gradient(to bottom,#e3e3e3 0%,#cccccc 100%);" +
-                                  "-fx-padding: 4px;" +
-                                  "-fx-background-radius: 3px;" +
-                                  "-fx-border-radius: 3px;" +
-                                  "-fx-effect: innershadow(three-pass-box, rgba(0,0,0,0.75),1,0,1,1);");
-        authorValueLabel.setMinWidth(150);
+        setLabelProperties_InfoLabel(authorValueLabel);
         // Datum nastanka
         Label creationDateLabel = new Label("Datum nastanka:");
-        creationDateLabel.setStyle("-fx-text-fill: rgb(250,250,250)");
+        creationDateLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         creationDateLabel.setPadding(new Insets(10));
         Label creationDateValueLabel = new Label("N/A");
-        creationDateValueLabel.setStyle("-fx-background-color: rgb(255,255,255)," +
-                                        "linear-gradient(to bottom,#e3e3e3 0%,#cccccc 100%);" +
-                                        "-fx-padding: 4px;" +
-                                        "-fx-background-radius: 3px;" +
-                                        "-fx-border-radius: 3px;" +
-                                        "-fx-effect: innershadow(three-pass-box, rgba(0,0,0,0.75),1,0,1,1);");
-        creationDateValueLabel.setMinWidth(150);
+        setLabelProperties_InfoLabel(creationDateValueLabel);
         // Datum zaprtja
         Label deletionDateLabel = new Label("Datum izbrisa:");
-        deletionDateLabel.setStyle("-fx-text-fill: rgb(250,250,250)");
+        deletionDateLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         deletionDateLabel.setPadding(new Insets(10));
         Label deletionDateValueLabel = new Label("N/A");
-        deletionDateValueLabel.setStyle("-fx-background-color: rgb(255,255,255)," +
-                                        "linear-gradient(to bottom,#e3e3e3 0%,#cccccc 100%);" +
-                                        "-fx-padding: 4px;" +
-                                        "-fx-background-radius: 3px;" +
-                                        "-fx-border-radius: 3px;" +
-                                        "-fx-effect: innershadow(three-pass-box, rgba(0,0,0,0.75),1,0,1,1);");
-        deletionDateValueLabel.setMinWidth(150);
+        setLabelProperties_InfoLabel(deletionDateValueLabel);
         //# Handler-ji za gumbe
         loadConfigButton.setOnAction((event) -> {
             // Naloži podatke o povezavi iz datoteke
@@ -200,65 +187,68 @@ public class App extends Application {
         // Spodnji GridPane
         GridPane lowerPane = new GridPane();
         lowerPane.setPadding(new Insets(10));
-        lowerPane.setStyle("-fx-background-color: rgb(60,63,65);" +
+        lowerPane.setStyle(Colors.GRAY_BG_COLOR +
                 "-fx-background-radius: 5px;" +
                 "-fx-background-insets: 2px;");
+        //## Maksimalna višina GridPane
+        int MAXGRIDHEIGHT = 300;
+        int MINGRIDWIDTH = 395;
         //# Vstavljanje GridPane
         GridPane insertionPane = new GridPane();
         insertionPane.setPadding(new Insets(10));
         Label insertionLabel = new Label("Vstavljanja:");
         Label insertionUsernameLabel = new Label("N/A");
-        insertionLabel.setStyle("-fx-text-fill: rgb(250, 250, 250);");
-        insertionUsernameLabel.setStyle("-fx-text-fill: rgb(250, 250, 250)");
+        insertionLabel.setStyle(Colors.WHITE_TEXT_COLOR);
+        insertionUsernameLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         insertionLabel.setPadding(new Insets(0, 0, 10, 0));
         insertionUsernameLabel.setPadding(new Insets(0, 0, 10, 5));
         TableView<String[]> insertionTableView = new TableView<>();
         insertionTableView.setPlaceholder(new Label("Podatki še niso bili izbrani."));
-        insertionTableView.setMinWidth(395);
-        insertionTableView.setMaxHeight(300);
+        insertionTableView.setMinWidth(MINGRIDWIDTH);
+        insertionTableView.setMaxHeight(MAXGRIDHEIGHT);
         //# Ogledovanje GridPane
         GridPane viewPane = new GridPane();
         viewPane.setPadding(new Insets(10));
         Label viewLabel = new Label("Ogledovanja:");
         Label viewUsernameLabel = new Label("N/A");
-        viewLabel.setStyle("-fx-text-fill: rgb(250, 250, 250);");
-        viewUsernameLabel.setStyle("-fx-text-fill: rgb(250, 250, 250);");
+        viewLabel.setStyle(Colors.WHITE_TEXT_COLOR);
+        viewUsernameLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         viewLabel.setPadding(new Insets(0, 0, 10, 0));
         viewUsernameLabel.setPadding(new Insets(0, 0, 10, 5));
         TableView<String[]> viewTableView = new TableView<>();
         viewTableView.setPlaceholder(new Label("Podatki še niso bili izbrani."));
-        viewTableView.setMinWidth(395);
-        viewTableView.setMaxHeight(300);
+        viewTableView.setMinWidth(MINGRIDWIDTH);
+        viewTableView.setMaxHeight(MAXGRIDHEIGHT);
         //# Ažuriranje GridPane
         GridPane updatePane = new GridPane();
         updatePane.setPadding(new Insets(10));
         Label updateLabel = new Label("Ažuriranja:");
         Label updateUsernameLabel = new Label("N/A");
-        updateLabel.setStyle("-fx-text-fill: rgb(250, 250, 250);");
-        updateUsernameLabel.setStyle("-fx-text-fill: rgb(250, 250, 250);");
+        updateLabel.setStyle(Colors.WHITE_TEXT_COLOR);
+        updateUsernameLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         updateLabel.setPadding(new Insets(0, 0, 10, 0));
         updateUsernameLabel.setPadding(new Insets(0, 0, 10, 5));
         TableView<String[]> updateTableView = new TableView<>();
         updateTableView.setPlaceholder(new Label("Podatki še niso bili izbrani."));
-        updateTableView.setMinWidth(395);
-        updateTableView.setMaxHeight(300);
+        updateTableView.setMinWidth(MINGRIDWIDTH);
+        updateTableView.setMaxHeight(MAXGRIDHEIGHT);
         //# Brisanje GridPane
         GridPane deletionPane = new GridPane();
         deletionPane.setPadding(new Insets(10));
         Label deletionLabel = new Label("Brisanja:");
         Label deletionUsernameLabel = new Label("N/A");
-        deletionLabel.setStyle("-fx-text-fill: rgb(250, 250, 250);");
-        deletionUsernameLabel.setStyle("-fx-text-fill: rgb(250, 250, 250);");
+        deletionLabel.setStyle(Colors.WHITE_TEXT_COLOR);
+        deletionUsernameLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         deletionLabel.setPadding(new Insets(0, 0, 10, 0));
         deletionUsernameLabel.setPadding(new Insets(0, 0, 10, 5));
         TableView<String[]> deletionTableView = new TableView<>();
         deletionTableView.setPlaceholder(new Label("Podatki še niso bili izbrani."));
-        deletionTableView.setMinWidth(395);
-        deletionTableView.setMaxHeight(300);
+        deletionTableView.setMinWidth(MINGRIDWIDTH);
+        deletionTableView.setMaxHeight(MAXGRIDHEIGHT);
 
         // Desni starševski GridPane
         GridPane rightSuperPane = new GridPane();
-        rightSuperPane.setStyle("-fx-background-color: rgb(60,63,65);" +
+        rightSuperPane.setStyle(Colors.GRAY_BG_COLOR +
                 "-fx-background-radius: 5px;" +
                 "-fx-background-insets: 2px;");
 
@@ -268,19 +258,19 @@ public class App extends Application {
         //# Seznam vseh tabel
         Label tablesLabel = new Label("Vse tabele:");
         tablesLabel.setPadding(new Insets(0, 0, 10, 0));
-        tablesLabel.setStyle("-fx-text-fill: rgb(250, 250, 250)");
+        tablesLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         ListView<String> tablesListView = new ListView<>();
         tablesListView.setMaxHeight(125);
         //# Seznam vseh uporabnikov (IP)
         Label usersIPLabel = new Label("Vsi uporabniki (IP):");
         usersIPLabel.setPadding(new Insets(10, 0, 10, 0));
-        usersIPLabel.setStyle("-fx-text-fill: rgb(250, 250, 250)");
+        usersIPLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         ListView<String> usersIPListView = new ListView<>();
         usersIPListView.setMaxHeight(300);
         //# Seznam vseh uporabnikov (username)
         Label usersUsernameLabel = new Label("Vsi uporabniki (uporabniško ime):");
         usersUsernameLabel.setPadding(new Insets(10, 0, 10, 0));
-        usersUsernameLabel.setStyle("-fx-text-fill: rgb(250, 250, 250)");
+        usersUsernameLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         ListView<String> usersUsernameListView = new ListView<>();
         usersUsernameListView.setMaxHeight(300);
         //# Handler-ji za ListView-je
@@ -300,19 +290,19 @@ public class App extends Application {
         //# Seznam tabel
         Label tablesSelectionLabel = new Label("Tabele izbranega uporabnika:");
         tablesSelectionLabel.setPadding(new Insets(0, 0, 10, 0));
-        tablesSelectionLabel.setStyle("-fx-text-fill: rgb(250, 250, 250)");
+        tablesSelectionLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         ListView<String> tablesSelectionListView = new ListView<>();
         tablesSelectionListView.setMaxHeight(125);
         //# Seznam uporabnikov (IP)
         Label usersIPSelectionLabel = new Label("Uporabniki izbrane tabele (IP):");
         usersIPSelectionLabel.setPadding(new Insets(10, 0, 10, 0));
-        usersIPSelectionLabel.setStyle("-fx-text-fill: rgb(250, 250, 250)");
+        usersIPSelectionLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         ListView<String> usersIPSelectionListView = new ListView<>();
         usersIPSelectionListView.setMaxHeight(300);
         //# Seznam uporabnikov (username)
         Label usersUsernameSelectionLabel = new Label("Uporabniki izbrane tabele (uporab. ime):");
         usersUsernameSelectionLabel.setPadding(new Insets(10, 0, 10, 0));
-        usersUsernameSelectionLabel.setStyle("-fx-text-fill: rgb(250, 250, 250)");
+        usersUsernameSelectionLabel.setStyle(Colors.WHITE_TEXT_COLOR);
         ListView<String> usersUsernameSelectionListView = new ListView<>();
         usersUsernameSelectionListView.setMaxHeight(300);
 
@@ -404,5 +394,32 @@ public class App extends Application {
         primaryStage.setMinHeight(lowerPane.getHeight() + upperPane.getHeight());
         primaryStage.setMaxWidth(lowerPane.getWidth() + rightSuperPane.getWidth());
         primaryStage.setMinWidth(lowerPane.getWidth() + rightSuperPane.getWidth());
+    }
+
+    /**
+     * Razred vsebuje barve uporabljene v aplikaciji
+     */
+    static class Colors {
+        /**
+         * Črno ozadje
+         */
+        static String BLACK_BG_COLOR = "-fx-background-color: rgb(43,43,45);";
+        /**
+         * Sivo ozadje
+         */
+        static String GRAY_BG_COLOR = "-fx-background-color: rgb(60,63,65);";
+        /**
+         * Svetlo siv gumb
+         */
+        static String LIGHTGRAY_BASE_COLOR = "-fx-base: rgb(150, 150, 150);";
+        /**
+         * Belo besedilo
+         */
+        static String WHITE_TEXT_COLOR = "-fx-text-fill: rgb(250,250,250)";
+        /**
+         * Belo ozadje z linearnim gradientom
+         */
+        static String WHITE_BG_COLOR_LINEARGRADIENT = "-fx-background-color: rgb(255,255,255)," +
+                " linear-gradient(to bottom,#e3e3e3 0%,#cccccc 100%);";
     }
 }
