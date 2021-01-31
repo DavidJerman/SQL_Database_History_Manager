@@ -32,6 +32,7 @@ import java.io.PrintWriter;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Scanner;
 
 /**
@@ -94,6 +95,16 @@ public class App extends Application {
     }
 
     /**
+     * Napolni TableView s podanimi vrednostmi
+     *
+     * @param tableView TableView
+     * @param hashMap   Vrednosti, ki jih dodajamo v TableView
+     */
+    static void populateTableViewWith(TableView<String[]> tableView, HashMap<String, String> hashMap) {
+        // TODO
+    }
+
+    /**
      * Shrani podatke o konfiguraciji v datoteko
      *
      * @param file Datoteko, kamor shranjujemo
@@ -132,6 +143,15 @@ public class App extends Application {
             case 2:
                 Resource.connectionIndicatorCircle.setFill(Color.valueOf(Colors.GREEN));
         }
+    }
+
+    /**
+     * Pobriše trenutno izbrane tabele in uporabnike
+     */
+    static void clearSelection() {
+        Resource.tablesSelectionListView.setItems(null);
+        Resource.usersIPSelectionListView.setItems(null);
+        Resource.usersUsernameSelectionListView.setItems(null);
     }
 
     /**
@@ -372,29 +392,42 @@ public class App extends Application {
             // Vzpostavi povezavo z sql strežnikom
             // TODO: Prošnja za povezavo
             // Zaenkrat privzeto, da je povezava uspešna
-            Thread thread = new Thread(() -> {
-                // Spreminjanje stanja indikatorja
-                Platform.runLater(() -> changeIndicatorState(1));
-                // Polnjenje tabel
-                Thread work = new Thread(() -> {
-                    populateListViewWith(Resource.tablesListView, backend.getAllTablesCurrentDatabase());
-                    populateListViewWith(Resource.usersIPListView, backend.getAllUsersIP());
-                    populateListViewWith(Resource.usersUsernameListView, backend.getAllUsersName());
-                });
-                work.start();
-                try {
-                    // Počakamo, da se delo konča
-                    work.join();
+            if (!Resource.connected) {
+                Thread thread = new Thread(() -> {
                     // Spreminjanje stanja indikatorja
-                    Platform.runLater(() -> changeIndicatorState(2));
-                } catch (InterruptedException ignored) {
-                }
-            });
-            thread.start();
+                    Platform.runLater(() -> changeIndicatorState(1));
+                    // Polnjenje tabel
+                    Thread work = new Thread(() -> {
+                        populateListViewWith(Resource.tablesListView, backend.getAllTablesCurrentDatabase());
+                        populateListViewWith(Resource.usersIPListView, backend.getAllUsersIP());
+                        populateListViewWith(Resource.usersUsernameListView, backend.getAllUsersName());
+                    });
+                    work.start();
+                    try {
+                        // Počakamo, da se delo konča
+                        work.join();
+                        // Spreminjanje stanja indikatorja
+                        Platform.runLater(() -> changeIndicatorState(2));
+                    } catch (InterruptedException ignored) {
+                    }
+                });
+                thread.start();
+            }
         });
         Resource.disconnectButton.setOnAction((event) -> {
             // Prekine povezavo z sql strežnikom
             // TODO: Prošnja za prekinitev povezave
+            // Spreminjanje stanja gumba
+            if (Resource.connected) {
+                Resource.connected = false;
+                Platform.runLater(() -> {
+                    clearSelection();
+                    Resource.tablesListView.setItems(null);
+                    Resource.usersIPListView.setItems(null);
+                    Resource.usersUsernameListView.setItems(null);
+                    changeIndicatorState(0);
+                });
+            }
         });
         Resource.customConnectButton.setOnAction((event) -> {
             String username = "";
@@ -551,9 +584,7 @@ public class App extends Application {
                 } catch (IOException | URISyntaxException ignored) {
                 }
         });
-        Resource.clearButton.setOnAction((event) -> {
-            // Počisti izbiro
-        });
+        Resource.clearButton.setOnAction((event) -> clearSelection());
 
         // Spodnji GridPane
         Resource.lowerPane = new GridPane();
@@ -636,14 +667,33 @@ public class App extends Application {
         Resource.usersUsernameListView = new ListView<>();
         Resource.usersUsernameListView.setMaxHeight(300);
         //# Handler-ji za ListView-je
-        Resource.tablesListView.getSelectionModel().selectedItemProperty().addListener((event) -> {
-            // Backend-u pošlje zahtevo za seznam uporabnikov tabele
+        Resource.tablesListView.getSelectionModel().selectedItemProperty().addListener((ignored) -> {
+            // Izpiše vse uporabnike izbrane tabele
+            String selectedTable = Resource.tablesListView.getSelectionModel().getSelectedItem();
+            Resource.selectedTable = selectedTable;
+            clearSelection();
+            Platform.runLater(() -> {
+                populateListViewWith(Resource.usersUsernameSelectionListView, backend.getAllUsersName(selectedTable));
+                populateListViewWith(Resource.usersIPSelectionListView, backend.getAllUsersIP(selectedTable));
+            });
         });
-        Resource.usersIPListView.getSelectionModel().selectedItemProperty().addListener((event) -> {
+        Resource.usersIPListView.getSelectionModel().selectedItemProperty().addListener((ignored) -> {
             // Izpiše vse akcije izbranega uporabnika
+            String selectedUserIP = Resource.usersIPListView.getSelectionModel().getSelectedItem();
+            Resource.selectedIp = selectedUserIP;
+            clearSelection();
+            Platform.runLater(() -> {
+                // TODO
+            });
         });
-        Resource.usersUsernameListView.getSelectionModel().selectedItemProperty().addListener((event) -> {
+        Resource.usersUsernameListView.getSelectionModel().selectedItemProperty().addListener((ignored) -> {
             // Izpiše vse akcije izbranega uporabnika
+            String selectedUserUsername = Resource.usersUsernameListView.getSelectionModel().getSelectedItem();
+            Resource.selectedIp = backend.userhostToIP(selectedUserUsername);
+            clearSelection();
+            Platform.runLater(() -> {
+                // TODO
+            });
         });
 
         // Desni izbirni GridPane
@@ -664,6 +714,47 @@ public class App extends Application {
         Resource.usersUsernameSelectionLabel.setPadding(new Insets(10, 0, 10, 0));
         Resource.usersUsernameSelectionListView = new ListView<>();
         Resource.usersUsernameSelectionListView.setMaxHeight(300);
+        //# Handler-ji za ListView-je
+        Resource.tablesSelectionListView.getSelectionModel().selectedItemProperty().addListener((ignored) -> {
+            if (Resource.selectedIp != null) {
+                String selectedTable = Resource.tablesSelectionListView.getSelectionModel().getSelectedItem();
+                populateTableViewWith(Resource.insertionTableView,
+                        backend.getDataInsert(Resource.selectedIp, selectedTable));
+                populateTableViewWith(Resource.deletionTableView,
+                        backend.getDataDelete(Resource.selectedIp, selectedTable));
+                populateTableViewWith(Resource.updateTableView,
+                        backend.getDataUpdate(Resource.selectedIp, selectedTable));
+                populateTableViewWith(Resource.viewTableView,
+                        backend.getDataSelect(Resource.selectedIp, selectedTable));
+            }
+        });
+        Resource.usersIPSelectionListView.getSelectionModel().selectedItemProperty().addListener((ignored) -> {
+            if (Resource.selectedTable != null) {
+                String selectedIP = Resource.usersIPSelectionListView.getSelectionModel().getSelectedItem();
+                populateTableViewWith(Resource.insertionTableView,
+                        backend.getDataInsert(selectedIP, Resource.selectedTable));
+                populateTableViewWith(Resource.deletionTableView,
+                        backend.getDataDelete(selectedIP, Resource.selectedTable));
+                populateTableViewWith(Resource.updateTableView,
+                        backend.getDataUpdate(selectedIP, Resource.selectedTable));
+                populateTableViewWith(Resource.viewTableView,
+                        backend.getDataSelect(selectedIP, Resource.selectedTable));
+            }
+        });
+        Resource.usersUsernameSelectionListView.getSelectionModel().selectedItemProperty().addListener((ignored) -> {
+            if (Resource.selectedTable != null) {
+                String selectedUsername = Resource.usersIPSelectionListView.getSelectionModel().getSelectedItem();
+                String selectedIP = backend.userhostToIP(selectedUsername);
+                populateTableViewWith(Resource.insertionTableView,
+                        backend.getDataInsert(selectedIP, Resource.selectedTable));
+                populateTableViewWith(Resource.deletionTableView,
+                        backend.getDataDelete(selectedIP, Resource.selectedTable));
+                populateTableViewWith(Resource.updateTableView,
+                        backend.getDataUpdate(selectedIP, Resource.selectedTable));
+                populateTableViewWith(Resource.viewTableView,
+                        backend.getDataSelect(selectedIP, Resource.selectedTable));
+            }
+        });
 
         // Dodajanje elementov v glavni GridPane
         Resource.mainPane.add(Resource.upperPane, 0, 0, 1, 1);
@@ -890,6 +981,8 @@ class Resource {
     static String serverPort;
     static String database;
     static boolean connected;
+    static String selectedIp;
+    static String selectedTable;
     // Components
     static MenuBar menuBar;
     static ImageView title_img;
