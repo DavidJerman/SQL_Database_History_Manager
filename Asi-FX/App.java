@@ -1,5 +1,7 @@
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -16,6 +18,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import javax.swing.*;
+import java.util.Arrays;
 
 /**
  * Grafični vmesnik aplikacije oz. front-end
@@ -25,6 +28,11 @@ import javax.swing.*;
  * @since 2021.01.25
  */
 public class App extends Application {
+
+    /**
+     * Backend
+     */
+    static backend backend = new backend();
 
     /**
      * Glavna metoda
@@ -57,6 +65,18 @@ public class App extends Application {
                 "-fx-border-radius: 3px;" +
                 "-fx-effect: innershadow(three-pass-box, rgba(0,0,0,0.75),1,0,1,1);");
         label.setMinWidth(150);
+    }
+
+    /**
+     * Napolni ListView s podanimi vrednostmi
+     *
+     * @param listView ListView
+     * @param values   Vrednosti, ki jih dodajamo v ListView
+     */
+    static void populateListViewWith(ListView<String> listView, String[] values) {
+        ObservableList<String> items = FXCollections.observableArrayList();
+        items.addAll(Arrays.asList(values));
+        listView.setItems(items);
     }
 
     /**
