@@ -32,6 +32,7 @@ import java.io.PrintWriter;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Arrays;
+import java.util.Scanner;
 
 /**
  * Grafični vmesnik aplikacije oz. front-end
@@ -92,6 +93,11 @@ public class App extends Application {
         listView.setItems(items);
     }
 
+    /**
+     * Shrani podatke o konfiguraciji v datoteko
+     *
+     * @param file Datoteko, kamor shranjujemo
+     */
     static void saveConfig(File file) {
         try {
             PrintWriter printWriter = new PrintWriter(file);
@@ -103,6 +109,56 @@ public class App extends Application {
             printWriter.close();
             JOptionPane.showMessageDialog(Resource.jFrame, Texts.SAVE_CONFIG_PROMPT, null, JOptionPane.INFORMATION_MESSAGE);
         } catch (FileNotFoundException ignored) {
+            JOptionPane.showMessageDialog(Resource.jFrame, Texts.FILE_ERROR, null, JOptionPane.WARNING_MESSAGE);
+        }
+    }
+
+    /**
+     * Naloži konfiguracijo iz datoteke
+     *
+     * @param file Datoteka, iz katere nalagamo
+     */
+    static void loadConfig(File file) {
+        try {
+            Scanner scanner = new Scanner(file);
+            String username = null;
+            String password = null;
+            String ip = null;
+            String port = null;
+            String database = null;
+            while (scanner.hasNext()) {
+                String line = scanner.nextLine();
+                String[] split = line.split(":");
+                if (split.length != 2) throw new IndexOutOfBoundsException();
+                String key = split[0];
+                String value = split[1];
+                switch (key) {
+                    case "username":
+                        username = value;
+                    case "password":
+                        password = value;
+                    case "ip":
+                        ip = value;
+                    case "port":
+                        port = value;
+                    case "database":
+                        database = value;
+                }
+            }
+            if (username != null && password != null && ip != null && port != null && database != null) {
+                Resource.username = username;
+                Resource.password = password;
+                Resource.serverIp = ip;
+                Resource.serverPort = port;
+                Resource.database = database;
+                Resource.usernameValueLabel.setText(Resource.username);
+                Resource.serverIPValueLabel.setText(Resource.serverIp);
+                Resource.serverPortValueLabel.setText(Resource.serverPort);
+                Resource.databaseValueLabel.setText(Resource.database);
+                JOptionPane.showMessageDialog(Resource.jFrame, Texts.LOAD_CONFIG_PROMPT, null, JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (FileNotFoundException | IndexOutOfBoundsException ignored) {
+            JOptionPane.showMessageDialog(Resource.jFrame, Texts.FILE_ERROR, null, JOptionPane.WARNING_MESSAGE);
         }
     }
 
@@ -421,6 +477,14 @@ public class App extends Application {
         //# Handler-ji za gumbe
         Resource.loadConfigButton.setOnAction((event) -> {
             // Naloži podatke o povezavi iz datoteke
+            // Prikaže okno za odpiranje datoteke
+            FileChooser fileChooser = new FileChooser();
+            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("CFG datoteke (*.cfg)", "*.cfg");
+            fileChooser.getExtensionFilters().add(extFilter);
+            fileChooser.setInitialDirectory(new File(Texts.ASI_FX_DIRECTORY + "config"));
+            File file = fileChooser.showOpenDialog(primaryStage);
+            // Naloži datoteko
+            if (file != null) loadConfig(file);
         });
         Resource.saveConfigButton.setOnAction((event) -> {
             // Shrani podatke o povezavi v datoteko
@@ -748,6 +812,7 @@ class Texts {
     final static String CLEAR_TOOLTIP = "Pobriše izbrane podatke";
     final static String SAVE_CONFIG_PROMPT = "Konfiguracija uspešno shranjena";
     final static String LOAD_CONFIG_PROMPT = "Konfiguracija uspešno naložena";
+    final static String FILE_ERROR = "Prišlo je do napake med izvajanjem želene operacije";
     // Default server values
     final static String DEFAULT_USERNAME = "remote";
     final static String DEFAULT_PASSWORD = "remote";
