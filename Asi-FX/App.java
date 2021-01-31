@@ -6,11 +6,16 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+
+import javax.swing.*;
 
 /**
  * Grafični vmesnik aplikacije oz. front-end
@@ -223,14 +228,17 @@ public class App extends Application {
         Resource.connectButton = new Button(Texts.CONNECT);
         setButtonProperties_GrayBold(Resource.connectButton);
         Resource.connectButton.setMinWidth(130);
+        Tooltip.install(Resource.connectButton, new Tooltip(Texts.CONNECT_TOOLTIP));
         //## Prekinitev povezave
         Resource.disconnectButton = new Button(Texts.DISCONNECT);
         Resource.disconnectButton.setMinWidth(130);
         setButtonProperties_GrayBold(Resource.disconnectButton);
+        Tooltip.install(Resource.disconnectButton, new Tooltip(Texts.DISCONNECT_TOOLTIP));
         //## Povezava po meri
         Resource.customConnectButton = new Button(Texts.CUSTOM_CONNECT);
         setButtonProperties_GrayBold(Resource.customConnectButton);
         Resource.customConnectButton.setMinWidth(130);
+        Tooltip.install(Resource.customConnectButton, new Tooltip(Texts.CUSTOM_CONNECT_TOOLTIP));
         //# Handler-ji za gumbe
         Resource.connectButton.setOnAction((event) -> {
             // Pošlje backend-u podatke o povezavi in zaprosi za povezavo z sql strežnikom
@@ -239,33 +247,83 @@ public class App extends Application {
             // Prekine povezavo z sql strežnikom
         });
         Resource.customConnectButton.setOnAction((event) -> {
-            // Odpre JOption pane za vnos podatkov za povezavo po meri
+            String username = "";
+            String password = "";
+            String ip = "";
+            String port = "";
+            String database = "";
+            while (username.equals("")) {
+                username = JOptionPane.showInputDialog(Resource.jFrame, Texts.USERNAME_PROMPT,
+                        Texts.CUSTOM_CONNECTION_PROMPT_TITLE, JOptionPane.PLAIN_MESSAGE);
+                if (username == null) return;
+            }
+            while (password.equals("")) {
+                password = JOptionPane.showInputDialog(Resource.jFrame, Texts.PASSWORD_PROMPT,
+                        Texts.CUSTOM_CONNECTION_PROMPT_TITLE, JOptionPane.PLAIN_MESSAGE);
+                if (password == null) return;
+            }
+            while (ip.equals("")) {
+                ip = JOptionPane.showInputDialog(Resource.jFrame, Texts.IP_PROMOT,
+                        Texts.CUSTOM_CONNECTION_PROMPT_TITLE, JOptionPane.PLAIN_MESSAGE);
+                if (ip == null) return;
+            }
+            while (port.equals("")) {
+                port = JOptionPane.showInputDialog(Resource.jFrame, Texts.PORT_PROMPT,
+                        Texts.CUSTOM_CONNECTION_PROMPT_TITLE, JOptionPane.PLAIN_MESSAGE);
+                if (port == null) return;
+            }
+            while (database.equals("")) {
+                database = JOptionPane.showInputDialog(Resource.jFrame, Texts.DATABASE_PROMPT,
+                        Texts.CUSTOM_CONNECTION_PROMPT_TITLE, JOptionPane.PLAIN_MESSAGE);
+                if (database == null) return;
+            }
+            Resource.usernameValueLabel.setText(username);
+            Resource.serverIPValueLabel.setText(ip);
+            Resource.serverPortValueLabel.setText(port);
+            Resource.databaseValueLabel.setText(database);
+            Resource.username = username;
+            Resource.password = password;
+            Resource.serverIp = ip;
+            Resource.serverPort = port;
+            Resource.database = database;
         });
         //# GridPane povezava info
         Resource.connectInfoPane = new GridPane();
         //## Naslov
         Resource.connectionInfoTitleLabel = new Label(Texts.SERVER_INFO);
-        Resource.connectionInfoTitleLabel.setPadding(new Insets(0, 0, 10, 0));
+        Resource.connectionInfoTitleLabel.setPadding(new Insets(0, 10, 10, 0));
+        Resource.connectionIndicatorCircle = new Circle(10);
+        Resource.connectionIndicatorCircle.setFill(Color.valueOf(Colors.RED_COLOR));
+        Tooltip.install(Resource.connectionIndicatorCircle, new Tooltip(Texts.CONNECTION_STATUS));
+        Resource.connectionInfoContainer = new HBox();
+        Resource.connectionInfoContainer.getChildren().addAll(Resource.connectionInfoTitleLabel,
+                Resource.connectionIndicatorCircle);
         //## Informacije o tabeli
         Resource.connectInfoPane.setVgap(10);
         Resource.connectInfoPane.setHgap(10);
         Resource.connectInfoPane.setPadding(new Insets(10));
         //### Uporabnik
         Resource.usernameLabel = new Label(Texts.SERVER_USER);
-        Resource.usernameValueLabel = new Label(Texts.NA);
+        Resource.usernameValueLabel = new Label(Texts.DEFAULT_USERNAME);
         setLabelProperties_InfoLabel(Resource.usernameValueLabel);
         //### IP naslov strežnika
         Resource.serverIPLabel = new Label(Texts.SERVER_IP);
-        Resource.serverIPValueLabel = new Label(Texts.NA);
+        Resource.serverIPValueLabel = new Label(Texts.DEFAULT_IP);
         setLabelProperties_InfoLabel(Resource.serverIPValueLabel);
         //### Vrata strežnika
         Resource.serverPortLabel = new Label(Texts.SERVER_PORT);
-        Resource.serverPortValueLabel = new Label(Texts.NA);
+        Resource.serverPortValueLabel = new Label(Texts.DEFAULT_PORT);
         setLabelProperties_InfoLabel(Resource.serverPortValueLabel);
         //### Podatkovna baza strežnika
         Resource.databaseLabel = new Label(Texts.SERVER_DATABASE);
-        Resource.databaseValueLabel = new Label(Texts.NA);
+        Resource.databaseValueLabel = new Label(Texts.DEFAULT_DATABASE);
         setLabelProperties_InfoLabel(Resource.databaseValueLabel);
+        // Setting up the default values
+        Resource.username = Texts.DEFAULT_USERNAME;
+        Resource.password = Texts.DEFAULT_PASSWORD;
+        Resource.serverIp = Texts.DEFAULT_IP;
+        Resource.serverPort = Texts.DEFAULT_PORT;
+        Resource.database = Texts.DEFAULT_DATABASE;
         //# GridPane konfiguracija
         Resource.configPane = new GridPane();
         Resource.configPane.setVgap(11);
@@ -275,18 +333,22 @@ public class App extends Application {
         Resource.loadConfigButton = new Button(Texts.LOAD_CONFIG);
         Resource.loadConfigButton.setMinWidth(130);
         setButtonProperties_GrayBold(Resource.loadConfigButton);
+        Tooltip.install(Resource.loadConfigButton, new Tooltip(Texts.LOAD_CONFIG_TOOLTIP));
         //## Shrani konfiguracijo
         Resource.saveConfigButton = new Button(Texts.SAVE_CONFIG);
         Resource.saveConfigButton.setMinWidth(130);
         setButtonProperties_GrayBold(Resource.saveConfigButton);
+        Tooltip.install(Resource.saveConfigButton, new Tooltip(Texts.SAVE_CONFIG_TOOLTIP));
         //## Pomoč
         Resource.helpButton = new Button(Texts.HELP);
         Resource.helpButton.setMinWidth(130);
         setButtonProperties_GrayBold(Resource.helpButton);
+        Tooltip.install(Resource.helpButton, new Tooltip(Texts.HELP_TOOLTIP));
         //## Počisti izbiro
         Resource.clearButton = new Button(Texts.CLEAR_SELECTION);
         Resource.clearButton.setMinWidth(130);
         setButtonProperties_GrayBold(Resource.clearButton);
+        Tooltip.install(Resource.clearButton, new Tooltip(Texts.CLEAR_TOOLTIP));
         //# GridPane Tabela Info
         Resource.infoPane = new GridPane();
         Resource.infoPane.setPadding(new Insets(0, 10, 0, 0));
@@ -334,6 +396,8 @@ public class App extends Application {
         Resource.insertionPane.setPadding(new Insets(10));
         Resource.insertionLabel = new Label(Texts.INSERTIONS);
         Resource.insertionUsernameLabel = new Label(Texts.NA);
+        Tooltip.install(Resource.insertionLabel, new Tooltip(Texts.INSERTION_TOOLTIP));
+        Tooltip.install(Resource.insertionUsernameLabel, new Tooltip(Texts.INSERTION_TOOLTIP));
         Resource.insertionLabel.setPadding(new Insets(0, 0, 10, 0));
         Resource.insertionUsernameLabel.setPadding(new Insets(0, 0, 10, 5));
         Resource.insertionTableView = new TableView<>();
@@ -345,6 +409,8 @@ public class App extends Application {
         Resource.viewPane.setPadding(new Insets(10));
         Resource.viewLabel = new Label(Texts.VIEWS);
         Resource.viewUsernameLabel = new Label(Texts.NA);
+        Tooltip.install(Resource.viewLabel, new Tooltip(Texts.VIEW_TOOLTIP));
+        Tooltip.install(Resource.viewUsernameLabel, new Tooltip(Texts.VIEW_TOOLTIP));
         Resource.viewLabel.setPadding(new Insets(0, 0, 10, 0));
         Resource.viewUsernameLabel.setPadding(new Insets(0, 0, 10, 5));
         Resource.viewTableView = new TableView<>();
@@ -356,6 +422,8 @@ public class App extends Application {
         Resource.updatePane.setPadding(new Insets(10));
         Resource.updateLabel = new Label(Texts.UPDATES);
         Resource.updateUsernameLabel = new Label(Texts.NA);
+        Tooltip.install(Resource.updateLabel, new Tooltip(Texts.UPDATE_TOOLTIP));
+        Tooltip.install(Resource.updateUsernameLabel, new Tooltip(Texts.UPDATE_TOOLTIP));
         Resource.updateLabel.setPadding(new Insets(0, 0, 10, 0));
         Resource.updateUsernameLabel.setPadding(new Insets(0, 0, 10, 5));
         Resource.updateTableView = new TableView<>();
@@ -367,6 +435,8 @@ public class App extends Application {
         Resource.deletionPane.setPadding(new Insets(10));
         Resource.deletionLabel = new Label(Texts.DELETIONS);
         Resource.deletionUsernameLabel = new Label(Texts.NA);
+        Tooltip.install(Resource.deletionLabel, new Tooltip(Texts.DELETION_TOOLTIP));
+        Tooltip.install(Resource.deletionUsernameLabel, new Tooltip(Texts.DELETION_TOOLTIP));
         Resource.deletionLabel.setPadding(new Insets(0, 0, 10, 0));
         Resource.deletionUsernameLabel.setPadding(new Insets(0, 0, 10, 5));
         Resource.deletionTableView = new TableView<>();
@@ -440,7 +510,7 @@ public class App extends Application {
         Resource.connectPane.add(Resource.disconnectButton, 0, 1, 1, 1);
         Resource.connectPane.add(Resource.customConnectButton, 0, 2, 1, 1);
         //# Dodajanje elementov v povezava info GridPane
-        Resource.connectInfoPane.add(Resource.connectionInfoTitleLabel, 0, 0, 2, 1);
+        Resource.connectInfoPane.add(Resource.connectionInfoContainer, 0, 0, 2, 1);
         Resource.connectInfoPane.add(Resource.usernameLabel, 0, 1, 1, 1);
         Resource.connectInfoPane.add(Resource.usernameValueLabel, 1, 1, 1, 1);
         Resource.connectInfoPane.add(Resource.serverIPLabel, 0, 2, 1, 1);
@@ -553,6 +623,9 @@ class Colors {
     final static String TRUEWHITE_BG_COLOR = "-fx-background-color: rgb(255, 255, 255);";
     final static String LIGHTGRAY_BG_COLOR = "-fx-background-color: rgb(195, 195, 195);";
     final static String BLACK_TEXT_COLOR = "-fx-text-fill: rgb(10, 10, 10);";
+    final static String RED_COLOR = "#d23c28";
+    final static String YELLOW_COLOR = "#cdbb44";
+    final static String GREEN_COLOR = "#419941";
 }
 
 /**
@@ -592,6 +665,34 @@ class Texts {
     final static String APLICCATION_THEME = "Tema aplikacije";
     final static String DARK_THEME = "Temno";
     final static String LIGHT_THEME = "Svetlo";
+    final static String CUSTOM_CONNECTION_PROMPT_TITLE = "Povezava po meri";
+    final static String USERNAME_PROMPT = "Vnesi uporabniško ime:";
+    final static String PASSWORD_PROMPT = "Vnesi geslo:";
+    final static String IP_PROMOT = "Vnesi ip naslov strežnika (brez vrat):";
+    final static String PORT_PROMPT = "Vnesi vrata strežnika:";
+    final static String DATABASE_PROMPT = "Vnesi ime podatkovne baze:";
+    final static String CONNECTION_STATUS = "Stanje povezave";
+    final static String INSERTION_TOOLTIP = "Tabela prikazuje vsa vstavljanja v izbrani tabeli ali vsa vstavljanja" +
+            " izbranega uporabnika";
+    final static String DELETION_TOOLTIP = "Tabela prikazuje vsa brisanja v izbrani tabeli ali vsa brisanja" +
+            " izbranega uporabnika";
+    final static String UPDATE_TOOLTIP = "Tabela prikazuje vsa ažuriranja v izbrani tabeli ali vsa ažuriranja izbranega " +
+            "uporabnika";
+    final static String VIEW_TOOLTIP = "Tabela prikazuje vsa ogledovanja v izbrani tabeli ali vsa ogledovanja izbranega" +
+            " uporabnika";
+    final static String CONNECT_TOOLTIP = "Vzpostavi povezavo s podatkovno bazo";
+    final static String DISCONNECT_TOOLTIP = "Prekine povezave s podatkovno bazo";
+    final static String CUSTOM_CONNECT_TOOLTIP = "Odpre okno za vnos podatkov za povezavo po meri";
+    final static String LOAD_CONFIG_TOOLTIP = "Naloži konfiguracijo iz izbrane datoteke";
+    final static String SAVE_CONFIG_TOOLTIP = "Shrani trenutno konfiguracijo v datoteko";
+    final static String HELP_TOOLTIP = "Prikaže okno za pomoč uporabniku";
+    final static String CLEAR_TOOLTIP = "Pobriše izbrane podatke";
+    // Default server values
+    final static String DEFAULT_USERNAME = "remote";
+    final static String DEFAULT_PASSWORD = "remote";
+    final static String DEFAULT_IP = "193.2.190.23";
+    final static String DEFAULT_PORT = "3306";
+    final static String DEFAULT_DATABASE = "mysql";
 }
 
 /**
@@ -605,6 +706,13 @@ class Delta {
  * Resursi
  */
 class Resource {
+    // Values
+    static String username;
+    static String password;
+    static String serverIp;
+    static String serverPort;
+    static String database;
+    // Components
     static MenuBar menuBar;
     static ImageView title_img;
     static Menu menu;
@@ -621,6 +729,8 @@ class Resource {
     static Button customConnectButton;
     static GridPane connectInfoPane;
     static Label connectionInfoTitleLabel;
+    static Circle connectionIndicatorCircle;
+    static HBox connectionInfoContainer;
     static Label usernameLabel;
     static Label usernameValueLabel;
     static Label serverIPLabel;
@@ -675,4 +785,5 @@ class Resource {
     static Label usersUsernameSelectionLabel;
     static ListView<String> usersUsernameSelectionListView;
     static VBox menuMainContainer;
+    static JFrame jFrame;
 }
