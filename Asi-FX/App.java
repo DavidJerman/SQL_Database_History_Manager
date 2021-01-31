@@ -114,6 +114,27 @@ public class App extends Application {
     }
 
     /**
+     * Spremeni stanje indikatorja povezanosti:
+     * 0: Ni povezave
+     * 1: Povezovanje
+     * 2: Je povezava
+     *
+     * @param state Stanje
+     */
+    static void changeIndicatorState(int state) {
+        switch (state) {
+            case 0:
+                Resource.connectionIndicatorCircle.setFill(Color.valueOf(Colors.RED));
+                break;
+            case 1:
+                Resource.connectionIndicatorCircle.setFill(Color.valueOf(Colors.YELLOW));
+                break;
+            case 2:
+                Resource.connectionIndicatorCircle.setFill(Color.valueOf(Colors.GREEN));
+        }
+    }
+
+    /**
      * Naloži konfiguracijo iz datoteke
      *
      * @param file Datoteka, iz katere nalagamo
@@ -135,12 +156,16 @@ public class App extends Application {
                 switch (key) {
                     case "username":
                         username = value;
+                        break;
                     case "password":
                         password = value;
+                        break;
                     case "ip":
                         ip = value;
+                        break;
                     case "port":
                         port = value;
+                        break;
                     case "database":
                         database = value;
                 }
@@ -344,10 +369,32 @@ public class App extends Application {
         Tooltip.install(Resource.customConnectButton, new Tooltip(Texts.CUSTOM_CONNECT_TOOLTIP));
         //# Handler-ji za gumbe
         Resource.connectButton.setOnAction((event) -> {
-            // Pošlje backend-u podatke o povezavi in zaprosi za povezavo z sql strežnikom
+            // Vzpostavi povezavo z sql strežnikom
+            // TODO: Prošnja za povezavo
+            // Zaenkrat privzeto, da je povezava uspešna
+            Thread thread = new Thread(() -> {
+                // Spreminjanje stanja indikatorja
+                Platform.runLater(() -> changeIndicatorState(1));
+                // Polnjenje tabel
+                Thread work = new Thread(() -> {
+                    populateListViewWith(Resource.tablesListView, backend.getAllTablesCurrentDatabase());
+                    populateListViewWith(Resource.usersIPListView, backend.getAllUsersIP());
+                    populateListViewWith(Resource.usersUsernameListView, backend.getAllUsersName());
+                });
+                work.start();
+                try {
+                    // Počakamo, da se delo konča
+                    work.join();
+                    // Spreminjanje stanja indikatorja
+                    Platform.runLater(() -> changeIndicatorState(2));
+                } catch (InterruptedException ignored) {
+                }
+            });
+            thread.start();
         });
         Resource.disconnectButton.setOnAction((event) -> {
             // Prekine povezavo z sql strežnikom
+            // TODO: Prošnja za prekinitev povezave
         });
         Resource.customConnectButton.setOnAction((event) -> {
             String username = "";
@@ -396,7 +443,7 @@ public class App extends Application {
         Resource.connectionInfoTitleLabel = new Label(Texts.SERVER_INFO);
         Resource.connectionInfoTitleLabel.setPadding(new Insets(0, 10, 10, 0));
         Resource.connectionIndicatorCircle = new Circle(10);
-        Resource.connectionIndicatorCircle.setFill(Color.valueOf(Colors.RED));
+        changeIndicatorState(0);
         Tooltip.install(Resource.connectionIndicatorCircle, new Tooltip(Texts.CONNECTION_STATUS));
         Resource.connectionInfoContainer = new HBox();
         Resource.connectionInfoContainer.getChildren().addAll(Resource.connectionInfoTitleLabel,
@@ -727,6 +774,9 @@ public class App extends Application {
         primaryStage.setMinHeight(Resource.lowerPane.getHeight() + Resource.upperPane.getHeight());
         primaryStage.setMaxWidth(Resource.lowerPane.getWidth() + Resource.rightSuperPane.getWidth());
         primaryStage.setMinWidth(Resource.lowerPane.getWidth() + Resource.rightSuperPane.getWidth());
+
+        // Spremenljivke
+        Resource.connected = false;
     }
 }
 
@@ -839,6 +889,7 @@ class Resource {
     static String serverIp;
     static String serverPort;
     static String database;
+    static boolean connected;
     // Components
     static MenuBar menuBar;
     static ImageView title_img;
