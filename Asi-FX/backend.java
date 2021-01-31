@@ -56,7 +56,7 @@ public class backend { //predlagam da se ime razreda začne z veliko začetnico 
      *
      * opomba: metoda ima še možnosti izboljšave... (preveč decimalk pri datumu, ...)
      *
-     * @param user uporabnik, ki si je ogledoval podatke v tabeli
+     * @param user uporabnik, ki si je ogledoval podatke v tabeli (treba je vnesti uporabnikov ip naslov)
      * @param table tabela, iz katere je uporabnik ogledoval podatke
      * @return HashMap<String, String> (ključ: datum; vrednost: podatek)
      */
@@ -100,6 +100,9 @@ public class backend { //predlagam da se ime razreda začne z veliko začetnico 
 
             //zapiši vrednost v hashmap
             vrednosti.put(rezultat[0][i], value);
+
+            zapisi = null;
+            value = null;
         }
 
         return vrednosti;
@@ -109,7 +112,7 @@ public class backend { //predlagam da se ime razreda začne z veliko začetnico 
      *
      * opomba: metoda ima možnosti za izboljšavo
      *
-     * @param user uporabnik, ki je ažuriral podatke v tabeli
+     * @param user uporabnik, ki je ažuriral podatke v tabeli (treba je vnesti uporabnikov ip naslov)
      * @param table tabela, v kateri je uporabnik ažuriral podatke
      * @return HashMap<String, String> (ključ: datum; vrednost: podatek)
      */
@@ -139,6 +142,9 @@ public class backend { //predlagam da se ime razreda začne z veliko začetnico 
             }
             //zapiši vrednost v hashmap
             vrednosti.put(rezultat[0][i], value);
+
+            zapisi = null;
+            value = null;
         }
 
         return vrednosti;
@@ -146,22 +152,87 @@ public class backend { //predlagam da se ime razreda začne z veliko začetnico 
 
     /** Metoda vrne objekt HashMap, v katerem se nahajajo podatki, ki si jih je določen uporabnik v podani tabeli ogledoval.
      *
-     * @param user uporabnik, ki je vstavljal podatke v tabelo
+     * @param user uporabnik, ki je vstavljal podatke v tabelo (treba je vnesti uporabnikov ip naslov)
      * @param table tabela, v katero je uporabnik vstavljal podatke
      * @return HashMap<String, String> (ključ: datum; vrednost: podatek)
      */
     public HashMap<String, String> getDataInsert(String user, String table){
-        return new HashMap<>();
+        checkConnection();
+        if(table.contains(".")) table = table.substring(table.indexOf(".")+1);
+
+        String[][] rezultat = queryToStringArray("select event_time, argument from mysql.general_log where user_host like '%"+user+"%' and argument like 'insert%';"); // and argument like '%"+table+"%';"); //"select event_time, argument from mysql.general_log where user_host like '%"+user+"%' and argument like 'update%' and argument like '%"+ table +"%';"); //'%86.61.30.67%';");
+        HashMap<String, String> vrednosti = new HashMap<>();
+
+        for(int i = 1; i < rezultat[0].length; i++){ //po vrsticah ()
+            String zapisi = rezultat[1][i];
+            String value = zapisi;
+            zapisi = zapisi.toLowerCase();
+
+            //----
+            if(zapisi.contains("values")){
+                value = value.substring(zapisi.indexOf("values")+6);
+            }
+            else value = value.substring(zapisi.lastIndexOf("("));
+            value = value.replaceAll("\\(", "").replaceAll("\\)", "");
+            value = value.replaceAll("'", "");
+            //----
+
+            //zapiši vrednost v hashmap
+            vrednosti.put(rezultat[0][i], value);
+
+            zapisi = null;
+            value = null;
+        }
+
+        return vrednosti;
     }
 
     /** Metoda vrne objekt HashMap, v katerem se nahajajo podatki, ki jih je določen uporabnik iz podane tabele brisal.
      *
-     * @param user uporabnik, ki je brisal podatke iz tabeli
+     * @param user uporabnik, ki je brisal podatke iz tabeli (treba je vnesti uporabnikov ip naslov)
      * @param table tabela, iz katere je uporabnik brisal podatke
      * @return HashMap<String, String> (ključ: datum; vrednost: podatek)
      */
     public HashMap<String, String> getDataDelete(String user, String table){
-        return new HashMap<>();
+        checkConnection();
+        if(table.contains(".")) table = table.substring(table.indexOf(".")+1);
+
+        String[][] rezultat = queryToStringArray("select event_time, argument from mysql.general_log where user_host like '%"+user+"%' and argument like 'delete%' and argument like '%"+table+"%';");
+        HashMap<String, String> vrednosti = new HashMap<>();
+
+        for(int i = 1; i < rezultat[0].length; i++){ //po vrsticah ()
+            String zapisi = rezultat[1][i];
+            String value = zapisi;
+            zapisi = zapisi.toLowerCase();
+
+            //----
+            if(zapisi.contains("where")){ //če vsebuje pogoj where, potem še uredi zapis, drugače vrni string "vse vrstice"
+                value = value.substring(zapisi.indexOf("where"));
+                value = value.replace("where", "kjer je").replace("WHERE", "kjer je");
+                value = value.replaceAll("LIKE", "vsebuje").replaceAll("like", "vsebuje");
+
+
+                value = value.replaceAll(" AND ", " in ");
+
+                value = value.replaceAll("'", "").replaceAll("`", "");
+
+
+
+            }
+            else value = "vse vrstice tabele";
+
+            //value = value.replaceAll("\\(", "").replaceAll("\\)", "");
+            //value = value.replaceAll("'", "");
+            //----
+
+            //zapiši vrednost v hashmap
+            vrednosti.put(rezultat[0][i], value);
+
+            zapisi = null;
+            value = null;
+        }
+
+        return vrednosti;
     }
     //--------
 
