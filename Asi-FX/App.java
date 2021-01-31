@@ -4,6 +4,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -14,10 +19,18 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import javax.swing.*;
+import java.awt.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Arrays;
 
 /**
@@ -49,7 +62,7 @@ public class App extends Application {
      * @param button Button, ki ga urejamo
      */
     static void setButtonProperties_GrayBold(Button button) {
-        button.setStyle(Colors.LIGHTGRAY_BASE_COLOR);
+        button.setStyle(Colors.LIGHTGRAY_BASE);
         button.setFont(Font.font("Segoe", FontWeight.BOLD, 12));
     }
 
@@ -59,7 +72,7 @@ public class App extends Application {
      * @param label Label, ki ga urejamo
      */
     static void setLabelProperties_InfoLabel(Label label) {
-        label.setStyle(Colors.WHITE_BG_COLOR_LINEARGRADIENT +
+        label.setStyle(Colors.WHITE_BG_LINEARGRADIENT +
                 "-fx-padding: 4px;" +
                 "-fx-background-radius: 3px;" +
                 "-fx-border-radius: 3px;" +
@@ -79,122 +92,136 @@ public class App extends Application {
         listView.setItems(items);
     }
 
+    static void saveConfig(File file) {
+        try {
+            PrintWriter printWriter = new PrintWriter(file);
+            printWriter.println("username:" + Resource.username);
+            printWriter.println("password:" + Resource.password);
+            printWriter.println("ip:" + Resource.serverIp);
+            printWriter.println("port:" + Resource.serverPort);
+            printWriter.println("database:" + Resource.database);
+            printWriter.close();
+            JOptionPane.showMessageDialog(Resource.jFrame, Texts.SAVE_CONFIG_PROMPT, null, JOptionPane.INFORMATION_MESSAGE);
+        } catch (FileNotFoundException ignored) {
+        }
+    }
+
     /**
      * Spremeni temo aplikacije v temno
      */
     static void setToDarkTheme() {
-        Resource.menuBar.setStyle(Colors.TRUEBLACK_BG_COLOR);
+        Resource.menuBar.setStyle(Colors.TRUEBLACK_BG);
         Resource.title_img.setImage(new Image("images/database_logo_white.png"));
-        Resource.menu.setStyle(Colors.TRUEBLACK_BG_COLOR);
-        Resource.mainPane.setStyle(Colors.BLACK_BG_COLOR);
-        Resource.upperPane.setStyle(Colors.GRAY_BG_COLOR +
+        Resource.menu.setStyle(Colors.TRUEBLACK_BG);
+        Resource.mainPane.setStyle(Colors.BLACK_BG);
+        Resource.upperPane.setStyle(Colors.GRAY_BG +
                 "-fx-background-radius: 5px;" +
                 "-fx-background-insets: 2px;");
-        Resource.connectInfoPane.setStyle(Colors.BLACK_BG_COLOR +
+        Resource.connectInfoPane.setStyle(Colors.BLACK_BG +
                 "-fx-background-radius: 5px;" +
                 "-fx-background-insets: 2px;");
-        Resource.connectionInfoTitleLabel.setStyle(Colors.WHITE_TEXT_COLOR);
-        Resource.usernameLabel.setStyle(Colors.WHITE_TEXT_COLOR);
-        Resource.serverIPLabel.setStyle(Colors.WHITE_TEXT_COLOR);
-        Resource.serverPortLabel.setStyle(Colors.WHITE_TEXT_COLOR);
-        Resource.databaseLabel.setStyle(Colors.WHITE_TEXT_COLOR);
-        Resource.infoPane.setStyle(Colors.BLACK_BG_COLOR +
+        Resource.connectionInfoTitleLabel.setStyle(Colors.WHITE_TEXT);
+        Resource.usernameLabel.setStyle(Colors.WHITE_TEXT);
+        Resource.serverIPLabel.setStyle(Colors.WHITE_TEXT);
+        Resource.serverPortLabel.setStyle(Colors.WHITE_TEXT);
+        Resource.databaseLabel.setStyle(Colors.WHITE_TEXT);
+        Resource.infoPane.setStyle(Colors.BLACK_BG +
                 "-fx-background-radius: 5px;" +
                 "-fx-background-insets: 2px;");
-        Resource.infoTitleLabel.setStyle(Colors.WHITE_TEXT_COLOR);
-        Resource.authorLabel.setStyle(Colors.WHITE_TEXT_COLOR);
-        Resource.creationDateLabel.setStyle(Colors.WHITE_TEXT_COLOR);
-        Resource.deletionDateLabel.setStyle(Colors.WHITE_TEXT_COLOR);
-        Resource.lowerPane.setStyle(Colors.GRAY_BG_COLOR +
+        Resource.infoTitleLabel.setStyle(Colors.WHITE_TEXT);
+        Resource.authorLabel.setStyle(Colors.WHITE_TEXT);
+        Resource.creationDateLabel.setStyle(Colors.WHITE_TEXT);
+        Resource.deletionDateLabel.setStyle(Colors.WHITE_TEXT);
+        Resource.lowerPane.setStyle(Colors.GRAY_BG +
                 "-fx-background-radius: 5px;" +
                 "-fx-background-insets: 2px;");
-        Resource.insertionLabel.setStyle(Colors.WHITE_TEXT_COLOR);
-        Resource.insertionUsernameLabel.setStyle(Colors.WHITE_TEXT_COLOR);
-        Resource.insertionTableView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
-        Resource.viewLabel.setStyle(Colors.WHITE_TEXT_COLOR);
-        Resource.viewUsernameLabel.setStyle(Colors.WHITE_TEXT_COLOR);
-        Resource.viewTableView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
-        Resource.updateLabel.setStyle(Colors.WHITE_TEXT_COLOR);
-        Resource.updateUsernameLabel.setStyle(Colors.WHITE_TEXT_COLOR);
-        Resource.updateTableView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
-        Resource.deletionLabel.setStyle(Colors.WHITE_TEXT_COLOR);
-        Resource.deletionUsernameLabel.setStyle(Colors.WHITE_TEXT_COLOR);
-        Resource.deletionTableView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
-        Resource.rightSuperPane.setStyle(Colors.GRAY_BG_COLOR +
+        Resource.insertionLabel.setStyle(Colors.WHITE_TEXT);
+        Resource.insertionUsernameLabel.setStyle(Colors.WHITE_TEXT);
+        Resource.insertionTableView.setStyle(Colors.LIGHTGRAY_BG);
+        Resource.viewLabel.setStyle(Colors.WHITE_TEXT);
+        Resource.viewUsernameLabel.setStyle(Colors.WHITE_TEXT);
+        Resource.viewTableView.setStyle(Colors.LIGHTGRAY_BG);
+        Resource.updateLabel.setStyle(Colors.WHITE_TEXT);
+        Resource.updateUsernameLabel.setStyle(Colors.WHITE_TEXT);
+        Resource.updateTableView.setStyle(Colors.LIGHTGRAY_BG);
+        Resource.deletionLabel.setStyle(Colors.WHITE_TEXT);
+        Resource.deletionUsernameLabel.setStyle(Colors.WHITE_TEXT);
+        Resource.deletionTableView.setStyle(Colors.LIGHTGRAY_BG);
+        Resource.rightSuperPane.setStyle(Colors.GRAY_BG +
                 "-fx-background-radius: 5px;" +
                 "-fx-background-insets: 2px;");
-        Resource.tablesLabel.setStyle(Colors.WHITE_TEXT_COLOR);
-        Resource.tablesListView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
-        Resource.usersIPLabel.setStyle(Colors.WHITE_TEXT_COLOR);
-        Resource.usersIPListView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
-        Resource.usersUsernameLabel.setStyle(Colors.WHITE_TEXT_COLOR);
-        Resource.usersUsernameListView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
-        Resource.tablesSelectionLabel.setStyle(Colors.WHITE_TEXT_COLOR);
-        Resource.tablesSelectionListView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
-        Resource.usersIPSelectionLabel.setStyle(Colors.WHITE_TEXT_COLOR);
-        Resource.usersIPSelectionListView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
-        Resource.usersUsernameSelectionLabel.setStyle(Colors.WHITE_TEXT_COLOR);
-        Resource.usersUsernameSelectionListView.setStyle(Colors.LIGHTGRAY_BG_COLOR);
-        Resource.menuMainContainer.setStyle(Colors.TRUEBLACK_BG_COLOR);
+        Resource.tablesLabel.setStyle(Colors.WHITE_TEXT);
+        Resource.tablesListView.setStyle(Colors.LIGHTGRAY_BG);
+        Resource.usersIPLabel.setStyle(Colors.WHITE_TEXT);
+        Resource.usersIPListView.setStyle(Colors.LIGHTGRAY_BG);
+        Resource.usersUsernameLabel.setStyle(Colors.WHITE_TEXT);
+        Resource.usersUsernameListView.setStyle(Colors.LIGHTGRAY_BG);
+        Resource.tablesSelectionLabel.setStyle(Colors.WHITE_TEXT);
+        Resource.tablesSelectionListView.setStyle(Colors.LIGHTGRAY_BG);
+        Resource.usersIPSelectionLabel.setStyle(Colors.WHITE_TEXT);
+        Resource.usersIPSelectionListView.setStyle(Colors.LIGHTGRAY_BG);
+        Resource.usersUsernameSelectionLabel.setStyle(Colors.WHITE_TEXT);
+        Resource.usersUsernameSelectionListView.setStyle(Colors.LIGHTGRAY_BG);
+        Resource.menuMainContainer.setStyle(Colors.TRUEBLACK_BG);
     }
 
     /**
      * Spremeni temo aplikacije v svetlo
      */
     static void setToLightTheme() {
-        Resource.menuBar.setStyle(Colors.BEIGE_BG_COLOR);
+        Resource.menuBar.setStyle(Colors.BEIGE_BG);
         Resource.title_img.setImage(new Image("images/database_logo_black.png"));
-        Resource.menu.setStyle(Colors.BEIGE_BG_COLOR);
-        Resource.mainPane.setStyle(Colors.TRUEWHITE_BG_COLOR);
-        Resource.upperPane.setStyle(Colors.BEIGE_BG_COLOR +
+        Resource.menu.setStyle(Colors.BEIGE_BG);
+        Resource.mainPane.setStyle(Colors.TRUEWHITE_BG);
+        Resource.upperPane.setStyle(Colors.BEIGE_BG +
                 "-fx-background-radius: 5px;" +
                 "-fx-background-insets: 2px;");
-        Resource.connectInfoPane.setStyle(Colors.WHITE_BG_COLOR +
+        Resource.connectInfoPane.setStyle(Colors.WHITE_BG +
                 "-fx-background-radius: 5px;" +
                 "-fx-background-insets: 2px;");
-        Resource.connectionInfoTitleLabel.setStyle(Colors.BLACK_TEXT_COLOR);
-        Resource.usernameLabel.setStyle(Colors.BLACK_TEXT_COLOR);
-        Resource.serverIPLabel.setStyle(Colors.BLACK_TEXT_COLOR);
-        Resource.serverPortLabel.setStyle(Colors.BLACK_TEXT_COLOR);
-        Resource.databaseLabel.setStyle(Colors.BLACK_TEXT_COLOR);
-        Resource.infoPane.setStyle(Colors.WHITE_BG_COLOR +
+        Resource.connectionInfoTitleLabel.setStyle(Colors.BLACK_TEXT);
+        Resource.usernameLabel.setStyle(Colors.BLACK_TEXT);
+        Resource.serverIPLabel.setStyle(Colors.BLACK_TEXT);
+        Resource.serverPortLabel.setStyle(Colors.BLACK_TEXT);
+        Resource.databaseLabel.setStyle(Colors.BLACK_TEXT);
+        Resource.infoPane.setStyle(Colors.WHITE_BG +
                 "-fx-background-radius: 5px;" +
                 "-fx-background-insets: 2px;");
-        Resource.infoTitleLabel.setStyle(Colors.BLACK_TEXT_COLOR);
-        Resource.authorLabel.setStyle(Colors.BLACK_TEXT_COLOR);
-        Resource.creationDateLabel.setStyle(Colors.BLACK_TEXT_COLOR);
-        Resource.deletionDateLabel.setStyle(Colors.BLACK_TEXT_COLOR);
-        Resource.lowerPane.setStyle(Colors.BEIGE_BG_COLOR +
+        Resource.infoTitleLabel.setStyle(Colors.BLACK_TEXT);
+        Resource.authorLabel.setStyle(Colors.BLACK_TEXT);
+        Resource.creationDateLabel.setStyle(Colors.BLACK_TEXT);
+        Resource.deletionDateLabel.setStyle(Colors.BLACK_TEXT);
+        Resource.lowerPane.setStyle(Colors.BEIGE_BG +
                 "-fx-background-radius: 5px;" +
                 "-fx-background-insets: 2px;");
-        Resource.insertionLabel.setStyle(Colors.BLACK_TEXT_COLOR);
-        Resource.insertionUsernameLabel.setStyle(Colors.BLACK_TEXT_COLOR);
-        Resource.insertionTableView.setStyle(Colors.TRUEWHITE_BG_COLOR);
-        Resource.viewLabel.setStyle(Colors.BLACK_TEXT_COLOR);
-        Resource.viewUsernameLabel.setStyle(Colors.BLACK_TEXT_COLOR);
-        Resource.viewTableView.setStyle(Colors.TRUEWHITE_BG_COLOR);
-        Resource.updateLabel.setStyle(Colors.BLACK_TEXT_COLOR);
-        Resource.updateUsernameLabel.setStyle(Colors.BLACK_TEXT_COLOR);
-        Resource.updateTableView.setStyle(Colors.TRUEWHITE_BG_COLOR);
-        Resource.deletionLabel.setStyle(Colors.BLACK_TEXT_COLOR);
-        Resource.deletionUsernameLabel.setStyle(Colors.BLACK_TEXT_COLOR);
-        Resource.deletionTableView.setStyle(Colors.TRUEWHITE_BG_COLOR);
-        Resource.rightSuperPane.setStyle(Colors.BEIGE_BG_COLOR +
+        Resource.insertionLabel.setStyle(Colors.BLACK_TEXT);
+        Resource.insertionUsernameLabel.setStyle(Colors.BLACK_TEXT);
+        Resource.insertionTableView.setStyle(Colors.TRUEWHITE_BG);
+        Resource.viewLabel.setStyle(Colors.BLACK_TEXT);
+        Resource.viewUsernameLabel.setStyle(Colors.BLACK_TEXT);
+        Resource.viewTableView.setStyle(Colors.TRUEWHITE_BG);
+        Resource.updateLabel.setStyle(Colors.BLACK_TEXT);
+        Resource.updateUsernameLabel.setStyle(Colors.BLACK_TEXT);
+        Resource.updateTableView.setStyle(Colors.TRUEWHITE_BG);
+        Resource.deletionLabel.setStyle(Colors.BLACK_TEXT);
+        Resource.deletionUsernameLabel.setStyle(Colors.BLACK_TEXT);
+        Resource.deletionTableView.setStyle(Colors.TRUEWHITE_BG);
+        Resource.rightSuperPane.setStyle(Colors.BEIGE_BG +
                 "-fx-background-radius: 5px;" +
                 "-fx-background-insets: 2px;");
-        Resource.tablesLabel.setStyle(Colors.BLACK_TEXT_COLOR);
-        Resource.tablesListView.setStyle(Colors.TRUEWHITE_BG_COLOR);
-        Resource.usersIPLabel.setStyle(Colors.BLACK_TEXT_COLOR);
-        Resource.usersIPListView.setStyle(Colors.TRUEWHITE_BG_COLOR);
-        Resource.usersUsernameLabel.setStyle(Colors.BLACK_TEXT_COLOR);
-        Resource.usersUsernameListView.setStyle(Colors.TRUEWHITE_BG_COLOR);
-        Resource.tablesSelectionLabel.setStyle(Colors.BLACK_TEXT_COLOR);
-        Resource.tablesSelectionListView.setStyle(Colors.TRUEWHITE_BG_COLOR);
-        Resource.usersIPSelectionLabel.setStyle(Colors.BLACK_TEXT_COLOR);
-        Resource.usersIPSelectionListView.setStyle(Colors.TRUEWHITE_BG_COLOR);
-        Resource.usersUsernameSelectionLabel.setStyle(Colors.BLACK_TEXT_COLOR);
-        Resource.usersUsernameSelectionListView.setStyle(Colors.TRUEWHITE_BG_COLOR);
-        Resource.menuMainContainer.setStyle(Colors.BEIGE_BG_COLOR);
+        Resource.tablesLabel.setStyle(Colors.BLACK_TEXT);
+        Resource.tablesListView.setStyle(Colors.TRUEWHITE_BG);
+        Resource.usersIPLabel.setStyle(Colors.BLACK_TEXT);
+        Resource.usersIPListView.setStyle(Colors.TRUEWHITE_BG);
+        Resource.usersUsernameLabel.setStyle(Colors.BLACK_TEXT);
+        Resource.usersUsernameListView.setStyle(Colors.TRUEWHITE_BG);
+        Resource.tablesSelectionLabel.setStyle(Colors.BLACK_TEXT);
+        Resource.tablesSelectionListView.setStyle(Colors.TRUEWHITE_BG);
+        Resource.usersIPSelectionLabel.setStyle(Colors.BLACK_TEXT);
+        Resource.usersIPSelectionListView.setStyle(Colors.TRUEWHITE_BG);
+        Resource.usersUsernameSelectionLabel.setStyle(Colors.BLACK_TEXT);
+        Resource.usersUsernameSelectionListView.setStyle(Colors.TRUEWHITE_BG);
+        Resource.menuMainContainer.setStyle(Colors.BEIGE_BG);
     }
 
     /**
@@ -313,7 +340,7 @@ public class App extends Application {
         Resource.connectionInfoTitleLabel = new Label(Texts.SERVER_INFO);
         Resource.connectionInfoTitleLabel.setPadding(new Insets(0, 10, 10, 0));
         Resource.connectionIndicatorCircle = new Circle(10);
-        Resource.connectionIndicatorCircle.setFill(Color.valueOf(Colors.RED_COLOR));
+        Resource.connectionIndicatorCircle.setFill(Color.valueOf(Colors.RED));
         Tooltip.install(Resource.connectionIndicatorCircle, new Tooltip(Texts.CONNECTION_STATUS));
         Resource.connectionInfoContainer = new HBox();
         Resource.connectionInfoContainer.getChildren().addAll(Resource.connectionInfoTitleLabel,
@@ -397,9 +424,21 @@ public class App extends Application {
         });
         Resource.saveConfigButton.setOnAction((event) -> {
             // Shrani podatke o povezavi v datoteko
+            // Prikaže okno za shranjevanje datoteke
+            FileChooser fileChooser = new FileChooser();
+            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("CFG datoteke (*.cfg)", "*.cfg");
+            fileChooser.getExtensionFilters().add(extFilter);
+            fileChooser.setInitialDirectory(new File(Texts.ASI_FX_DIRECTORY + "config"));
+            File file = fileChooser.showSaveDialog(primaryStage);
+            // Shrani datoteko
+            if (file != null) saveConfig(file);
         });
         Resource.helpButton.setOnAction((event) -> {
-            // Prikaže pomoč uporabniku
+            if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE))
+                try {
+                    Desktop.getDesktop().browse(new URI("https://gitlab.vegova.si/SerhioN/podjetje-sqmalsys/-/tree/Asi-FX/Asi-FX"));
+                } catch (IOException | URISyntaxException ignored) {
+                }
         });
         Resource.clearButton.setOnAction((event) -> {
             // Počisti izbiro
@@ -631,21 +670,21 @@ public class App extends Application {
  * Razred vsebuje barve uporabljene v aplikaciji
  */
 class Colors {
-    final static String TRUEBLACK_BG_COLOR = "-fx-background-color: rgb(10, 10, 10);";
-    final static String BLACK_BG_COLOR = "-fx-background-color: rgb(43, 43, 45);";
-    final static String GRAY_BG_COLOR = "-fx-background-color: rgb(60, 63, 65);";
-    final static String LIGHTGRAY_BASE_COLOR = "-fx-base: rgb(180, 180, 180);";
-    final static String WHITE_TEXT_COLOR = "-fx-text-fill: rgb(250, 250, 250);";
-    final static String WHITE_BG_COLOR_LINEARGRADIENT = "-fx-background-color: rgb(255, 255, 255)," +
+    final static String TRUEBLACK_BG = "-fx-background-color: rgb(10, 10, 10);";
+    final static String BLACK_BG = "-fx-background-color: rgb(43, 43, 45);";
+    final static String GRAY_BG = "-fx-background-color: rgb(60, 63, 65);";
+    final static String LIGHTGRAY_BASE = "-fx-base: rgb(180, 180, 180);";
+    final static String WHITE_TEXT = "-fx-text-fill: rgb(250, 250, 250);";
+    final static String WHITE_BG_LINEARGRADIENT = "-fx-background-color: rgb(255, 255, 255)," +
             " linear-gradient(to bottom, #e3e3e3 0%, #cccccc 100%);";
-    final static String BEIGE_BG_COLOR = "-fx-background-color: rgb(253,242,211);";
-    final static String WHITE_BG_COLOR = "-fx-background-color: rgb(250, 250, 250);";
-    final static String TRUEWHITE_BG_COLOR = "-fx-background-color: rgb(255, 255, 255);";
-    final static String LIGHTGRAY_BG_COLOR = "-fx-background-color: rgb(195, 195, 195);";
-    final static String BLACK_TEXT_COLOR = "-fx-text-fill: rgb(10, 10, 10);";
-    final static String RED_COLOR = "#d23c28";
-    final static String YELLOW_COLOR = "#cdbb44";
-    final static String GREEN_COLOR = "#419941";
+    final static String BEIGE_BG = "-fx-background-color: rgb(253,242,211);";
+    final static String WHITE_BG = "-fx-background-color: rgb(250, 250, 250);";
+    final static String TRUEWHITE_BG = "-fx-background-color: rgb(255, 255, 255);";
+    final static String LIGHTGRAY_BG = "-fx-background-color: rgb(195, 195, 195);";
+    final static String BLACK_TEXT = "-fx-text-fill: rgb(10, 10, 10);";
+    final static String RED = "#d23c28";
+    final static String YELLOW = "#cdbb44";
+    final static String GREEN = "#419941";
 }
 
 /**
@@ -707,12 +746,15 @@ class Texts {
     final static String SAVE_CONFIG_TOOLTIP = "Shrani trenutno konfiguracijo v datoteko";
     final static String HELP_TOOLTIP = "Prikaže okno za pomoč uporabniku";
     final static String CLEAR_TOOLTIP = "Pobriše izbrane podatke";
+    final static String SAVE_CONFIG_PROMPT = "Konfiguracija uspešno shranjena";
+    final static String LOAD_CONFIG_PROMPT = "Konfiguracija uspešno naložena";
     // Default server values
     final static String DEFAULT_USERNAME = "remote";
     final static String DEFAULT_PASSWORD = "remote";
     final static String DEFAULT_IP = "193.2.190.23";
     final static String DEFAULT_PORT = "3306";
     final static String DEFAULT_DATABASE = "mysql";
+    final static String ASI_FX_DIRECTORY = "Asi-FX/";
 }
 
 /**
