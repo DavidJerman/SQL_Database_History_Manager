@@ -43,7 +43,7 @@ public class backend { //predlagam da se ime razreda začne z veliko začetnico 
      @return Vracanje
      @thorws Exception
      **/
-    public String[] getTableInfo(String tableName){
+    public String[] getTableInfo(String tableName){ //TO DELAM ZDELE ROK
 
         return null;
     }
