@@ -790,6 +790,7 @@ public class App extends Application {
             if (Resource.selectedIp != null) {
                 String selectedTable = Resource.tablesSelectionListView.getSelectionModel().getSelectedItem();
                 if (selectedTable != null) {
+                    // TODO: Informacija o uporabniku in tabeli
                     populateTableViewWith(Resource.insertionTableView,
                             backend.getDataInsert(Resource.selectedIp, selectedTable));
                     populateTableViewWith(Resource.deletionTableView,
@@ -805,6 +806,7 @@ public class App extends Application {
             if (Resource.selectedTable != null) {
                 String selectedIP = Resource.usersIPSelectionListView.getSelectionModel().getSelectedItem();
                 if (selectedIP != null) {
+                    // TODO: Informacija o uporabniku in tabeli
                     populateTableViewWith(Resource.insertionTableView,
                             backend.getDataInsert(selectedIP, Resource.selectedTable));
                     populateTableViewWith(Resource.deletionTableView,
@@ -822,6 +824,7 @@ public class App extends Application {
                 if (selectedUsername != null) {
                     String selectedIP = backend.nameToIP(selectedUsername);
                     if (selectedIP != null) {
+                        // TODO: Informacija o uporabniku in tabeli
                         populateTableViewWith(Resource.insertionTableView,
                                 backend.getDataInsert(selectedIP, Resource.selectedTable));
                         populateTableViewWith(Resource.deletionTableView,
