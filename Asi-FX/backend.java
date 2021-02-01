@@ -37,15 +37,53 @@ public class backend { //predlagam da se ime razreda začne z veliko začetnico 
 
 
     /**
-     Opis
+     Vrne metapodatke o tabeli
 
      @param
-     @return Vracanje
-     @thorws Exception
+     @return String[]{kdo ustvaril, kdaj ustvaril, kdo izbrisal, kdaj izbrisal}
      **/
-    public String[] getTableInfo(String tableName){ //TO DELAM ZDELE ROK
+    public String[] getTableInfo(String tableName){
+        //Dobi log kreacije
+        ResultSet resultSet = executeQuery(
+                "SELECT user_host, event_time FROM mysql.general_log " +
+                "WHERE argument LIKE '%TMlinarVahtarRok7%'" +
+                        "AND argument LIKE '%CREATE TABLE%' AND argument LIKE '%create table%' " +
+                        "AND argument NOT LIKE  '%SHOW%' AND argument NOT LIKE  '%show%' " +
+                        "AND argument NOT LIKE  '%SELECT%' AND argument NOT LIKE  '%select%' ");
 
-        return null;
+        String[] ret = new String[4];
+
+        //Vpiše ip kreatorja in datum kreacije
+        try {
+            resultSet.next();
+            ret[0] = userhostToIP(resultSet.getString(1));
+            ret[1] = resultSet.getString(2);
+
+
+        } catch (SQLException exception) {
+            ret[0] = null; ret[1] = null;
+        }
+
+        //Dobi log brisanja
+        resultSet = executeQuery(
+                "SELECT user_host, event_time FROM mysql.general_log " +
+                        "WHERE argument LIKE '%TMlinarVahtarRok7%'" +
+                        "AND (argument LIKE '%DROP TABLE%' OR argument LIKE '%drop table%') " +
+                        "AND argument NOT LIKE  '%SHOW%' AND argument NOT LIKE  '%show%' " +
+                        "AND argument NOT LIKE  '%SELECT%' AND argument NOT LIKE  '%select%' ");
+
+
+        //Vpiše ip izbrisatelja in datum izbrisanja
+        try {
+            resultSet.next();
+            ret[2] = userhostToIP(resultSet.getString(1));
+            ret[3] = resultSet.getString(2);
+
+
+        } catch (SQLException exception){
+            ret[2] = null; ret[3] = null;
+        }
+        return ret;
     }
 
     //--------
