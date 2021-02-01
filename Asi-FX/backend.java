@@ -43,7 +43,7 @@ public class backend { //predlagam da se ime razreda začne z veliko začetnico 
      @return Vracanje
      @thorws Exception
      **/
-    public String[] getTableInfo(String tableName){
+    public String[] getTableInfo(String tableName){ //TO DELAM ZDELE ROK
 
         return null;
     }
@@ -467,24 +467,31 @@ public class backend { //predlagam da se ime razreda začne z veliko začetnico 
 
 
     /**
-     Funkcija IP pretvori v ime preko avtorjev ustvarjenih poimenovanih tabel. Če imena ni vrne null;
+     Funkcija IP pretvori v ime preko avtorjev ustvarjenih poimenovanih tabel;
 
      @param IP
-     @return name
+     @return name ali null
      **/
-    public String crossReferenceIP(String IP){
-        return nameAndIP_map.get(IP);
+    public String IPtoName(String IP){
+        if(nameAndIP_map.containsKey(IP))
+            return nameAndIP_map.get(IP);
+
+        return null;
 
     }
 
     /**
-     Funkcija IP pretvori v ime preko avtorjev ustvarjenih poimenovanih tabel. Če imena ni vrne null;
+     Funkcija name pretvori v ime preko avtorjev ustvarjenih poimenovanih tabel;
 
-     @param
-     @return name
+     @param name
+     @return IP ali null
      **/
-    public String crossReferenceName(String name){
-        return nameAndIP_map.get(name);
+    public String nameToIP(String name){
+        if(nameAndIP_map.containsKey(name))
+            return nameAndIP_map.get(name);
+
+        return null;
+
     }
 
     /**
