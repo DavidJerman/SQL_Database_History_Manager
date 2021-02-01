@@ -1,5 +1,6 @@
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -101,7 +102,27 @@ public class App extends Application {
      * @param hashMap   Vrednosti, ki jih dodajamo v TableView
      */
     static void populateTableViewWith(TableView<String[]> tableView, HashMap<String, String> hashMap) {
-        // TODO: Polnjenje TableView
+        tableView.getColumns().clear();
+        tableView.getItems().clear();
+        TableColumn<String[], String> column1 = new TableColumn<>("Čas in datum:");
+        TableColumn<String[], String> column2 = new TableColumn<>("Vsebina:");
+        tableView.getColumns().add(column1);
+        tableView.getColumns().add(column2);
+        column1.setCellValueFactory((p) -> {
+            String[] x = p.getValue();
+            return new SimpleStringProperty(x != null && x.length > 0 ? x[0] : "N/A");
+        });
+        column2.setCellValueFactory((p) -> {
+            String[] x = p.getValue();
+            return new SimpleStringProperty(x != null && x.length > 0 ? x[1] : "N/A");
+        });
+        String[][] data = new String[hashMap.size()][2];
+        int i = 0;
+        for (String key : hashMap.keySet()) {
+            data[i] = new String[]{key, hashMap.get(key)};
+            i++;
+        }
+        tableView.getItems().addAll(Arrays.asList(data));
     }
 
     /**
@@ -399,9 +420,10 @@ public class App extends Application {
         //# Handler-ji za gumbe
         Resource.connectButton.setOnAction((event) -> {
             // Vzpostavi povezavo z sql strežnikom
-            // TODO: Prošnja za povezavo
-            // Zaenkrat privzeto, da je povezava uspešna
-            if (!Resource.connected) {
+            Resource.connected = backend.connect(Resource.username, Resource.password, Resource.serverIp,
+                    Resource.serverPort, Resource.database);
+            // Če je povezava vzpostavljena, sprejema podatke
+            if (Resource.connected) {
                 Thread thread = new Thread(() -> {
                     // Spreminjanje stanja indikatorja
                     Platform.runLater(() -> changeIndicatorState(1));
@@ -417,18 +439,22 @@ public class App extends Application {
                         work.join();
                         // Spreminjanje stanja indikatorja
                         Platform.runLater(() -> changeIndicatorState(2));
+                        JOptionPane.showMessageDialog(Resource.jFrame, Texts.CONNECTION_SUCCESSFUL, null,
+                                JOptionPane.INFORMATION_MESSAGE);
                     } catch (InterruptedException ignored) {
                     }
                 });
                 thread.start();
+            } else {
+                JOptionPane.showMessageDialog(Resource.jFrame, Texts.CONNECTION_ERROR, null,
+                        JOptionPane.ERROR_MESSAGE);
             }
         });
         Resource.disconnectButton.setOnAction((event) -> {
             // Prekine povezavo z sql strežnikom
-            // TODO: Prošnja za prekinitev povezave
+            Resource.connected = !backend.disconnect();
             // Spreminjanje stanja gumba
-            if (Resource.connected) {
-                Resource.connected = false;
+            if (!Resource.connected) {
                 Platform.runLater(() -> {
                     clearSelection();
                     Resource.tablesListView.setItems(null);
@@ -699,7 +725,7 @@ public class App extends Application {
             // Izpiše vse akcije izbranega uporabnika
             String selectedUserUsername = Resource.usersUsernameListView.getSelectionModel().getSelectedItem();
             // TODO: Uporaba prave metode
-            Resource.selectedIp = backend.userhostToIP(selectedUserUsername);
+            Resource.selectedIp = backend.crossReferenceName(selectedUserUsername);
             clearSelection();
             Platform.runLater(() -> {
                 // TODO: Napolni tabelo tabel izbranega uporabnika (Username)
@@ -754,8 +780,7 @@ public class App extends Application {
         Resource.usersUsernameSelectionListView.getSelectionModel().selectedItemProperty().addListener((ignored) -> {
             if (Resource.selectedTable != null) {
                 String selectedUsername = Resource.usersIPSelectionListView.getSelectionModel().getSelectedItem();
-                // TODO: Uporaba prave metode
-                String selectedIP = backend.crossReferenceIP(selectedUsername);
+                String selectedIP = backend.crossReferenceName(selectedUsername);
                 populateTableViewWith(Resource.insertionTableView,
                         backend.getDataInsert(selectedIP, Resource.selectedTable));
                 populateTableViewWith(Resource.deletionTableView,
@@ -965,12 +990,14 @@ class Texts {
     final static String SAVE_CONFIG_PROMPT = "Konfiguracija uspešno shranjena";
     final static String LOAD_CONFIG_PROMPT = "Konfiguracija uspešno naložena";
     final static String FILE_ERROR = "Prišlo je do napake med izvajanjem želene operacije";
+    final static String CONNECTION_ERROR = "Povezave ni bilo mogoče vzpostaviti!";
+    final static String CONNECTION_SUCCESSFUL = "Povezava uspešno vzpostavljena!";
     // Default server values
     final static String DEFAULT_USERNAME = "remote";
     final static String DEFAULT_PASSWORD = "remote";
     final static String DEFAULT_IP = "193.2.190.23";
     final static String DEFAULT_PORT = "3306";
-    final static String DEFAULT_DATABASE = "mysql";
+    final static String DEFAULT_DATABASE = "remote11";
     final static String ASI_FX_DIRECTORY = "Asi-FX/";
 }
 
