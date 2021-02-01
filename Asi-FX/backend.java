@@ -8,7 +8,7 @@ import java.util.*;
 @version - 25.1.2021
 @since - 25.1.2021
 **/
-public class backend { //predlagam da se ime razreda začne z veliko začetnico (ker se ime razreda običajno začne z veliko zač.) <- Gašper Suhadolnik
+public class backend {
 
     Connection connection; //Povazava z SQL serverjem
     String currentDatabase = "remote11"; //Ime baze na kateri trenutno izvajamo operacije
@@ -99,7 +99,9 @@ public class backend { //predlagam da se ime razreda začne z veliko začetnico 
         checkConnection();
         if(table.contains(".")) table = table.substring(table.indexOf(".")+1);
 
-        String[][] rezultat = queryToStringArray("select event_time, argument from mysql.general_log where argument like 'select%' and user_host like '%"+user+"%' and argument like '%"+ table +"%';"); //'%86.61.30.67%';");
+        //ne pokaži rezultata, kjer je ime tabele enako mysql.general_log, ker drugače pokaže tudi podatke iz log-ov, ker se pri njih pojavijo ravno taki podatki, ki jih s to metodo iščemo
+        //to je začasna rešitev, treba bo enkrat popravit in ob zapisu preverit, ali stolpci sploh obstajajo v tabeli in v nasprotnem primeru ignorirati te vrstice
+        String[][] rezultat = queryToStringArray("select event_time, argument from mysql.general_log where argument like 'select%' and user_host like '%"+user+"%' and argument like '%"+ table +"%' and argument not like '%mysql.general_log%';");
         HashMap<String, String> vrednosti = new HashMap<>();
 
         for(int i = 1; i < rezultat[0].length; i++){ //po vrsticah ()
