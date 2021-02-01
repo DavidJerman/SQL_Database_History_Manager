@@ -1,8 +1,5 @@
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.TreeSet;
+import java.util.*;
 
 /**
  * Communication with the SQL database log
@@ -15,7 +12,7 @@ public class backend { //predlagam da se ime razreda začne z veliko začetnico 
 
     Connection connection; //Povazava z SQL serverjem
     String currentDatabase = "remote11"; //Ime baze na kateri trenutno izvajamo operacije
-    HashMap<String,String> nameAndIP_map = new HashMap<String,String>(); //Map imen in ip naslovov
+    TreeMap<String,String> nameAndIP_map = new TreeMap<String,String>(); //Map imen in ip naslovov
 
 
     /**
@@ -476,10 +473,18 @@ public class backend { //predlagam da se ime razreda začne z veliko začetnico 
      @return name
      **/
     public String crossReferenceIP(String IP){
-        if(nameAndIP_map.containsValue(IP)){
-            return nameAndIP_map.get(IP);
-        }
-        return null;
+        return nameAndIP_map.get(IP);
+
+    }
+
+    /**
+     Funkcija IP pretvori v ime preko avtorjev ustvarjenih poimenovanih tabel. Če imena ni vrne null;
+
+     @param
+     @return name
+     **/
+    public String crossReferenceName(String name){
+        return nameAndIP_map.get(name);
     }
 
     /**
@@ -536,6 +541,7 @@ public class backend { //predlagam da se ime razreda začne z veliko začetnico 
 
                         //Vstavi ime in IP v hashmap
                         nameAndIP_map.put(user_host,argument);
+                        nameAndIP_map.put(argument,user_host);
 
                     } else continue;
 
