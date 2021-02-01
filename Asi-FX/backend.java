@@ -19,8 +19,8 @@ public class backend { //predlagam da se ime razreda začne z veliko začetnico 
      Privzeti konstruktor vzpostavi povezavo s podatkovno bazo in nastavi currentDatabase na privzeto vrednost
      **/
     public backend(){
-        checkConnection(); //vzpostavi povezavo ob kreiranju novega objekta razreda backend
-        this.currentDatabase = "remote11"; //privzeta podatkovna baza, s katero se operira, je remote11 (lahko se nastavi tudi katero drugo)
+        //checkConnection(); //vzpostavi povezavo ob kreiranju novega objekta razreda backend
+        //this.currentDatabase = "remote11"; //privzeta podatkovna baza, s katero se operira, je remote11 (lahko se nastavi tudi katero drugo)
     }
 
     /**
@@ -598,18 +598,51 @@ public class backend { //predlagam da se ime razreda začne z veliko začetnico 
         }
     }
 
+    /**Metoda vzpostavi povezavo s podatkovno bazo.
+     *
+     * @param username uporabniško ime
+     * @param password geslo
+     * @param serverIp ip serverja, na katerem je podatkovna baza
+     * @param serverPort port serverja, na katerem je podatkovan baza
+     * @param database podatkovna baza (shema), ki jo trenutno uporablja povezava
+     * @return vrne vrednost true, če je povezava uspešna, drugače vrne false.
+     */
+    public boolean connect(String username, String password, String serverIp, String serverPort, String database){
+        this.currentDatabase = database;
+        try {
+            if(connection == null || connection.isClosed()) {
+                try {
+                    Class.forName("com.mysql.jdbc.Driver");
+                } catch (ClassNotFoundException e) {
+                    System.out.println("CLassNotFoundException: " + e.getMessage());
+                    System.exit(1);
+                }
+
+                connection = DriverManager.getConnection("jdbc:mysql://"+ serverIp + ":"+ serverPort + "/"+currentDatabase, username, password);//"jdbc:mysql://193.2.190.23:3306/" + currentDatabase,"remote","remote");
+                return true; //če je povezava uspešna, potem vrni true
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return false; //če povezava ni uspešna, vrni false.
+    }
+
+
     /**
-     Metoda prekine povezavo s podatkovno bazo
+     Metoda prekine povezavo s podatkovno bazo.
+     @return vrni true, če je povezava uspešno prekinjena, drugače pa vrni false.
      **/
-    private void closeConnection(){
+    public boolean disconnect(){ //preimenovana iz closeConnection()
         try {
             if (connection != null) {
                 connection.close();
                 connection = null;
             }
+            return true; //*-> tukaj
         } catch (SQLException e){
             e.printStackTrace();
         }
+        return false; //če pride do napake med izvajanjem zgornjega try-catch bloka, potem ne pride do vračanja true*, in potem vrni false.
     }
 
     /**
