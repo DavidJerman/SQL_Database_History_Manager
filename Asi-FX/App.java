@@ -101,7 +101,16 @@ public class App extends Application {
      * @param hashMap   Vrednosti, ki jih dodajamo v TableView
      */
     static void populateTableViewWith(TableView<String[]> tableView, HashMap<String, String> hashMap) {
-        // TODO
+        // TODO: Polnjenje TableView
+    }
+
+    /**
+     * Vpiše informacije o tabeli
+     *
+     * @param table Tabela
+     */
+    static void setTableInfo(String table) {
+        // TODO: Dodajanje informacij tabele
     }
 
     /**
@@ -683,7 +692,7 @@ public class App extends Application {
             Resource.selectedIp = selectedUserIP;
             clearSelection();
             Platform.runLater(() -> {
-                // TODO
+                // TODO: Napolni tabelo tabel izbranega uporabnika (IP)
             });
         });
         Resource.usersUsernameListView.getSelectionModel().selectedItemProperty().addListener((ignored) -> {
@@ -692,7 +701,7 @@ public class App extends Application {
             Resource.selectedIp = backend.userhostToIP(selectedUserUsername);
             clearSelection();
             Platform.runLater(() -> {
-                // TODO
+                // TODO: Napolni tabelo tabel izbranega uporabnika (Username)
             });
         });
 
@@ -744,7 +753,8 @@ public class App extends Application {
         Resource.usersUsernameSelectionListView.getSelectionModel().selectedItemProperty().addListener((ignored) -> {
             if (Resource.selectedTable != null) {
                 String selectedUsername = Resource.usersIPSelectionListView.getSelectionModel().getSelectedItem();
-                String selectedIP = backend.userhostToIP(selectedUsername);
+                // TODO: Uporaba prave metode
+                String selectedIP = backend.crossReferenceIP(selectedUsername);
                 populateTableViewWith(Resource.insertionTableView,
                         backend.getDataInsert(selectedIP, Resource.selectedTable));
                 populateTableViewWith(Resource.deletionTableView,
