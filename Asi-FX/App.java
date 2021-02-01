@@ -81,6 +81,7 @@ public class App extends Application {
                 "-fx-border-radius: 3px;" +
                 "-fx-effect: innershadow(three-pass-box, rgba(0,0,0,0.75),1,0,1,1);");
         label.setMinWidth(150);
+        label.setMaxWidth(150);
     }
 
     /**
@@ -131,7 +132,21 @@ public class App extends Application {
      * @param table Tabela
      */
     static void setTableInfo(String table) {
-        // TODO: Dodajanje informacij tabele
+        String[] data = backend.getTableInfo(table);
+        Resource.creationAuthorValueLabel.setText(data[0] == null ? Texts.NA : data[0]);
+        Resource.creationDateValueLabel.setText(data[1] == null ? Texts.NA : data[1]);
+        Resource.deletionAuthorValueLabel.setText(data[2] == null ? Texts.NA : data[2]);
+        Resource.deletionDateValueLabel.setText(data[3] == null ? Texts.NA : data[3]);
+    }
+
+    /**
+     * Ponastavi informacije o tabeli
+     */
+    static void resetTableInfo() {
+        Resource.creationAuthorValueLabel.setText(null);
+        Resource.creationDateValueLabel.setText(null);
+        Resource.deletionAuthorValueLabel.setText(null);
+        Resource.deletionDateValueLabel.setText(null);
     }
 
     /**
@@ -190,8 +205,13 @@ public class App extends Application {
         Resource.insertionTableView.getItems().clear();
         Resource.deletionTableView.getColumns().clear();
         Resource.deletionTableView.getItems().clear();
+        resetLabels();
+        resetTableInfo();
     }
 
+    /**
+     * Ponastavi vsak fokus na ListView
+     */
     static void resetAllFocus() {
         Resource.tablesSelectionListView.getSelectionModel().clearSelection();
         Resource.usersIPSelectionListView.getSelectionModel().clearSelection();
@@ -199,6 +219,29 @@ public class App extends Application {
         Resource.tablesListView.getSelectionModel().clearSelection();
         Resource.usersIPListView.getSelectionModel().clearSelection();
         Resource.usersUsernameListView.getSelectionModel().clearSelection();
+    }
+
+    /**
+     * Nastavi avtorja in tabelo vsem Label-om
+     *
+     * @param author Avtor
+     * @param table  Tabela
+     */
+    static void setTableAuthorToLabels(String author, String table) {
+        Resource.deletionUsernameLabel.setText(table + " > " + author);
+        Resource.updateUsernameLabel.setText(table + " > " + author);
+        Resource.insertionUsernameLabel.setText(table + " > " + author);
+        Resource.viewUsernameLabel.setText(table + " > " + author);
+    }
+
+    /**
+     * Ponastavi vsebino vsem Label-om
+     */
+    static void resetLabels() {
+        Resource.deletionUsernameLabel.setText(Texts.NA);
+        Resource.updateUsernameLabel.setText(Texts.NA);
+        Resource.insertionUsernameLabel.setText(Texts.NA);
+        Resource.viewUsernameLabel.setText(Texts.NA);
     }
 
     /**
@@ -277,7 +320,8 @@ public class App extends Application {
                 "-fx-background-radius: 5px;" +
                 "-fx-background-insets: 2px;");
         Resource.infoTitleLabel.setStyle(Colors.WHITE_TEXT);
-        Resource.authorLabel.setStyle(Colors.WHITE_TEXT);
+        Resource.creationAuthorLabel.setStyle(Colors.WHITE_TEXT);
+        Resource.deletionAuthorLabel.setStyle(Colors.WHITE_TEXT);
         Resource.creationDateLabel.setStyle(Colors.WHITE_TEXT);
         Resource.deletionDateLabel.setStyle(Colors.WHITE_TEXT);
         Resource.lowerPane.setStyle(Colors.GRAY_BG +
@@ -336,7 +380,8 @@ public class App extends Application {
                 "-fx-background-radius: 5px;" +
                 "-fx-background-insets: 2px;");
         Resource.infoTitleLabel.setStyle(Colors.BLACK_TEXT);
-        Resource.authorLabel.setStyle(Colors.BLACK_TEXT);
+        Resource.creationAuthorLabel.setStyle(Colors.BLACK_TEXT);
+        Resource.deletionAuthorLabel.setStyle(Colors.BLACK_TEXT);
         Resource.creationDateLabel.setStyle(Colors.BLACK_TEXT);
         Resource.deletionDateLabel.setStyle(Colors.BLACK_TEXT);
         Resource.lowerPane.setStyle(Colors.BEIGE_BG +
@@ -602,15 +647,20 @@ public class App extends Application {
         Resource.infoTitleLabel.setPadding(new Insets(10));
         //## Informacije o tabeli
         // Avtor Tabele
-        Resource.authorLabel = new Label(Texts.TABLE_AUTHOR);
-        Resource.authorLabel.setPadding(new Insets(10));
-        Resource.authorValueLabel = new Label(Texts.NA);
-        setLabelProperties_InfoLabel(Resource.authorValueLabel);
+        Resource.creationAuthorLabel = new Label(Texts.TABLE_CREATOR);
+        Resource.creationAuthorLabel.setPadding(new Insets(10));
+        Resource.creationAuthorValueLabel = new Label(Texts.NA);
+        setLabelProperties_InfoLabel(Resource.creationAuthorValueLabel);
         // Datum nastanka
         Resource.creationDateLabel = new Label(Texts.TABLE_CREATION_DATE);
         Resource.creationDateLabel.setPadding(new Insets(10));
         Resource.creationDateValueLabel = new Label(Texts.NA);
         setLabelProperties_InfoLabel(Resource.creationDateValueLabel);
+        // Avtor zaprtja
+        Resource.deletionAuthorLabel = new Label(Texts.TABLE_DELETOR);
+        Resource.deletionAuthorLabel.setPadding(new Insets(10));
+        Resource.deletionAuthorValueLabel = new Label(Texts.NA);
+        setLabelProperties_InfoLabel(Resource.deletionAuthorValueLabel);
         // Datum zaprtja
         Resource.deletionDateLabel = new Label(Texts.TABLE_DELETION_DATE);
         Resource.deletionDateLabel.setPadding(new Insets(10));
@@ -739,8 +789,9 @@ public class App extends Application {
             clearSelection();
             if (selectedTable != null)
                 Platform.runLater(() -> {
-                    populateListViewWith(Resource.usersUsernameSelectionListView, backend.getAllUsersName(selectedTable));
-                    populateListViewWith(Resource.usersIPSelectionListView, backend.getAllUsersIP(selectedTable));
+                    setTableInfo(Resource.selectedTable);
+                    populateListViewWith(Resource.usersUsernameSelectionListView, backend.getAllUsersName(Resource.selectedTable));
+                    populateListViewWith(Resource.usersIPSelectionListView, backend.getAllUsersIP(Resource.selectedTable));
                 });
         });
         Resource.usersIPListView.getSelectionModel().selectedItemProperty().addListener((ignored) -> {
@@ -790,7 +841,8 @@ public class App extends Application {
             if (Resource.selectedIp != null) {
                 String selectedTable = Resource.tablesSelectionListView.getSelectionModel().getSelectedItem();
                 if (selectedTable != null) {
-                    // TODO: Informacija o uporabniku in tabeli
+                    setTableInfo(selectedTable);
+                    setTableAuthorToLabels(Resource.selectedIp, selectedTable);
                     populateTableViewWith(Resource.insertionTableView,
                             backend.getDataInsert(Resource.selectedIp, selectedTable));
                     populateTableViewWith(Resource.deletionTableView,
@@ -806,7 +858,7 @@ public class App extends Application {
             if (Resource.selectedTable != null) {
                 String selectedIP = Resource.usersIPSelectionListView.getSelectionModel().getSelectedItem();
                 if (selectedIP != null) {
-                    // TODO: Informacija o uporabniku in tabeli
+                    setTableAuthorToLabels(selectedIP, Resource.selectedTable);
                     populateTableViewWith(Resource.insertionTableView,
                             backend.getDataInsert(selectedIP, Resource.selectedTable));
                     populateTableViewWith(Resource.deletionTableView,
@@ -824,7 +876,7 @@ public class App extends Application {
                 if (selectedUsername != null) {
                     String selectedIP = backend.nameToIP(selectedUsername);
                     if (selectedIP != null) {
-                        // TODO: Informacija o uporabniku in tabeli
+                        setTableAuthorToLabels(selectedUsername, Resource.selectedTable);
                         populateTableViewWith(Resource.insertionTableView,
                                 backend.getDataInsert(selectedIP, Resource.selectedTable));
                         populateTableViewWith(Resource.deletionTableView,
@@ -869,12 +921,14 @@ public class App extends Application {
         Resource.configPane.add(Resource.clearButton, 0, 3, 1, 1);
         //# Dodajanje elementov v table info GridPane
         Resource.infoPane.add(Resource.infoTitleLabel, 0, 0, 2, 1);
-        Resource.infoPane.add(Resource.authorLabel, 0, 1, 1, 1);
-        Resource.infoPane.add(Resource.authorValueLabel, 1, 1, 1, 1);
+        Resource.infoPane.add(Resource.creationAuthorLabel, 0, 1, 1, 1);
+        Resource.infoPane.add(Resource.creationAuthorValueLabel, 1, 1, 1, 1);
         Resource.infoPane.add(Resource.creationDateLabel, 0, 2, 1, 1);
         Resource.infoPane.add(Resource.creationDateValueLabel, 1, 2, 1, 1);
-        Resource.infoPane.add(Resource.deletionDateLabel, 0, 3, 1, 1);
-        Resource.infoPane.add(Resource.deletionDateValueLabel, 1, 3, 1, 1);
+        Resource.infoPane.add(Resource.deletionAuthorLabel, 0, 3, 1, 1);
+        Resource.infoPane.add(Resource.deletionAuthorValueLabel, 1, 3, 1, 1);
+        Resource.infoPane.add(Resource.deletionDateLabel, 0, 4, 1, 1);
+        Resource.infoPane.add(Resource.deletionDateValueLabel, 1, 4, 1, 1);
 
         // Dodajanje elementov v spodnji GridPane
         Resource.lowerPane.add(Resource.insertionPane, 0, 0, 1, 1);
@@ -993,7 +1047,8 @@ class Texts {
     final static String HELP = "Pomoč";
     final static String CLEAR_SELECTION = "Počisti izbiro";
     final static String TABLE_INFO = "Informacije o izbrani tabeli:";
-    final static String TABLE_AUTHOR = "Avtor:";
+    final static String TABLE_CREATOR = "Avtor kreacije:";
+    final static String TABLE_DELETOR = "Avtor izbrisa:";
     final static String TABLE_CREATION_DATE = "Datum nastanka:";
     final static String TABLE_DELETION_DATE = "Datum izbrisa:";
     final static String INSERTIONS = "Vstavljanja:";
@@ -1110,10 +1165,12 @@ class Resource {
     static Button clearButton;
     static GridPane infoPane;
     static Label infoTitleLabel;
-    static Label authorLabel;
-    static Label authorValueLabel;
+    static Label creationAuthorLabel;
+    static Label creationAuthorValueLabel;
     static Label creationDateLabel;
     static Label creationDateValueLabel;
+    static Label deletionAuthorLabel;
+    static Label deletionAuthorValueLabel;
     static Label deletionDateLabel;
     static Label deletionDateValueLabel;
     static GridPane lowerPane;

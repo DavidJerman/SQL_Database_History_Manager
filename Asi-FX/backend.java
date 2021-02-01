@@ -46,7 +46,7 @@ public class backend { //predlagam da se ime razreda začne z veliko začetnico 
         //Dobi log kreacije
         ResultSet resultSet = executeQuery(
                 "SELECT user_host, event_time FROM mysql.general_log " +
-                "WHERE argument LIKE '%TMlinarVahtarRok7%'" +
+                        "WHERE argument LIKE '%" + tableName + "%'" +
                         "AND argument LIKE '%CREATE TABLE%' AND argument LIKE '%create table%' " +
                         "AND argument NOT LIKE  '%SHOW%' AND argument NOT LIKE  '%show%' " +
                         "AND argument NOT LIKE  '%SELECT%' AND argument NOT LIKE  '%select%' ");
@@ -556,14 +556,15 @@ public class backend { //predlagam da se ime razreda začne z veliko začetnico 
 
                 try {
                     //Preveri, da se argument začne z CREATE TABLE
-                    if (argument.split(" ")[0].toUpperCase().equals("CREATE") && argument.split(" ")[1].toUpperCase().equals("TABLE")) {
+                    if (argument.split(" ")[0].equalsIgnoreCase("CREATE") && argument.split(" ")[1].equalsIgnoreCase("TABLE")) {
                         argument = argument.split(" ")[2];
 
                         //Odstrani '' okoli imena
-                        if (argument.charAt(0) == '`' || argument.charAt(0) == '\'') argument = argument.substring(1, argument.length() - 1);
+                        if (argument.charAt(0) == '`' || argument.charAt(0) == '\'')
+                            argument = argument.substring(1, argument.length() - 1);
 
                         //Dovoli le T+Priimek+Ime+danRojstva tabele
-                        if (!(argument.charAt(0) == 'T'))continue;
+                        if (!(argument.charAt(0) == 'T')) continue;
 
                         //Obreže T in končno številko
                         argument = argument.substring(1);
