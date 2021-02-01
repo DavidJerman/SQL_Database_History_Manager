@@ -5,7 +5,7 @@ import java.util.*;
  * Communication with the SQL database log
  *
 @author - Rok Mlinar Vahtar, Gašper Suhadolnik
-@version - 25.1.2021
+@version - 1.2.2021
 @since - 25.1.2021
 **/
 public class backend {
@@ -404,11 +404,9 @@ public class backend {
 
 
     /**
-     Opis
+     Metoda vrne vse tabele iz vseh shem podatkovne baze.
 
-     @param
-     @return Vracanje
-     @thorws Exception
+     @return arr2; vsebuje želene podatke
      **/
     public String[] getAllTablesAllDatabases(){
         String[][] arr1 = queryToStringArray("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES;");
@@ -423,11 +421,9 @@ public class backend {
     }
 
     /**
-     Opis
+     Metoda vrne vse tabele iz trenutno izbrane sheme.
 
-     @param
-     @return Vracanje
-     @thorws Exception
+     @return arr2; vrni zahtevane podatke
      **/
     public String[] getAllTablesCurrentDatabase(){
         String[][] arr1 = queryToStringArray("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = '"+ currentDatabase +"';");
@@ -514,7 +510,7 @@ public class backend {
     /**
      Funkcija izvede sql query in vrne ResultSet
 
-     @param sql
+     @param sql stavek sql, katerega rezultat vrača metoda
      @return resultSet
      **/
     private ResultSet executeQuery(String sql){
@@ -535,7 +531,7 @@ public class backend {
     /**
      Funkcija IP pretvori v ime preko avtorjev ustvarjenih poimenovanih tabel;
 
-     @param IP
+     @param IP ip naslov, ki se, če obstaja, pretvori v ime
      @return name ali null
      **/
     public String IPtoName(String IP){
@@ -549,7 +545,7 @@ public class backend {
     /**
      Funkcija name pretvori v ime preko avtorjev ustvarjenih poimenovanih tabel;
 
-     @param name
+     @param name ime, ki se pretvori v ip naslov
      @return IP ali null
      **/
     public String nameToIP(String name){
@@ -634,7 +630,7 @@ public class backend {
     /**
      Iz user_host izreže IP naslov
 
-     @param user_host
+     @param user_host niz, iz katerega se izreže ip naslov
      @return IP
      **/
     public String userhostToIP(String user_host){
