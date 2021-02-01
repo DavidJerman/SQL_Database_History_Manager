@@ -182,6 +182,23 @@ public class App extends Application {
         Resource.tablesSelectionListView.setItems(null);
         Resource.usersIPSelectionListView.setItems(null);
         Resource.usersUsernameSelectionListView.setItems(null);
+        Resource.viewTableView.getColumns().clear();
+        Resource.viewTableView.getItems().clear();
+        Resource.updateTableView.getColumns().clear();
+        Resource.updateTableView.getItems().clear();
+        Resource.insertionTableView.getColumns().clear();
+        Resource.insertionTableView.getItems().clear();
+        Resource.deletionTableView.getColumns().clear();
+        Resource.deletionTableView.getItems().clear();
+    }
+
+    static void resetAllFocus() {
+        Resource.tablesSelectionListView.getSelectionModel().clearSelection();
+        Resource.usersIPSelectionListView.getSelectionModel().clearSelection();
+        Resource.usersUsernameSelectionListView.getSelectionModel().clearSelection();
+        Resource.tablesListView.getSelectionModel().clearSelection();
+        Resource.usersIPListView.getSelectionModel().clearSelection();
+        Resource.usersUsernameListView.getSelectionModel().clearSelection();
     }
 
     /**
@@ -428,17 +445,26 @@ public class App extends Application {
                     // Spreminjanje stanja indikatorja
                     Platform.runLater(() -> changeIndicatorState(1));
                     // Polnjenje tabel
+                    final String[][] tables = new String[1][];
+                    final String[][] usersIP = new String[1][];
+                    final String[][] usersUsername = new String[1][];
                     Thread work = new Thread(() -> {
-                        populateListViewWith(Resource.tablesListView, backend.getAllTablesCurrentDatabase());
-                        populateListViewWith(Resource.usersIPListView, backend.getAllUsersIP());
-                        populateListViewWith(Resource.usersUsernameListView, backend.getAllUsersName());
+                        tables[0] = backend.getAllTablesCurrentDatabase();
+                        usersIP[0] = backend.getAllUsersIP();
+                        usersUsername[0] = backend.getAllUsersName();
                     });
                     work.start();
                     try {
                         // Počakamo, da se delo konča
                         work.join();
-                        // Spreminjanje stanja indikatorja
-                        Platform.runLater(() -> changeIndicatorState(2));
+                        Platform.runLater(() -> {
+                            // Polnjenje tabel
+                            populateListViewWith(Resource.tablesListView, tables[0]);
+                            populateListViewWith(Resource.usersIPListView, usersIP[0]);
+                            populateListViewWith(Resource.usersUsernameListView, usersUsername[0]);
+                            // Spreminjanje stanja indikatorja
+                            changeIndicatorState(2);
+                        });
                         JOptionPane.showMessageDialog(Resource.jFrame, Texts.CONNECTION_SUCCESSFUL, null,
                                 JOptionPane.INFORMATION_MESSAGE);
                     } catch (InterruptedException ignored) {
@@ -456,10 +482,11 @@ public class App extends Application {
             // Spreminjanje stanja gumba
             if (!Resource.connected) {
                 Platform.runLater(() -> {
-                    clearSelection();
                     Resource.tablesListView.setItems(null);
                     Resource.usersIPListView.setItems(null);
                     Resource.usersUsernameListView.setItems(null);
+                    resetAllFocus();
+                    clearSelection();
                     changeIndicatorState(0);
                 });
             }
@@ -619,7 +646,10 @@ public class App extends Application {
                 } catch (IOException | URISyntaxException ignored) {
                 }
         });
-        Resource.clearButton.setOnAction((event) -> clearSelection());
+        Resource.clearButton.setOnAction((event) -> {
+            resetAllFocus();
+            clearSelection();
+        });
 
         // Spodnji GridPane
         Resource.lowerPane = new GridPane();
@@ -707,29 +737,34 @@ public class App extends Application {
             String selectedTable = Resource.tablesListView.getSelectionModel().getSelectedItem();
             Resource.selectedTable = selectedTable;
             clearSelection();
-            Platform.runLater(() -> {
-                populateListViewWith(Resource.usersUsernameSelectionListView, backend.getAllUsersName(selectedTable));
-                populateListViewWith(Resource.usersIPSelectionListView, backend.getAllUsersIP(selectedTable));
-            });
+            if (selectedTable != null)
+                Platform.runLater(() -> {
+                    populateListViewWith(Resource.usersUsernameSelectionListView, backend.getAllUsersName(selectedTable));
+                    populateListViewWith(Resource.usersIPSelectionListView, backend.getAllUsersIP(selectedTable));
+                });
         });
         Resource.usersIPListView.getSelectionModel().selectedItemProperty().addListener((ignored) -> {
             // Izpiše vse akcije izbranega uporabnika
             String selectedUserIP = Resource.usersIPListView.getSelectionModel().getSelectedItem();
             Resource.selectedIp = selectedUserIP;
             clearSelection();
-            Platform.runLater(() -> {
-                // TODO: Napolni tabelo tabel izbranega uporabnika (IP)
-            });
+            if (Resource.selectedIp != null)
+                Platform.runLater(() -> {
+                    // TODO: Napolni tabelo tabel izbranega uporabnika (IP)
+                });
         });
         Resource.usersUsernameListView.getSelectionModel().selectedItemProperty().addListener((ignored) -> {
             // Izpiše vse akcije izbranega uporabnika
             String selectedUserUsername = Resource.usersUsernameListView.getSelectionModel().getSelectedItem();
             // TODO: Uporaba prave metode
-            Resource.selectedIp = backend.crossReferenceName(selectedUserUsername);
-            clearSelection();
-            Platform.runLater(() -> {
-                // TODO: Napolni tabelo tabel izbranega uporabnika (Username)
-            });
+            if (selectedUserUsername != null) {
+                Resource.selectedIp = backend.crossReferenceName(selectedUserUsername);
+                clearSelection();
+                if (Resource.selectedIp != null)
+                    Platform.runLater(() -> {
+                        // TODO: Napolni tabelo tabel izbranega uporabnika (Username)
+                    });
+            }
         });
 
         // Desni izbirni GridPane
@@ -754,41 +789,49 @@ public class App extends Application {
         Resource.tablesSelectionListView.getSelectionModel().selectedItemProperty().addListener((ignored) -> {
             if (Resource.selectedIp != null) {
                 String selectedTable = Resource.tablesSelectionListView.getSelectionModel().getSelectedItem();
-                populateTableViewWith(Resource.insertionTableView,
-                        backend.getDataInsert(Resource.selectedIp, selectedTable));
-                populateTableViewWith(Resource.deletionTableView,
-                        backend.getDataDelete(Resource.selectedIp, selectedTable));
-                populateTableViewWith(Resource.updateTableView,
-                        backend.getDataUpdate(Resource.selectedIp, selectedTable));
-                populateTableViewWith(Resource.viewTableView,
-                        backend.getDataSelect(Resource.selectedIp, selectedTable));
+                if (selectedTable != null) {
+                    populateTableViewWith(Resource.insertionTableView,
+                            backend.getDataInsert(Resource.selectedIp, selectedTable));
+                    populateTableViewWith(Resource.deletionTableView,
+                            backend.getDataDelete(Resource.selectedIp, selectedTable));
+                    populateTableViewWith(Resource.updateTableView,
+                            backend.getDataUpdate(Resource.selectedIp, selectedTable));
+                    populateTableViewWith(Resource.viewTableView,
+                            backend.getDataSelect(Resource.selectedIp, selectedTable));
+                }
             }
         });
         Resource.usersIPSelectionListView.getSelectionModel().selectedItemProperty().addListener((ignored) -> {
             if (Resource.selectedTable != null) {
                 String selectedIP = Resource.usersIPSelectionListView.getSelectionModel().getSelectedItem();
-                populateTableViewWith(Resource.insertionTableView,
-                        backend.getDataInsert(selectedIP, Resource.selectedTable));
-                populateTableViewWith(Resource.deletionTableView,
-                        backend.getDataDelete(selectedIP, Resource.selectedTable));
-                populateTableViewWith(Resource.updateTableView,
-                        backend.getDataUpdate(selectedIP, Resource.selectedTable));
-                populateTableViewWith(Resource.viewTableView,
-                        backend.getDataSelect(selectedIP, Resource.selectedTable));
+                if (selectedIP != null) {
+                    populateTableViewWith(Resource.insertionTableView,
+                            backend.getDataInsert(selectedIP, Resource.selectedTable));
+                    populateTableViewWith(Resource.deletionTableView,
+                            backend.getDataDelete(selectedIP, Resource.selectedTable));
+                    populateTableViewWith(Resource.updateTableView,
+                            backend.getDataUpdate(selectedIP, Resource.selectedTable));
+                    populateTableViewWith(Resource.viewTableView,
+                            backend.getDataSelect(selectedIP, Resource.selectedTable));
+                }
             }
         });
         Resource.usersUsernameSelectionListView.getSelectionModel().selectedItemProperty().addListener((ignored) -> {
             if (Resource.selectedTable != null) {
-                String selectedUsername = Resource.usersIPSelectionListView.getSelectionModel().getSelectedItem();
-                String selectedIP = backend.crossReferenceName(selectedUsername);
-                populateTableViewWith(Resource.insertionTableView,
-                        backend.getDataInsert(selectedIP, Resource.selectedTable));
-                populateTableViewWith(Resource.deletionTableView,
-                        backend.getDataDelete(selectedIP, Resource.selectedTable));
-                populateTableViewWith(Resource.updateTableView,
-                        backend.getDataUpdate(selectedIP, Resource.selectedTable));
-                populateTableViewWith(Resource.viewTableView,
-                        backend.getDataSelect(selectedIP, Resource.selectedTable));
+                String selectedUsername = Resource.usersUsernameSelectionListView.getSelectionModel().getSelectedItem();
+                if (selectedUsername != null) {
+                    String selectedIP = backend.crossReferenceName(selectedUsername);
+                    if (selectedIP != null) {
+                        populateTableViewWith(Resource.insertionTableView,
+                                backend.getDataInsert(selectedIP, Resource.selectedTable));
+                        populateTableViewWith(Resource.deletionTableView,
+                                backend.getDataDelete(selectedIP, Resource.selectedTable));
+                        populateTableViewWith(Resource.updateTableView,
+                                backend.getDataUpdate(selectedIP, Resource.selectedTable));
+                        populateTableViewWith(Resource.viewTableView,
+                                backend.getDataSelect(selectedIP, Resource.selectedTable));
+                    }
+                }
             }
         });
 
@@ -990,7 +1033,7 @@ class Texts {
     final static String SAVE_CONFIG_PROMPT = "Konfiguracija uspešno shranjena";
     final static String LOAD_CONFIG_PROMPT = "Konfiguracija uspešno naložena";
     final static String FILE_ERROR = "Prišlo je do napake med izvajanjem želene operacije";
-    final static String CONNECTION_ERROR = "Povezave ni bilo mogoče vzpostaviti!";
+    final static String CONNECTION_ERROR = "Povezava je že vzpostavljena!";
     final static String CONNECTION_SUCCESSFUL = "Povezava uspešno vzpostavljena!";
     // Default server values
     final static String DEFAULT_USERNAME = "remote";
