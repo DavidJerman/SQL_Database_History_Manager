@@ -39,7 +39,7 @@ import java.util.Scanner;
 /**
  * Grafični vmesnik aplikacije oz. front-end
  *
- * @author David Jerman
+ * @author David JermanU
  * @version 2021.01.30
  * @since 2021.01.25
  */
@@ -104,17 +104,17 @@ public class App extends Application {
     static void populateTableViewWith(TableView<String[]> tableView, HashMap<String, String> hashMap) {
         tableView.getColumns().clear();
         tableView.getItems().clear();
-        TableColumn<String[], String> column1 = new TableColumn<>("Čas in datum:");
-        TableColumn<String[], String> column2 = new TableColumn<>("Vsebina:");
+        TableColumn<String[], String> column1 = new TableColumn<>(Texts.DATE_AND_TIME);
+        TableColumn<String[], String> column2 = new TableColumn<>(Texts.CONTENT);
         tableView.getColumns().add(column1);
         tableView.getColumns().add(column2);
         column1.setCellValueFactory((p) -> {
             String[] x = p.getValue();
-            return new SimpleStringProperty(x != null && x.length > 0 ? x[0] : "N/A");
+            return new SimpleStringProperty(x != null && x.length > 0 ? x[0] : Texts.NA);
         });
         column2.setCellValueFactory((p) -> {
             String[] x = p.getValue();
-            return new SimpleStringProperty(x != null && x.length > 0 ? x[1] : "N/A");
+            return new SimpleStringProperty(x != null && x.length > 0 ? x[1] : Texts.NA);
         });
         String[][] data = new String[hashMap.size()][2];
         int i = 0;
@@ -259,7 +259,7 @@ public class App extends Application {
      */
     static void setToDarkTheme() {
         Resource.menuBar.setStyle(Colors.TRUEBLACK_BG);
-        Resource.title_img.setImage(new Image("images/database_logo_white.png"));
+        Resource.title_img.setImage(new Image(Texts.WHITE_LOGO_URL));
         Resource.menu.setStyle(Colors.TRUEBLACK_BG);
         Resource.mainPane.setStyle(Colors.BLACK_BG);
         Resource.upperPane.setStyle(Colors.GRAY_BG +
@@ -318,7 +318,7 @@ public class App extends Application {
      */
     static void setToLightTheme() {
         Resource.menuBar.setStyle(Colors.BEIGE_BG);
-        Resource.title_img.setImage(new Image("images/database_logo_black.png"));
+        Resource.title_img.setImage(new Image(Texts.BLACK_LOGO_URL));
         Resource.menu.setStyle(Colors.BEIGE_BG);
         Resource.mainPane.setStyle(Colors.TRUEWHITE_BG);
         Resource.upperPane.setStyle(Colors.BEIGE_BG +
@@ -382,7 +382,7 @@ public class App extends Application {
         // Meni
         Resource.menuBar = new MenuBar();
         // Izbira nastavitve
-        Resource.title_img = new ImageView("images/database_logo_white.png");
+        Resource.title_img = new ImageView(Texts.WHITE_LOGO_URL);
         Resource.title_img.setFitHeight(25);
         Resource.title_img.setFitWidth(50);
         Resource.menu = new Menu("", Resource.title_img);
@@ -492,32 +492,32 @@ public class App extends Application {
             }
         });
         Resource.customConnectButton.setOnAction((event) -> {
-            String username = "";
-            String password = "";
-            String ip = "";
-            String port = "";
-            String database = "";
-            while (username.equals("")) {
+            String username = Texts.EMPTY;
+            String password = Texts.EMPTY;
+            String ip = Texts.EMPTY;
+            String port = Texts.EMPTY;
+            String database = Texts.EMPTY;
+            while (username.equals(Texts.EMPTY)) {
                 username = JOptionPane.showInputDialog(Resource.jFrame, Texts.USERNAME_PROMPT,
                         Texts.CUSTOM_CONNECTION_PROMPT_TITLE, JOptionPane.PLAIN_MESSAGE);
                 if (username == null) return;
             }
-            while (password.equals("")) {
+            while (password.equals(Texts.EMPTY)) {
                 password = JOptionPane.showInputDialog(Resource.jFrame, Texts.PASSWORD_PROMPT,
                         Texts.CUSTOM_CONNECTION_PROMPT_TITLE, JOptionPane.PLAIN_MESSAGE);
                 if (password == null) return;
             }
-            while (ip.equals("")) {
+            while (ip.equals(Texts.EMPTY)) {
                 ip = JOptionPane.showInputDialog(Resource.jFrame, Texts.IP_PROMOT,
                         Texts.CUSTOM_CONNECTION_PROMPT_TITLE, JOptionPane.PLAIN_MESSAGE);
                 if (ip == null) return;
             }
-            while (port.equals("")) {
+            while (port.equals(Texts.EMPTY)) {
                 port = JOptionPane.showInputDialog(Resource.jFrame, Texts.PORT_PROMPT,
                         Texts.CUSTOM_CONNECTION_PROMPT_TITLE, JOptionPane.PLAIN_MESSAGE);
                 if (port == null) return;
             }
-            while (database.equals("")) {
+            while (database.equals(Texts.EMPTY)) {
                 database = JOptionPane.showInputDialog(Resource.jFrame, Texts.DATABASE_PROMPT,
                         Texts.CUSTOM_CONNECTION_PROMPT_TITLE, JOptionPane.PLAIN_MESSAGE);
                 if (database == null) return;
@@ -621,9 +621,9 @@ public class App extends Application {
             // Naloži podatke o povezavi iz datoteke
             // Prikaže okno za odpiranje datoteke
             FileChooser fileChooser = new FileChooser();
-            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("CFG datoteke (*.cfg)", "*.cfg");
+            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(Texts.FILE_TYPE_NAME, Texts.FILE_TYPE_EXTENSION);
             fileChooser.getExtensionFilters().add(extFilter);
-            fileChooser.setInitialDirectory(new File(Texts.ASI_FX_DIRECTORY + "config"));
+            fileChooser.setInitialDirectory(new File(Texts.ASI_FX_DIRECTORY + Texts.CONFIG_FOLDER_NAME));
             File file = fileChooser.showOpenDialog(primaryStage);
             // Naloži datoteko
             if (file != null) loadConfig(file);
@@ -632,9 +632,9 @@ public class App extends Application {
             // Shrani podatke o povezavi v datoteko
             // Prikaže okno za shranjevanje datoteke
             FileChooser fileChooser = new FileChooser();
-            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("CFG datoteke (*.cfg)", "*.cfg");
+            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(Texts.FILE_TYPE_NAME, Texts.FILE_TYPE_EXTENSION);
             fileChooser.getExtensionFilters().add(extFilter);
-            fileChooser.setInitialDirectory(new File(Texts.ASI_FX_DIRECTORY + "config"));
+            fileChooser.setInitialDirectory(new File(Texts.ASI_FX_DIRECTORY + Texts.CONFIG_FOLDER_NAME));
             File file = fileChooser.showSaveDialog(primaryStage);
             // Shrani datoteko
             if (file != null) saveConfig(file);
@@ -642,7 +642,7 @@ public class App extends Application {
         Resource.helpButton.setOnAction((event) -> {
             if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE))
                 try {
-                    Desktop.getDesktop().browse(new URI("https://gitlab.vegova.si/SerhioN/podjetje-sqmalsys/-/tree/Asi-FX/Asi-FX"));
+                    Desktop.getDesktop().browse(new URI(Texts.HELP_URL));
                 } catch (IOException | URISyntaxException ignored) {
                 }
         });
@@ -1035,6 +1035,12 @@ class Texts {
     final static String FILE_ERROR = "Prišlo je do napake med izvajanjem želene operacije";
     final static String CONNECTION_ERROR = "Povezava je že vzpostavljena!";
     final static String CONNECTION_SUCCESSFUL = "Povezava uspešno vzpostavljena!";
+    final static String HELP_URL = "https://gitlab.vegova.si/SerhioN/podjetje-sqmalsys/-/tree/Asi-FX/Asi-FX";
+    final static String DATE_AND_TIME = "Čas in datum:";
+    final static String CONTENT = "Vsebina:";
+    final static String FILE_TYPE_NAME = "CFG datoteke (*.cfg)";
+    final static String FILE_TYPE_EXTENSION = "*.cfg";
+    final static String EMPTY = "";
     // Default server values
     final static String DEFAULT_USERNAME = "remote";
     final static String DEFAULT_PASSWORD = "remote";
@@ -1042,6 +1048,9 @@ class Texts {
     final static String DEFAULT_PORT = "3306";
     final static String DEFAULT_DATABASE = "remote11";
     final static String ASI_FX_DIRECTORY = "Asi-FX/";
+    final static String WHITE_LOGO_URL = "images/database_logo_white.png";
+    final static String BLACK_LOGO_URL = "images/database_logo_black.png";
+    final static String CONFIG_FOLDER_NAME = "config";
 }
 
 /**
