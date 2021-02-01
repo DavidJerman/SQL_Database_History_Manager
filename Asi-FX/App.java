@@ -698,6 +698,7 @@ public class App extends Application {
         Resource.usersUsernameListView.getSelectionModel().selectedItemProperty().addListener((ignored) -> {
             // Izpiše vse akcije izbranega uporabnika
             String selectedUserUsername = Resource.usersUsernameListView.getSelectionModel().getSelectedItem();
+            // TODO: Uporaba prave metode
             Resource.selectedIp = backend.userhostToIP(selectedUserUsername);
             clearSelection();
             Platform.runLater(() -> {
