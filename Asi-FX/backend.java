@@ -195,7 +195,7 @@ public class backend { //predlagam da se ime razreda začne z veliko začetnico 
         checkConnection();
         if(table.contains(".")) table = table.substring(table.indexOf(".")+1);
 
-        String[][] rezultat = queryToStringArray("select event_time, argument from mysql.general_log where user_host like '%"+user+"%' and argument like 'insert%';"); // and argument like '%"+table+"%';"); //"select event_time, argument from mysql.general_log where user_host like '%"+user+"%' and argument like 'update%' and argument like '%"+ table +"%';"); //'%86.61.30.67%';");
+        String[][] rezultat = queryToStringArray("select event_time, argument from mysql.general_log where user_host like '%"+user+"%' and argument like 'insert%' and argument like '"+table+"';"); // and argument like '%"+table+"%';"); //"select event_time, argument from mysql.general_log where user_host like '%"+user+"%' and argument like 'update%' and argument like '%"+ table +"%';"); //'%86.61.30.67%';");
         HashMap<String, String> vrednosti = new HashMap<>();
 
         for(int i = 1; i < rezultat[0].length; i++){ //po vrsticah ()
