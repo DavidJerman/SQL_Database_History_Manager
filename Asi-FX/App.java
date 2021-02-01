@@ -758,7 +758,7 @@ public class App extends Application {
             String selectedUserUsername = Resource.usersUsernameListView.getSelectionModel().getSelectedItem();
             // TODO: Uporaba prave metode
             if (selectedUserUsername != null) {
-                Resource.selectedIp = backend.crossReferenceName(selectedUserUsername);
+                Resource.selectedIp = backend.nameToIP(selectedUserUsername);
                 clearSelection();
                 if (Resource.selectedIp != null)
                     Platform.runLater(() -> {
@@ -820,7 +820,7 @@ public class App extends Application {
             if (Resource.selectedTable != null) {
                 String selectedUsername = Resource.usersUsernameSelectionListView.getSelectionModel().getSelectedItem();
                 if (selectedUsername != null) {
-                    String selectedIP = backend.crossReferenceName(selectedUsername);
+                    String selectedIP = backend.nameToIP(selectedUsername);
                     if (selectedIP != null) {
                         populateTableViewWith(Resource.insertionTableView,
                                 backend.getDataInsert(selectedIP, Resource.selectedTable));
