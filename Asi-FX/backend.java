@@ -39,7 +39,7 @@ public class backend { //predlagam da se ime razreda začne z veliko začetnico 
     /**
      Vrne metapodatke o tabeli
 
-     @param
+     @param tableName
      @return String[]{kdo ustvaril, kdaj ustvaril, kdo izbrisal, kdaj izbrisal}
      **/
     public String[] getTableInfo(String tableName){
@@ -317,7 +317,16 @@ public class backend { //predlagam da se ime razreda začne z veliko začetnico 
         //Vrne vse poimenovane uporabnike
         String[] arr = new String[nameAndIP_map.size()];
         nameAndIP_map.values().toArray(arr);
-        return arr;
+
+        String[] ret = new String[arr.length/2];
+        int retI = 0;
+        for(int i = 0; i < arr.length; i++)
+            if(!isIP(arr[i])){
+                ret[retI] = arr[i];
+                retI++;
+            }
+
+        return ret;
     }
 
 
@@ -349,6 +358,23 @@ public class backend { //predlagam da se ime razreda začne z veliko začetnico 
         arr = a.toArray(arr);
         return Arrays.copyOfRange(arr,1,arr.length);
     }
+
+    /**
+     Preveri, če je podavi string IP naslov ali ime
+
+     @return boolean
+     **/
+    private boolean isIP(String string){
+        int dotCount = 0;
+        for(int i = 0; i < string.length(); i++)
+            if(string.charAt(i) == '.')dotCount++;
+
+        if(dotCount == 3)return true;
+
+        return false;
+    }
+
+
 
 
     /**
