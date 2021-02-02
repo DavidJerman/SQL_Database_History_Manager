@@ -29,6 +29,14 @@ public class backend {
     }
 
     /**
+     Setter za language
+     @param languageFile
+     **/
+    public void setLanguage(Language languageFile) {
+        this.language = languageFile;
+    }
+
+    /**
      Nov konstruktor, ki kot parameter prejme ime podatkovne baze, katero želi ob povezavi uporabiti
      @param database ime podatkovne baze na serverju, do katere želimo dostopati
      @throws IOException ko je podan neobstoječ language file
