@@ -14,12 +14,10 @@ import java.util.*;
 public class backend {
 
 
-
-
-
     Connection connection; //Povazava z SQL serverjem
     String currentDatabase = "remote11"; //Ime baze na kateri trenutno izvajamo operacije
     TreeMap<String,String> nameAndIP_map = new TreeMap<String,String>(); //Map imen in ip naslovov
+    Language language;
 
 
     /**
@@ -31,13 +29,23 @@ public class backend {
     }
 
     /**
+     Setter za language
+     @param languageFile
+     **/
+    public void setLanguage(Language languageFile) {
+        this.language = languageFile;
+    }
+
+    /**
      Nov konstruktor, ki kot parameter prejme ime podatkovne baze, katero želi ob povezavi uporabiti
      @param database ime podatkovne baze na serverju, do katere želimo dostopati
+     @throws IOException ko je podan neobstoječ language file
      **/
-    public backend(String database){
+    public backend(String database, String languageFile) throws IOException{
         checkConnection(); //vzpostavi povezavo z bazo ob kreiranju objekta
         changeDatabase(database);
         this.currentDatabase = database; //nastavi bazo podatkov na tisto, kjer
+        language = new Language(languageFile);
     }
 
 
@@ -127,19 +135,19 @@ public class backend {
 
             //zamenjaj nekatere stvari v nizu poizvedbe:
             if(value.contains("*")){
-                value = value.replace("*", "vsi stolpci tabele");
+                value = value.replace("*", language.all);
             }
             if(value.contains("where")){
-                value = value.replace("where", "kjer:");
+                value = value.replace("where", language.where);
             }
             if(value.contains("distinct")){
-                value = value.replace("distinct", "razlicni iz");
+                value = value.replace("distinct", language.distinct);
             }
             if(value.contains("count")){
-                value = value.replace("count", "prestej");
+                value = value.replace("count", language.count);
             }
             if(value.contains(" as ")){
-                value = value.replace(" as ", " kot ");
+                value = value.replace(" as ", language.as);
             }
 
             //zapiši vrednost v hashmap
@@ -176,13 +184,13 @@ public class backend {
             //zamenjaj nekatere stvari v nizu poizvedbe:
             value = value.replaceAll("`", ""); //zamenja vse "čudne" narekovaje (`` <- tele)
             if(value.contains("where")){
-                value = value.replace("where", "kjer:");
+                value = value.replace("where", language.where);
             }
             if(value.contains("is null")){
-                value = value.replace("is null", "= NULL");
+                value = value.replace("is null", language.is_null);
             }
             if(value.contains(" and ")){
-                value = value.replace(" and ", " in ");
+                value = value.replace(" and ", language.and);
             }
             //zapiši vrednost v hashmap
             vrednosti.put(rezultat[0][i], value);
@@ -252,11 +260,11 @@ public class backend {
             //----
             if(zapisi.contains("where")){ //če vsebuje pogoj where, potem še uredi zapis, drugače vrni string "vse vrstice"
                 value = value.substring(zapisi.indexOf("where"));
-                value = value.replace("where", "kjer je").replace("WHERE", "kjer je");
-                value = value.replaceAll("LIKE", "vsebuje").replaceAll("like", "vsebuje");
+                value = value.replace("where", language.where).replace("WHERE", language.where);
+                value = value.replaceAll("LIKE", language.like).replaceAll("like", language.like);
 
 
-                value = value.replaceAll(" AND ", " in ");
+                value = value.replaceAll(" AND ", language.and);
 
                 value = value.replaceAll("'", "").replaceAll("`", "");
 
