@@ -219,18 +219,24 @@ public class App extends Application {
             fileWriter.close();
 
             if (!oldLanguage.equals(language)) {
-                if (language.equals(Texts.SL))
-                    JOptionPane.showMessageDialog(Resource.jFrame, "Spremembe bodo uveljavljene ob ponovnem zagonu.",
-                            null, JOptionPane.INFORMATION_MESSAGE);
-                else if (language.equals(Texts.EN))
-                    JOptionPane.showMessageDialog(Resource.jFrame, "Changes will be applied after restarting the app.",
-                            null, JOptionPane.INFORMATION_MESSAGE);
-                else if (language.equals(Texts.DE))
-                    JOptionPane.showMessageDialog(Resource.jFrame, "Änderungen werden nach dem Neustart der App übernommen.",
-                            null, JOptionPane.INFORMATION_MESSAGE);
-                else if (language.equals(Texts.JP))
-                    JOptionPane.showMessageDialog(Resource.jFrame, "アプリの再起動後に変更が適用されます",
-                            null, JOptionPane.INFORMATION_MESSAGE);
+                switch (language) {
+                    case Texts.SL:
+                        JOptionPane.showMessageDialog(Resource.jFrame, "Spremembe bodo uveljavljene ob ponovnem zagonu.",
+                                null, JOptionPane.INFORMATION_MESSAGE);
+                        break;
+                    case Texts.EN:
+                        JOptionPane.showMessageDialog(Resource.jFrame, "Changes will be applied after restarting the app.",
+                                null, JOptionPane.INFORMATION_MESSAGE);
+                        break;
+                    case Texts.DE:
+                        JOptionPane.showMessageDialog(Resource.jFrame, "Änderungen werden nach dem Neustart der App übernommen.",
+                                null, JOptionPane.INFORMATION_MESSAGE);
+                        break;
+                    case Texts.JP:
+                        JOptionPane.showMessageDialog(Resource.jFrame, "アプリの再起動後に変更が適用されます",
+                                null, JOptionPane.INFORMATION_MESSAGE);
+                        break;
+                }
             }
         } catch (IOException ignored) {
         }
