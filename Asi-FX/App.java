@@ -75,7 +75,11 @@ public class App extends Application {
             initBackend();
             loadLanguage();
         } catch (IOException ignored) {
-            JOptionPane.showMessageDialog(Resource.jFrame, "Prišlo je do napake.\nThe program encountered an error.",
+            JOptionPane.showMessageDialog(Resource.jFrame,
+                    "Prišlo je do napake.\n" +
+                            "The program encountered an error.\n" +
+                            "プログラムでエラーが発生しました。\n" +
+                            "Das Programm hat einen Fehler festgestellt.",
                     "Error", JOptionPane.ERROR_MESSAGE);
             Platform.exit();
         }
@@ -1321,6 +1325,8 @@ class Texts {
     // Default server values
     final static String EN = "en";
     final static String SL = "sl";
+    static String DE_LANGUAGE;
+    static String JP_LANGUAGE;
     final static String CONFIG_FILE_NAME = "app.config";
     final static String SL_LANGUAGE_PACK_PATH = "language_packs/sl_app.config";
     final static String DARK = "dark";
@@ -1341,8 +1347,6 @@ class Texts {
     final static String EN_LANGUAGE_PACKB_PATH = "language_packs/en_backend.cfg";
     final static String DE_LANGUAGE_PACKB_PATH = "language_packs/de_backend.cfg";
     final static String JP_LNAGUAGE_PACKB_PATH = "language_packs/jp_backend.cfg";
-    static String DE_LANGUAGE;
-    static String JP_LANGUAGE;
     static String FILE_TYPE_NAME;
     static String FILE_TYPE_EXTENSION;
     static String EMPTY;
