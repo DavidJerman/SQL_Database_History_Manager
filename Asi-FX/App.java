@@ -1331,10 +1331,9 @@ class Texts {
     // Default server values
     final static String EN = "en";
     final static String SL = "sl";
-    static String DE_LANGUAGE;
-    static String JP_LANGUAGE;
-    final static String CONFIG_FILE_NAME = "app.config";
     final static String SL_LANGUAGE_PACK_PATH = "language_packs/sl_app.config";
+    static String DE_LANGUAGE;
+    final static String CONFIG_FILE_NAME = "app.config";
     final static String DARK = "dark";
     final static String LIGHT = "light";
     final static String DEFAULT_USERNAME = "remote";
@@ -1346,6 +1345,7 @@ class Texts {
     final static String WHITE_LOGO_URL = "images/database_logo_white.png";
     final static String BLACK_LOGO_URL = "images/database_logo_black.png";
     final static String CONFIG_FOLDER_NAME = "config";
+    static String JP_LANGUAGE;
     final static String EN_LANGUAGE_PACK_PATH = "language_packs/en_app.config";
     final static String DE_LANGUAGE_PACK_PATH = "language_packs/de_app.config";
     final static String JP_LNAGUAGE_PACK_PATH = "language_packs/jp_app.config";
