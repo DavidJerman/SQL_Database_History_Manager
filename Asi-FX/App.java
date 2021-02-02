@@ -127,6 +127,9 @@ public class App extends Application {
         Texts.APLICCATION_THEME = prop.getProperty("APLICCATION_THEME");
         Texts.DARK_THEME = prop.getProperty("DARK_THEME");
         Texts.LIGHT_THEME = prop.getProperty("LIGHT_THEME");
+        Texts.APPLICATION_LANGUAGE = prop.getProperty("APPLICATION_LANGUAGE");
+        Texts.EN_LANGUAGE = prop.getProperty("EN_LANGUAGE");
+        Texts.SL_LANGUAGE = prop.getProperty("SL_LANGUAGE");
         Texts.CUSTOM_CONNECTION_PROMPT_TITLE = prop.getProperty("CUSTOM_CONNECTION_PROMPT_TITLE");
         Texts.USERNAME_PROMPT = prop.getProperty("USERNAME_PROMPT");
         Texts.PASSWORD_PROMPT = prop.getProperty("PASSWORD_PROMPT");
@@ -583,10 +586,24 @@ public class App extends Application {
             theme = Texts.LIGHT;
             updateConfig();
         });
+        //## Jezik aplikacije
+        Resource.languageMenu = new Menu(Texts.APPLICATION_LANGUAGE);
+        //### Jeziki aplikacije
+        Resource.enLanguageMenuItem = new MenuItem(Texts.EN_LANGUAGE);
+        Resource.enLanguageMenuItem.setOnAction((event) -> {
+            language = Texts.EN;
+            updateConfig();
+        });
+        Resource.slLanguageMenuItem = new MenuItem(Texts.SL_LANGUAGE);
+        Resource.slLanguageMenuItem.setOnAction((event) -> {
+            language = Texts.SL;
+            updateConfig();
+        });
         // Dodajanje elementov v meni
         Resource.menu.getItems().addAll(Resource.exitMenuItem, Resource.settingsMenu);
-        Resource.settingsMenu.getItems().addAll(Resource.themeMenu);
+        Resource.settingsMenu.getItems().addAll(Resource.themeMenu, Resource.languageMenu);
         Resource.themeMenu.getItems().addAll(Resource.darkThemeMenuItem, Resource.lightThemeMenuItem);
+        Resource.languageMenu.getItems().addAll(Resource.enLanguageMenuItem, Resource.slLanguageMenuItem);
         // Dodaj vse elemente v meni
         Resource.menuBar.getMenus().addAll(Resource.menu);
 
@@ -1210,6 +1227,9 @@ class Texts {
     static String APLICCATION_THEME;
     static String DARK_THEME;
     static String LIGHT_THEME;
+    static String APPLICATION_LANGUAGE;
+    static String SL_LANGUAGE;
+    static String EN_LANGUAGE;
     static String CUSTOM_CONNECTION_PROMPT_TITLE;
     static String USERNAME_PROMPT;
     static String PASSWORD_PROMPT;
@@ -1284,6 +1304,9 @@ class Resource {
     static Menu themeMenu;
     static MenuItem darkThemeMenuItem;
     static MenuItem lightThemeMenuItem;
+    static Menu languageMenu;
+    static MenuItem slLanguageMenuItem;
+    static MenuItem enLanguageMenuItem;
     static GridPane mainPane;
     static GridPane upperPane;
     static GridPane connectPane;

@@ -402,9 +402,7 @@ public class backend {
         for(int i = 0; i < string.length(); i++)
             if(string.charAt(i) == '.')dotCount++;
 
-        if(dotCount == 3)return true;
-
-        return false;
+        return dotCount == 3;
     }
 
 
@@ -780,7 +778,7 @@ class Language{
 
 
     public Language(String filename) throws IOException {
-        BufferedReader in = new BufferedReader(new FileReader(filename));
+        BufferedReader in = new BufferedReader(new FileReader(Texts.ASI_FX_DIRECTORY + "language_packs/" + filename));
 
         all = findInFile(in,"*");
         where = findInFile(in,"where");
