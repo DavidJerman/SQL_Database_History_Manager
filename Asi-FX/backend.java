@@ -27,7 +27,7 @@ public class backend {
         //checkConnection(); //vzpostavi povezavo ob kreiranju novega objekta razreda backend
         //this.currentDatabase = "remote11"; //privzeta podatkovna baza, s katero se operira, je remote11 (lahko se nastavi tudi katero drugo)
         try {
-            language = new Language("sl_backend.cfg"); //default language file (slovenski)
+            language = new Language("Asi-FX\\language_packs\\sl_backend.cfg"); //default language file (slovenski)
         }catch (IOException e){
             System.out.println("napaka pri nastavljanju jezika");
             e.printStackTrace();
