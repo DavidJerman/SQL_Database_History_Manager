@@ -864,7 +864,7 @@ public class App extends Application {
         Tooltip.install(Resource.clearButton, new Tooltip(Texts.CLEAR_TOOLTIP));
         //# GridPane Tabela Info
         Resource.infoPane = new GridPane();
-        Resource.infoPane.setPadding(new Insets(0, 10, 10, 0));
+        Resource.infoPane.setPadding(new Insets(0, 10, 5, 0));
         //## Naslov
         Resource.infoTitleLabel = new Label(Texts.TABLE_INFO);
         Resource.infoTitleLabel.setPadding(new Insets(10));
@@ -995,16 +995,19 @@ public class App extends Application {
         Resource.tablesLabel.setPadding(new Insets(0, 0, 10, 0));
         Resource.tablesListView = new ListView<>();
         Resource.tablesListView.setMaxHeight(125);
+        Resource.tablesListView.setMinWidth(260);
         //# Seznam vseh uporabnikov (IP)
         Resource.usersIPLabel = new Label(Texts.ALL_USERS_IP);
         Resource.usersIPLabel.setPadding(new Insets(10, 0, 10, 0));
         Resource.usersIPListView = new ListView<>();
         Resource.usersIPListView.setMaxHeight(300);
+        Resource.usersIPListView.setMinWidth(260);
         //# Seznam vseh uporabnikov (username)
         Resource.usersUsernameLabel = new Label(Texts.ALL_USERS_USERNAME);
         Resource.usersUsernameLabel.setPadding(new Insets(10, 0, 10, 0));
         Resource.usersUsernameListView = new ListView<>();
         Resource.usersUsernameListView.setMaxHeight(300);
+        Resource.usersUsernameListView.setMinWidth(260);
         //# Handler-ji za ListView-je
         Resource.tablesListView.getSelectionModel().selectedItemProperty().addListener((ignored) -> {
             // Izpiše vse uporabnike izbrane tabele
@@ -1050,16 +1053,19 @@ public class App extends Application {
         Resource.tablesSelectionLabel.setPadding(new Insets(0, 0, 10, 0));
         Resource.tablesSelectionListView = new ListView<>();
         Resource.tablesSelectionListView.setMaxHeight(125);
+        Resource.tablesSelectionListView.setMinWidth(260);
         //# Seznam uporabnikov (IP)
         Resource.usersIPSelectionLabel = new Label(Texts.SELECTED_USERS_IP);
         Resource.usersIPSelectionLabel.setPadding(new Insets(10, 0, 10, 0));
         Resource.usersIPSelectionListView = new ListView<>();
         Resource.usersIPSelectionListView.setMaxHeight(300);
+        Resource.usersIPSelectionListView.setMinWidth(260);
         //# Seznam uporabnikov (username)
         Resource.usersUsernameSelectionLabel = new Label(Texts.SELECTED_USERS_USERNAME);
         Resource.usersUsernameSelectionLabel.setPadding(new Insets(10, 0, 10, 0));
         Resource.usersUsernameSelectionListView = new ListView<>();
         Resource.usersUsernameSelectionListView.setMaxHeight(300);
+        Resource.usersUsernameSelectionListView.setMinWidth(260);
         //# Handler-ji za ListView-je
         Resource.tablesSelectionListView.getSelectionModel().selectedItemProperty().addListener((ignored) -> {
             if (Resource.selectedIp != null) {
@@ -1224,8 +1230,8 @@ public class App extends Application {
         primaryStage.show();
         primaryStage.setMaxHeight(Resource.lowerPane.getHeight() + Resource.upperPane.getHeight());
         primaryStage.setMinHeight(Resource.lowerPane.getHeight() + Resource.upperPane.getHeight());
-        primaryStage.setMaxWidth(Resource.lowerPane.getWidth() + Resource.rightSuperPane.getWidth());
-        primaryStage.setMinWidth(Resource.lowerPane.getWidth() + Resource.rightSuperPane.getWidth());
+        primaryStage.setMaxWidth(Resource.lowerPane.getWidth() + Resource.rightSuperPane.getWidth() + 24 + 20);
+        primaryStage.setMinWidth(Resource.lowerPane.getWidth() + Resource.rightSuperPane.getWidth() + 24 + 20);
 
         // Spremenljivke
         Resource.connected = false;
