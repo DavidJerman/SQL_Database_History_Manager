@@ -48,8 +48,8 @@ public class App extends Application {
      * Backend
      */
     static backend backend = new backend();
-    static String theme = "dark";
-    static String language = "sl";
+    static String theme = Texts.DARK;
+    static String language = Texts.SL;
 
     /**
      * Glavna metoda
@@ -88,7 +88,7 @@ public class App extends Application {
     static void loadLanguage() throws IOException {
         Properties prop = new Properties();
         String fileName;
-        if (language.equals("sl")) fileName = Texts.ASI_FX_DIRECTORY + Texts.SL_LANGUAGE_PACK_NAME;
+        if (language.equals(Texts.SL)) fileName = Texts.ASI_FX_DIRECTORY + Texts.SL_LANGUAGE_PACK_NAME;
         else fileName = Texts.ASI_FX_DIRECTORY + Texts.EN_LANGUAGE_PACK_NAME;
         InputStream is;
         is = new FileInputStream(fileName);
@@ -156,6 +156,37 @@ public class App extends Application {
         Texts.FILE_TYPE_NAME = prop.getProperty("FILE_TYPE_NAME");
         Texts.FILE_TYPE_EXTENSION = prop.getProperty("FILE_TYPE_EXTENSION");
         Texts.EMPTY = "";
+    }
+
+    /**
+     * Posodobi konfiguracijsko datoteko
+     */
+    static void updateConfig() {
+        try {
+            Properties prop = new Properties();
+            String fileName = Texts.ASI_FX_DIRECTORY + Texts.CONFIG_FILE_NAME;
+            InputStream is;
+            is = new FileInputStream(fileName);
+            prop.load(is);
+            is.close();
+
+            String oldLanguage = prop.getProperty("language");
+
+            PrintWriter fileWriter = new PrintWriter(Texts.ASI_FX_DIRECTORY + Texts.CONFIG_FILE_NAME);
+            fileWriter.println("language = " + language);
+            fileWriter.println("theme = " + theme);
+            fileWriter.close();
+
+            if (!oldLanguage.equals(language)) {
+                if (language.equals(Texts.SL))
+                    JOptionPane.showMessageDialog(Resource.jFrame, "Spremembe bodo uveljavljene ob ponovnem zagonu",
+                            null, JOptionPane.INFORMATION_MESSAGE);
+                else if (language.equals(Texts.EN))
+                    JOptionPane.showMessageDialog(Resource.jFrame, "Changes will be applied after restarting the app",
+                            null, JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (IOException ignored) {
+        }
     }
 
     /**
@@ -541,9 +572,17 @@ public class App extends Application {
         Resource.themeMenu = new Menu(Texts.APLICCATION_THEME);
         //### Teme aplikacije
         Resource.darkThemeMenuItem = new MenuItem(Texts.DARK_THEME);
-        Resource.darkThemeMenuItem.setOnAction((event) -> setToDarkTheme());
+        Resource.darkThemeMenuItem.setOnAction((event) -> {
+            setToDarkTheme();
+            theme = Texts.DARK;
+            updateConfig();
+        });
         Resource.lightThemeMenuItem = new MenuItem(Texts.LIGHT_THEME);
-        Resource.lightThemeMenuItem.setOnAction((event) -> setToLightTheme());
+        Resource.lightThemeMenuItem.setOnAction((event) -> {
+            setToLightTheme();
+            theme = Texts.LIGHT;
+            updateConfig();
+        });
         // Dodajanje elementov v meni
         Resource.menu.getItems().addAll(Resource.exitMenuItem, Resource.settingsMenu);
         Resource.settingsMenu.getItems().addAll(Resource.themeMenu);
@@ -1092,7 +1131,7 @@ public class App extends Application {
         menuContainer.setPadding(new Insets(10, 0, 10, 0));
         Resource.menuMainContainer.getChildren().addAll(menuContainer, Resource.mainPane);
         // Nastavitev aplikacije na temno kot privzeto
-        if (theme.equals("light")) setToLightTheme();
+        if (theme.equals(Texts.LIGHT)) setToLightTheme();
         else setToDarkTheme();
         // Ostale nastavitve, okno po meri
         Scene mainScene = new Scene(Resource.menuMainContainer);
@@ -1198,6 +1237,10 @@ class Texts {
     static String DATE_AND_TIME;
     static String CONTENT;
     // Default server values
+    final static String EN = "en";
+    final static String SL = "sl";
+    final static String DARK = "dark";
+    final static String LIGHT = "light";
     final static String DEFAULT_USERNAME = "remote";
     final static String DEFAULT_PASSWORD = "remote";
     final static String DEFAULT_IP = "193.2.190.23";
