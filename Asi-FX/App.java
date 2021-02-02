@@ -225,6 +225,12 @@ public class App extends Application {
                 else if (language.equals(Texts.EN))
                     JOptionPane.showMessageDialog(Resource.jFrame, "Changes will be applied after restarting the app",
                             null, JOptionPane.INFORMATION_MESSAGE);
+                else if (language.equals(Texts.DE))
+                    JOptionPane.showMessageDialog(Resource.jFrame, "Änderungen werden nach dem Neustart der App übernommen",
+                            null, JOptionPane.INFORMATION_MESSAGE);
+                else if (language.equals(Texts.JP))
+                    JOptionPane.showMessageDialog(Resource.jFrame, "アプリの再起動後に変更が適用されます",
+                            null, JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (IOException ignored) {
         }
