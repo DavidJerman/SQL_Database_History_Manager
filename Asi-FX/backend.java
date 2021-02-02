@@ -47,7 +47,7 @@ public class backend {
      * @param languageFile ime jezikovne datoteke
      */
     public backend(String languageFile) throws IOException{
-        checkConnection();
+        // checkConnection();
         language = new Language(languageFile);
     }
 
@@ -778,7 +778,7 @@ class Language{
 
 
     public Language(String filename) throws IOException {
-        BufferedReader in = new BufferedReader(new FileReader(Texts.ASI_FX_DIRECTORY + "language_packs/" + filename));
+        BufferedReader in = new BufferedReader(new FileReader(filename));
 
         all = findInFile(in,"*");
         where = findInFile(in,"where");

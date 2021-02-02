@@ -75,7 +75,11 @@ public class App extends Application {
             initBackend();
             loadLanguage();
         } catch (IOException ignored) {
-            JOptionPane.showMessageDialog(Resource.jFrame, "Prišlo je do napake.\nThe program encountered an error.",
+            JOptionPane.showMessageDialog(Resource.jFrame,
+                    "Prišlo je do napake.\n" +
+                            "The program encountered an error.\n" +
+                            "プログラムでエラーが発生しました。\n" +
+                            "Das Programm hat einen Fehler festgestellt.",
                     "Error", JOptionPane.ERROR_MESSAGE);
             Platform.exit();
         }
@@ -219,18 +223,24 @@ public class App extends Application {
             fileWriter.close();
 
             if (!oldLanguage.equals(language)) {
-                if (language.equals(Texts.SL))
-                    JOptionPane.showMessageDialog(Resource.jFrame, "Spremembe bodo uveljavljene ob ponovnem zagonu",
-                            null, JOptionPane.INFORMATION_MESSAGE);
-                else if (language.equals(Texts.EN))
-                    JOptionPane.showMessageDialog(Resource.jFrame, "Changes will be applied after restarting the app",
-                            null, JOptionPane.INFORMATION_MESSAGE);
-                else if (language.equals(Texts.DE))
-                    JOptionPane.showMessageDialog(Resource.jFrame, "Änderungen werden nach dem Neustart der App übernommen",
-                            null, JOptionPane.INFORMATION_MESSAGE);
-                else if (language.equals(Texts.JP))
-                    JOptionPane.showMessageDialog(Resource.jFrame, "アプリの再起動後に変更が適用されます",
-                            null, JOptionPane.INFORMATION_MESSAGE);
+                switch (language) {
+                    case Texts.SL:
+                        JOptionPane.showMessageDialog(Resource.jFrame, "Spremembe bodo uveljavljene ob ponovnem zagonu.",
+                                null, JOptionPane.INFORMATION_MESSAGE);
+                        break;
+                    case Texts.EN:
+                        JOptionPane.showMessageDialog(Resource.jFrame, "Changes will be applied after restarting the app.",
+                                null, JOptionPane.INFORMATION_MESSAGE);
+                        break;
+                    case Texts.DE:
+                        JOptionPane.showMessageDialog(Resource.jFrame, "Änderungen werden nach dem Neustart der App übernommen.",
+                                null, JOptionPane.INFORMATION_MESSAGE);
+                        break;
+                    case Texts.JP:
+                        JOptionPane.showMessageDialog(Resource.jFrame, "アプリの再起動後に変更が適用されます",
+                                null, JOptionPane.INFORMATION_MESSAGE);
+                        break;
+                }
             }
         } catch (IOException ignored) {
         }
@@ -818,6 +828,7 @@ public class App extends Application {
         setLabelProperties_InfoLabel(Resource.serverPortValueLabel);
         //### Podatkovna baza strežnika
         Resource.databaseLabel = new Label(Texts.SERVER_DATABASE);
+        Resource.databaseLabel.setMinWidth(120);
         Resource.databaseValueLabel = new Label(Texts.DEFAULT_DATABASE);
         setLabelProperties_InfoLabel(Resource.databaseValueLabel);
         // Setting up the default values
@@ -853,7 +864,7 @@ public class App extends Application {
         Tooltip.install(Resource.clearButton, new Tooltip(Texts.CLEAR_TOOLTIP));
         //# GridPane Tabela Info
         Resource.infoPane = new GridPane();
-        Resource.infoPane.setPadding(new Insets(0, 10, 0, 0));
+        Resource.infoPane.setPadding(new Insets(0, 10, 10, 0));
         //## Naslov
         Resource.infoTitleLabel = new Label(Texts.TABLE_INFO);
         Resource.infoTitleLabel.setPadding(new Insets(10));
@@ -875,6 +886,7 @@ public class App extends Application {
         setLabelProperties_InfoLabel(Resource.deletionAuthorValueLabel);
         // Datum zaprtja
         Resource.deletionDateLabel = new Label(Texts.TABLE_DELETION_DATE);
+        Resource.deletionDateLabel.setMinWidth(120);
         Resource.deletionDateLabel.setPadding(new Insets(10));
         Resource.deletionDateValueLabel = new Label(Texts.NA);
         setLabelProperties_InfoLabel(Resource.deletionDateValueLabel);
@@ -917,8 +929,8 @@ public class App extends Application {
         Resource.lowerPane = new GridPane();
         Resource.lowerPane.setPadding(new Insets(10));
         //## Maksimalna višina GridPane
-        int MAXGRIDHEIGHT = 300;
-        int MINGRIDWIDTH = 395;
+        int MAXHEIGHT = 300;
+        int MINWIDTH = 420;
         //# Vstavljanje GridPane
         Resource.insertionPane = new GridPane();
         Resource.insertionPane.setPadding(new Insets(10));
@@ -930,8 +942,8 @@ public class App extends Application {
         Resource.insertionUsernameLabel.setPadding(new Insets(0, 0, 10, 5));
         Resource.insertionTableView = new TableView<>();
         Resource.insertionTableView.setPlaceholder(new Label(Texts.NO_DATA_SELECTED));
-        Resource.insertionTableView.setMinWidth(MINGRIDWIDTH);
-        Resource.insertionTableView.setMaxHeight(MAXGRIDHEIGHT);
+        Resource.insertionTableView.setMinWidth(MINWIDTH);
+        Resource.insertionTableView.setMaxHeight(MAXHEIGHT);
         //# Ogledovanje GridPane
         Resource.viewPane = new GridPane();
         Resource.viewPane.setPadding(new Insets(10));
@@ -943,8 +955,8 @@ public class App extends Application {
         Resource.viewUsernameLabel.setPadding(new Insets(0, 0, 10, 5));
         Resource.viewTableView = new TableView<>();
         Resource.viewTableView.setPlaceholder(new Label(Texts.NO_DATA_SELECTED));
-        Resource.viewTableView.setMinWidth(MINGRIDWIDTH);
-        Resource.viewTableView.setMaxHeight(MAXGRIDHEIGHT);
+        Resource.viewTableView.setMinWidth(MINWIDTH);
+        Resource.viewTableView.setMaxHeight(MAXHEIGHT);
         //# Ažuriranje GridPane
         Resource.updatePane = new GridPane();
         Resource.updatePane.setPadding(new Insets(10));
@@ -956,8 +968,8 @@ public class App extends Application {
         Resource.updateUsernameLabel.setPadding(new Insets(0, 0, 10, 5));
         Resource.updateTableView = new TableView<>();
         Resource.updateTableView.setPlaceholder(new Label(Texts.NO_DATA_SELECTED));
-        Resource.updateTableView.setMinWidth(MINGRIDWIDTH);
-        Resource.updateTableView.setMaxHeight(MAXGRIDHEIGHT);
+        Resource.updateTableView.setMinWidth(MINWIDTH);
+        Resource.updateTableView.setMaxHeight(MAXHEIGHT);
         //# Brisanje GridPane
         Resource.deletionPane = new GridPane();
         Resource.deletionPane.setPadding(new Insets(10));
@@ -969,8 +981,8 @@ public class App extends Application {
         Resource.deletionUsernameLabel.setPadding(new Insets(0, 0, 10, 5));
         Resource.deletionTableView = new TableView<>();
         Resource.deletionTableView.setPlaceholder(new Label(Texts.NO_DATA_SELECTED));
-        Resource.deletionTableView.setMinWidth(MINGRIDWIDTH);
-        Resource.deletionTableView.setMaxHeight(MAXGRIDHEIGHT);
+        Resource.deletionTableView.setMinWidth(MINWIDTH);
+        Resource.deletionTableView.setMaxHeight(MAXHEIGHT);
 
         // Desni starševski GridPane
         Resource.rightSuperPane = new GridPane();
@@ -1313,6 +1325,8 @@ class Texts {
     // Default server values
     final static String EN = "en";
     final static String SL = "sl";
+    static String DE_LANGUAGE;
+    static String JP_LANGUAGE;
     final static String CONFIG_FILE_NAME = "app.config";
     final static String SL_LANGUAGE_PACK_PATH = "language_packs/sl_app.config";
     final static String DARK = "dark";
@@ -1333,8 +1347,6 @@ class Texts {
     final static String EN_LANGUAGE_PACKB_PATH = "language_packs/en_backend.cfg";
     final static String DE_LANGUAGE_PACKB_PATH = "language_packs/de_backend.cfg";
     final static String JP_LNAGUAGE_PACKB_PATH = "language_packs/jp_backend.cfg";
-    static String DE_LANGUAGE;
-    static String JP_LANGUAGE;
     static String FILE_TYPE_NAME;
     static String FILE_TYPE_EXTENSION;
     static String EMPTY;
