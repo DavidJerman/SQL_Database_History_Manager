@@ -26,19 +26,35 @@ public class backend {
     public backend(){
         //checkConnection(); //vzpostavi povezavo ob kreiranju novega objekta razreda backend
         //this.currentDatabase = "remote11"; //privzeta podatkovna baza, s katero se operira, je remote11 (lahko se nastavi tudi katero drugo)
+        try {
+            language = new Language("sl_backend.cfg"); //default language file (slovenski)
+        }catch (IOException e){
+            System.out.println("napaka pri nastavljanju jezika");
+            e.printStackTrace();
+        }
     }
 
     /**
      Setter za language
-     @param languageFile
+     @param languageFile ime jezikovne datoteke
      **/
     public void setLanguage(Language languageFile) {
         this.language = languageFile;
     }
 
+
+    /** Konstruktor, ki kot parameter prejme samo ime jezikovne datoteke.
+     * @param languageFile ime jezikovne datoteke
+     */
+    public backend(String languageFile) throws IOException{
+        checkConnection();
+        language = new Language(languageFile);
+    }
+
     /**
      Nov konstruktor, ki kot parameter prejme ime podatkovne baze, katero želi ob povezavi uporabiti
      @param database ime podatkovne baze na serverju, do katere želimo dostopati
+     @param languageFile ime jezikovne datoteke, ki se uporabi za prikaz
      @throws IOException ko je podan neobstoječ language file
      **/
     public backend(String database, String languageFile) throws IOException{
