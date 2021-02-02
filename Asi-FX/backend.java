@@ -1,3 +1,6 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.*;
 import java.util.*;
 
@@ -9,6 +12,10 @@ import java.util.*;
 @since - 25.1.2021
 **/
 public class backend {
+
+
+
+
 
     Connection connection; //Povazava z SQL serverjem
     String currentDatabase = "remote11"; //Ime baze na kateri trenutno izvajamo operacije
@@ -733,5 +740,60 @@ public class backend {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+    }
+}
+
+
+class Language{
+    String all;
+    String where;
+    String distinct;
+    String count;
+    String as;
+    String is_null;
+    String and;
+    String like;
+
+
+    public Language(String filename) throws IOException {
+        BufferedReader in = new BufferedReader(new FileReader(filename));
+
+        all = findInFile(in,"*");
+        where = findInFile(in,"where");
+        distinct = findInFile(in,"distinct");
+        count = findInFile(in,"count");
+        as = findInFile(in,"as");
+        is_null = findInFile(in,"is_null");
+        and = findInFile(in,"and");
+        like = findInFile(in,"like");
+
+    }
+
+    String findInFile(BufferedReader in, String key){
+        try {
+            while (true) {
+                String line = in.readLine();
+                if(line.startsWith(key)){
+                    return line.substring(line.indexOf(':')+1);
+
+                }
+            }
+        }catch (IOException e){}
+
+        return null;
+    }
+
+    @Override
+    public String toString() {
+        return "Language{" +
+                "all='" + all + '\'' +
+                ", where='" + where + '\'' +
+                ", distinct='" + distinct + '\'' +
+                ", count='" + count + '\'' +
+                ", as='" + as + '\'' +
+                ", is_null='" + is_null + '\'' +
+                ", and='" + and + '\'' +
+                ", like='" + like + '\'' +
+                '}';
     }
 }
