@@ -26,14 +26,13 @@ import javafx.stage.StageStyle;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Properties;
 import java.util.Scanner;
 
 /**
@@ -49,6 +48,8 @@ public class App extends Application {
      * Backend
      */
     static backend backend = new backend();
+    static String theme = "dark";
+    static String language = "sl";
 
     /**
      * Glavna metoda
@@ -57,6 +58,104 @@ public class App extends Application {
      */
     public static void main(String[] args) {
         launch(args);
+    }
+
+    /**
+     * Nastavi jezik in temo aplikacije
+     */
+    static void initApp() {
+        Properties prop = new Properties();
+        String fileName = Texts.ASI_FX_DIRECTORY + Texts.CONFIG_FILE_NAME;
+        InputStream is;
+        try {
+            is = new FileInputStream(fileName);
+            prop.load(is);
+            theme = prop.getProperty("theme");
+            language = prop.getProperty("language");
+            loadLanguage();
+        } catch (IOException ignored) {
+            JOptionPane.showMessageDialog(Resource.jFrame, "Prišlo je do napake.\nThe program encountered an error.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            Platform.exit();
+        }
+    }
+
+    /**
+     * Naloži jezikovni paket
+     *
+     * @throws IOException Branje neuspešno
+     */
+    static void loadLanguage() throws IOException {
+        Properties prop = new Properties();
+        String fileName;
+        if (language.equals("sl")) fileName = Texts.ASI_FX_DIRECTORY + Texts.SL_LANGUAGE_PACK_NAME;
+        else fileName = Texts.ASI_FX_DIRECTORY + Texts.EN_LANGUAGE_PACK_NAME;
+        InputStream is;
+        is = new FileInputStream(fileName);
+        prop.load(new InputStreamReader(is, StandardCharsets.UTF_8));
+        Texts.NA = prop.getProperty("NA");
+        Texts.NO_DATA_SELECTED = prop.getProperty("NO_DATA_SELECTED");
+        Texts.CONNECT = prop.getProperty("CONNECT");
+        Texts.DISCONNECT = prop.getProperty("DISCONNECT");
+        Texts.CUSTOM_CONNECT = prop.getProperty("CUSTOM_CONNECT");
+        Texts.SERVER_INFO = prop.getProperty("SERVER_INFO");
+        Texts.SERVER_USER = prop.getProperty("SERVER_USER");
+        Texts.SERVER_IP = prop.getProperty("SERVER_IP");
+        Texts.SERVER_PORT = prop.getProperty("SERVER_PORT");
+        Texts.SERVER_DATABASE = prop.getProperty("SERVER_DATABASE");
+        Texts.LOAD_CONFIG = prop.getProperty("LOAD_CONFIG");
+        Texts.SAVE_CONFIG = prop.getProperty("SAVE_CONFIG");
+        Texts.HELP = prop.getProperty("HELP");
+        Texts.CLEAR_SELECTION = prop.getProperty("CLEAR_SELECTION");
+        Texts.TABLE_INFO = prop.getProperty("TABLE_INFO");
+        Texts.TABLE_CREATOR = prop.getProperty("TABLE_CREATOR");
+        Texts.TABLE_DELETOR = prop.getProperty("TABLE_DELETOR");
+        Texts.TABLE_CREATION_DATE = prop.getProperty("TABLE_CREATION_DATE");
+        Texts.TABLE_DELETION_DATE = prop.getProperty("TABLE_DELETION_DATE");
+        Texts.INSERTIONS = prop.getProperty("INSERTIONS");
+        Texts.UPDATES = prop.getProperty("UPDATES");
+        Texts.VIEWS = prop.getProperty("VIEWS");
+        Texts.DELETIONS = prop.getProperty("DELETIONS");
+        Texts.ALL_TABLES = prop.getProperty("ALL_TABLES");
+        Texts.ALL_USERS_IP = prop.getProperty("ALL_USERS_IP");
+        Texts.ALL_USERS_USERNAME = prop.getProperty("ALL_USERS_USERNAME");
+        Texts.SELECTED_TABLES = prop.getProperty("SELECTED_TABLES");
+        Texts.SELECTED_USERS_IP = prop.getProperty("SELECTED_USERS_IP");
+        Texts.SELECTED_USERS_USERNAME = prop.getProperty("SELECTED_USERS_USERNAME");
+        Texts.EXIT = prop.getProperty("EXIT");
+        Texts.SETTINGS = prop.getProperty("SETTINGS");
+        Texts.APLICCATION_THEME = prop.getProperty("APLICCATION_THEME");
+        Texts.DARK_THEME = prop.getProperty("DARK_THEME");
+        Texts.LIGHT_THEME = prop.getProperty("LIGHT_THEME");
+        Texts.CUSTOM_CONNECTION_PROMPT_TITLE = prop.getProperty("CUSTOM_CONNECTION_PROMPT_TITLE");
+        Texts.USERNAME_PROMPT = prop.getProperty("USERNAME_PROMPT");
+        Texts.PASSWORD_PROMPT = prop.getProperty("PASSWORD_PROMPT");
+        Texts.IP_PROMOT = prop.getProperty("IP_PROMOT");
+        Texts.PORT_PROMPT = prop.getProperty("PORT_PROMPT");
+        Texts.DATABASE_PROMPT = prop.getProperty("DATABASE_PROMPT");
+        Texts.CONNECTION_STATUS = prop.getProperty("CONNECTION_STATUS");
+        Texts.INSERTION_TOOLTIP = prop.getProperty("INSERTION_TOOLTIP");
+        Texts.DELETION_TOOLTIP = prop.getProperty("DELETION_TOOLTIP");
+        Texts.UPDATE_TOOLTIP = prop.getProperty("UPDATE_TOOLTIP");
+        Texts.VIEW_TOOLTIP = prop.getProperty("VIEW_TOOLTIP");
+        Texts.CONNECT_TOOLTIP = prop.getProperty("CONNECT_TOOLTIP");
+        Texts.DISCONNECT_TOOLTIP = prop.getProperty("DISCONNECT_TOOLTIP");
+        Texts.CUSTOM_CONNECT_TOOLTIP = prop.getProperty("CUSTOM_CONNECT_TOOLTIP");
+        Texts.LOAD_CONFIG_TOOLTIP = prop.getProperty("LOAD_CONFIG_TOOLTIP");
+        Texts.SAVE_CONFIG_TOOLTIP = prop.getProperty("SAVE_CONFIG_TOOLTIP");
+        Texts.HELP_TOOLTIP = prop.getProperty("HELP_TOOLTIP");
+        Texts.CLEAR_TOOLTIP = prop.getProperty("CLEAR_TOOLTIP");
+        Texts.SAVE_CONFIG_PROMPT = prop.getProperty("SAVE_CONFIG_PROMPT");
+        Texts.LOAD_CONFIG_PROMPT = prop.getProperty("LOAD_CONFIG_PROMPT");
+        Texts.FILE_ERROR = prop.getProperty("FILE_ERROR");
+        Texts.CONNECTION_ERROR = prop.getProperty("CONNECTION_ERROR");
+        Texts.CONNECTION_SUCCESSFUL = prop.getProperty("CONNECTION_SUCCESSFUL");
+        Texts.HELP_URL = prop.getProperty("HELP_URL");
+        Texts.DATE_AND_TIME = prop.getProperty("DATE_AND_TIME");
+        Texts.CONTENT = prop.getProperty("CONTENT");
+        Texts.FILE_TYPE_NAME = prop.getProperty("FILE_TYPE_NAME");
+        Texts.FILE_TYPE_EXTENSION = prop.getProperty("FILE_TYPE_EXTENSION");
+        Texts.EMPTY = "";
     }
 
     /**
@@ -424,6 +523,8 @@ public class App extends Application {
      */
     @Override
     public void start(Stage primaryStage) {
+        // Inicializacija
+        initApp();
         // Meni
         Resource.menuBar = new MenuBar();
         // Izbira nastavitve
@@ -991,7 +1092,8 @@ public class App extends Application {
         menuContainer.setPadding(new Insets(10, 0, 10, 0));
         Resource.menuMainContainer.getChildren().addAll(menuContainer, Resource.mainPane);
         // Nastavitev aplikacije na temno kot privzeto
-        setToDarkTheme();
+        if (theme.equals("light")) setToLightTheme();
+        else setToDarkTheme();
         // Ostale nastavitve, okno po meri
         Scene mainScene = new Scene(Resource.menuMainContainer);
         primaryStage.initStyle(StageStyle.UNDECORATED);
@@ -1032,73 +1134,69 @@ class Colors {
  * Razred vsebuje aplikacijska besedila
  */
 class Texts {
-    final static String NA = "N/A";
-    final static String NO_DATA_SELECTED = "Podatki še niso bili izbrani.";
-    final static String CONNECT = "Poveži se";
-    final static String DISCONNECT = "Prekini povezavo";
-    final static String CUSTOM_CONNECT = "Povezava po meri";
-    final static String SERVER_INFO = "Informacije o strežniku:";
-    final static String SERVER_USER = "Uporabnik:";
-    final static String SERVER_IP = "IP strežnika:";
-    final static String SERVER_PORT = "Vrata strežnika:";
-    final static String SERVER_DATABASE = "Podatk. baza:";
-    final static String LOAD_CONFIG = "Naloži konfiguracijo";
-    final static String SAVE_CONFIG = "Shrani konfiguracijo";
-    final static String HELP = "Pomoč";
-    final static String CLEAR_SELECTION = "Počisti izbiro";
-    final static String TABLE_INFO = "Informacije o izbrani tabeli:";
-    final static String TABLE_CREATOR = "Avtor kreacije:";
-    final static String TABLE_DELETOR = "Avtor izbrisa:";
-    final static String TABLE_CREATION_DATE = "Datum nastanka:";
-    final static String TABLE_DELETION_DATE = "Datum izbrisa:";
-    final static String INSERTIONS = "Vstavljanja:";
-    final static String UPDATES = "Ažuriranja:";
-    final static String VIEWS = "Ogledovanja:";
-    final static String DELETIONS = "Brisanja:";
-    final static String ALL_TABLES = "Vse tabele:";
-    final static String ALL_USERS_IP = "Vsi uporabniki (IP):";
-    final static String ALL_USERS_USERNAME = "Vsi uporabniki (uporabniško ime):";
-    final static String SELECTED_TABLES = "Tabele izbranega uporabnika:";
-    final static String SELECTED_USERS_IP = "Uporabniki izbrane tabele (IP):";
-    final static String SELECTED_USERS_USERNAME = "Uporabniki izbrane tabele (uporab. ime):";
-    final static String EXIT = "Izhod";
-    final static String SETTINGS = "Nastavitve";
-    final static String APLICCATION_THEME = "Tema aplikacije";
-    final static String DARK_THEME = "Temno";
-    final static String LIGHT_THEME = "Svetlo";
-    final static String CUSTOM_CONNECTION_PROMPT_TITLE = "Povezava po meri";
-    final static String USERNAME_PROMPT = "Vnesi uporabniško ime:";
-    final static String PASSWORD_PROMPT = "Vnesi geslo:";
-    final static String IP_PROMOT = "Vnesi ip naslov strežnika (brez vrat):";
-    final static String PORT_PROMPT = "Vnesi vrata strežnika:";
-    final static String DATABASE_PROMPT = "Vnesi ime podatkovne baze:";
-    final static String CONNECTION_STATUS = "Stanje povezave";
-    final static String INSERTION_TOOLTIP = "Tabela prikazuje vsa vstavljanja v izbrani tabeli ali vsa vstavljanja" +
-            " izbranega uporabnika";
-    final static String DELETION_TOOLTIP = "Tabela prikazuje vsa brisanja v izbrani tabeli ali vsa brisanja" +
-            " izbranega uporabnika";
-    final static String UPDATE_TOOLTIP = "Tabela prikazuje vsa ažuriranja v izbrani tabeli ali vsa ažuriranja izbranega " +
-            "uporabnika";
-    final static String VIEW_TOOLTIP = "Tabela prikazuje vsa ogledovanja v izbrani tabeli ali vsa ogledovanja izbranega" +
-            " uporabnika";
-    final static String CONNECT_TOOLTIP = "Vzpostavi povezavo s podatkovno bazo";
-    final static String DISCONNECT_TOOLTIP = "Prekine povezave s podatkovno bazo";
-    final static String CUSTOM_CONNECT_TOOLTIP = "Odpre okno za vnos podatkov za povezavo po meri";
-    final static String LOAD_CONFIG_TOOLTIP = "Naloži konfiguracijo iz izbrane datoteke";
-    final static String SAVE_CONFIG_TOOLTIP = "Shrani trenutno konfiguracijo v datoteko";
-    final static String HELP_TOOLTIP = "Prikaže okno za pomoč uporabniku";
-    final static String CLEAR_TOOLTIP = "Pobriše izbrane podatke";
-    final static String SAVE_CONFIG_PROMPT = "Konfiguracija uspešno shranjena";
-    final static String LOAD_CONFIG_PROMPT = "Konfiguracija uspešno naložena";
-    final static String FILE_ERROR = "Prišlo je do napake med izvajanjem želene operacije";
-    final static String CONNECTION_ERROR = "Povezava je že vzpostavljena!";
-    final static String CONNECTION_SUCCESSFUL = "Povezava uspešno vzpostavljena!";
-    final static String HELP_URL = "https://gitlab.vegova.si/SerhioN/podjetje-sqmalsys/-/tree/Asi-FX/Asi-FX";
-    final static String DATE_AND_TIME = "Čas in datum:";
-    final static String CONTENT = "Vsebina:";
-    final static String FILE_TYPE_NAME = "CFG datoteke (*.cfg)";
-    final static String FILE_TYPE_EXTENSION = "*.cfg";
-    final static String EMPTY = "";
+    final static String CONFIG_FILE_NAME = "app.config";
+    final static String SL_LANGUAGE_PACK_NAME = "language_packs/sl_app.config";
+    final static String EN_LANGUAGE_PACK_NAME = "language_packs/en_app.config";
+    static String NA;
+    static String NO_DATA_SELECTED;
+    static String CONNECT;
+    static String DISCONNECT;
+    static String CUSTOM_CONNECT;
+    static String SERVER_INFO;
+    static String SERVER_USER;
+    static String SERVER_IP;
+    static String SERVER_PORT;
+    static String SERVER_DATABASE;
+    static String LOAD_CONFIG;
+    static String SAVE_CONFIG;
+    static String HELP;
+    static String CLEAR_SELECTION;
+    static String TABLE_INFO;
+    static String TABLE_CREATOR;
+    static String TABLE_DELETOR;
+    static String TABLE_CREATION_DATE;
+    static String TABLE_DELETION_DATE;
+    static String INSERTIONS;
+    static String UPDATES;
+    static String VIEWS;
+    static String DELETIONS;
+    static String ALL_TABLES;
+    static String ALL_USERS_IP;
+    static String ALL_USERS_USERNAME;
+    static String SELECTED_TABLES;
+    static String SELECTED_USERS_IP;
+    static String SELECTED_USERS_USERNAME;
+    static String EXIT;
+    static String SETTINGS;
+    static String APLICCATION_THEME;
+    static String DARK_THEME;
+    static String LIGHT_THEME;
+    static String CUSTOM_CONNECTION_PROMPT_TITLE;
+    static String USERNAME_PROMPT;
+    static String PASSWORD_PROMPT;
+    static String IP_PROMOT;
+    static String PORT_PROMPT;
+    static String DATABASE_PROMPT;
+    static String CONNECTION_STATUS;
+    static String INSERTION_TOOLTIP;
+    static String DELETION_TOOLTIP;
+    static String UPDATE_TOOLTIP;
+    static String VIEW_TOOLTIP;
+    static String CONNECT_TOOLTIP;
+    static String DISCONNECT_TOOLTIP;
+    static String CUSTOM_CONNECT_TOOLTIP;
+    static String LOAD_CONFIG_TOOLTIP;
+    static String SAVE_CONFIG_TOOLTIP;
+    static String HELP_TOOLTIP;
+    static String CLEAR_TOOLTIP;
+    static String SAVE_CONFIG_PROMPT;
+    static String LOAD_CONFIG_PROMPT;
+    static String FILE_ERROR;
+    static String CONNECTION_ERROR;
+    static String CONNECTION_SUCCESSFUL;
+    static String HELP_URL;
+    static String DATE_AND_TIME;
+    static String CONTENT;
     // Default server values
     final static String DEFAULT_USERNAME = "remote";
     final static String DEFAULT_PASSWORD = "remote";
@@ -1109,6 +1207,9 @@ class Texts {
     final static String WHITE_LOGO_URL = "images/database_logo_white.png";
     final static String BLACK_LOGO_URL = "images/database_logo_black.png";
     final static String CONFIG_FOLDER_NAME = "config";
+    static String FILE_TYPE_NAME;
+    static String FILE_TYPE_EXTENSION;
+    static String EMPTY;
 }
 
 /**
