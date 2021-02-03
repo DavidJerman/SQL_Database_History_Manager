@@ -29,7 +29,6 @@ import java.awt.*;
 import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -39,8 +38,8 @@ import java.util.Scanner;
 /**
  * Grafični vmesnik aplikacije oz. front-end
  *
- * @author David JermanU
- * @version 2021.02.02
+ * @author David Jerman
+ * @version 2021.02.03
  * @since 2021.01.25
  */
 public class App extends Application {
