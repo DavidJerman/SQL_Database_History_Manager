@@ -81,7 +81,8 @@ public class App extends Application {
                             "プログラムでエラーが発生しました。\n" +
                             "Das Programm hat einen Fehler festgestellt.\n" +
                             "程序遇到错误。\n" +
-                            "Программа обнаружила ошибку.",
+                            "Программа обнаружила ошибку." +
+                            "Program je naišao na pogrešku.",
                     "Error", JOptionPane.ERROR_MESSAGE);
             Platform.exit();
         }
@@ -107,6 +108,12 @@ public class App extends Application {
                     break;
                 case Texts.RU:
                     backend = new backend(Texts.ASI_FX_DIRECTORY + Texts.RU_LANGUAGE_PACKB_PATH);
+                    break;
+                case Texts.HR:
+                    backend = new backend(Texts.ASI_FX_DIRECTORY + Texts.HR_LANGUAGE_PACKB_PATH);
+                    break;
+                case Texts.KC:
+                    backend = new backend(Texts.ASI_FX_DIRECTORY + Texts.KC_LANGUAGE_PACKB_PATH);
                     break;
                 default:
                     backend = new backend(Texts.ASI_FX_DIRECTORY + Texts.EN_LANGUAGE_PACKB_PATH);
@@ -139,6 +146,12 @@ public class App extends Application {
                 break;
             case Texts.RU:
                 fileName = Texts.ASI_FX_DIRECTORY + Texts.RU_LANGUAGE_PACK_PATH;
+                break;
+            case Texts.HR:
+                fileName = Texts.ASI_FX_DIRECTORY + Texts.HR_LANGUAGE_PACK_PATH;
+                break;
+            case Texts.KC:
+                fileName = Texts.ASI_FX_DIRECTORY + Texts.KC_LANGUAGE_PACK_PATH;
                 break;
             default:
                 fileName = Texts.ASI_FX_DIRECTORY + Texts.EN_LANGUAGE_PACK_PATH;
@@ -188,6 +201,8 @@ public class App extends Application {
         Texts.JP_LANGUAGE = prop.getProperty("JP_LANGUAGE");
         Texts.CN_LANGUAGE = prop.getProperty("CN_LANGUAGE");
         Texts.RU_LANGUAGE = prop.getProperty("RU_LANGUAGE");
+        Texts.HR_LANGUAGE = prop.getProperty("HR_LANGUAGE");
+        Texts.KC_LANGUAGE = prop.getProperty("KC_LANGUAGE");
         Texts.CUSTOM_CONNECTION_PROMPT_TITLE = prop.getProperty("CUSTOM_CONNECTION_PROMPT_TITLE");
         Texts.USERNAME_PROMPT = prop.getProperty("USERNAME_PROMPT");
         Texts.PASSWORD_PROMPT = prop.getProperty("PASSWORD_PROMPT");
@@ -240,6 +255,7 @@ public class App extends Application {
 
             if (!oldLanguage.equals(language)) {
                 switch (language) {
+                    case Texts.KC:
                     case Texts.SL:
                         JOptionPane.showMessageDialog(Resource.jFrame, "Spremembe bodo uveljavljene ob ponovnem zagonu.",
                                 null, JOptionPane.INFORMATION_MESSAGE);
@@ -262,6 +278,10 @@ public class App extends Application {
                         break;
                     case Texts.RU:
                         JOptionPane.showMessageDialog(Resource.jFrame, "Изменения вступят в силу после перезапуска приложения.",
+                                null, JOptionPane.INFORMATION_MESSAGE);
+                        break;
+                    case Texts.HR:
+                        JOptionPane.showMessageDialog(Resource.jFrame, "Promjene će se primijeniti nakon ponovnog pokretanja aplikacije.",
                                 null, JOptionPane.INFORMATION_MESSAGE);
                         break;
                 }
@@ -697,13 +717,23 @@ public class App extends Application {
             language = Texts.RU;
             updateConfig();
         });
+        Resource.hrLanguageMenuItem = new MenuItem(Texts.HR_LANGUAGE);
+        Resource.hrLanguageMenuItem.setOnAction((event) -> {
+            language = Texts.HR;
+            updateConfig();
+        });
+        Resource.kcLanguageMenuItem = new MenuItem(Texts.KC_LANGUAGE);
+        Resource.kcLanguageMenuItem.setOnAction((event) -> {
+            language = Texts.KC;
+            updateConfig();
+        });
         // Dodajanje elementov v meni
         Resource.menu.getItems().addAll(Resource.exitMenuItem, Resource.settingsMenu);
         Resource.settingsMenu.getItems().addAll(Resource.themeMenu, Resource.languageMenu);
         Resource.themeMenu.getItems().addAll(Resource.darkThemeMenuItem, Resource.lightThemeMenuItem);
         Resource.languageMenu.getItems().addAll(Resource.enLanguageMenuItem, Resource.slLanguageMenuItem,
-                Resource.deLanguageMenuItem, Resource.ruLanguageMenuItem, Resource.jpLanguageMenuItem,
-                Resource.cnLanguageMenuItem);
+                Resource.hrLanguageMenuItem, Resource.deLanguageMenuItem, Resource.ruLanguageMenuItem,
+                Resource.jpLanguageMenuItem, Resource.cnLanguageMenuItem, Resource.kcLanguageMenuItem);
         // Dodaj vse elemente v meni
         Resource.menuBar.getMenus().addAll(Resource.menu);
 
@@ -1332,6 +1362,8 @@ class Texts {
     static String JP_LANGUAGE;
     static String CN_LANGUAGE;
     static String RU_LANGUAGE;
+    static String HR_LANGUAGE;
+    static String KC_LANGUAGE;
     static String CUSTOM_CONNECTION_PROMPT_TITLE;
     static String USERNAME_PROMPT;
     static String PASSWORD_PROMPT;
@@ -1365,6 +1397,8 @@ class Texts {
     final static String JP = "jp";
     final static String CN = "cn";
     final static String RU = "ru";
+    final static String HR = "hr";
+    final static String KC = "kc";
     final static String CONFIG_FILE_NAME = "app.config";
     final static String DARK = "dark";
     final static String LIGHT = "light";
@@ -1383,12 +1417,16 @@ class Texts {
     final static String SL_LANGUAGE_PACK_PATH = "language_packs\\sl_app.config";
     final static String CN_LANGUAGE_PACK_PATH = "language_packs\\cn_app.config";
     final static String RU_LANGUAGE_PACK_PATH = "language_packs\\ru_app.config";
+    final static String HR_LANGUAGE_PACK_PATH = "language_packs\\hr_app.config";
+    final static String KC_LANGUAGE_PACK_PATH = "language_packs\\kc_app.config";
     final static String RU_LANGUAGE_PACKB_PATH = "language_packs\\ru_backend.cfg";
     final static String SL_LANGUAGE_PACKB_PATH = "language_packs\\sl_backend.cfg";
     final static String EN_LANGUAGE_PACKB_PATH = "language_packs\\en_backend.cfg";
     final static String DE_LANGUAGE_PACKB_PATH = "language_packs\\de_backend.cfg";
     final static String JP_LNAGUAGE_PACKB_PATH = "language_packs\\jp_backend.cfg";
     final static String CN_LANGUAGE_PACKB_PATH = "language_packs\\cn_backend.cfg";
+    final static String HR_LANGUAGE_PACKB_PATH = "language_packs\\hr_backend.cfg";
+    final static String KC_LANGUAGE_PACKB_PATH = "language_packs\\kc_backend.cfg";
 
     static String FILE_TYPE_NAME;
     static String FILE_TYPE_EXTENSION;
@@ -1431,6 +1469,8 @@ class Resource {
     static MenuItem jpLanguageMenuItem;
     static MenuItem cnLanguageMenuItem;
     static MenuItem ruLanguageMenuItem;
+    static MenuItem hrLanguageMenuItem;
+    static MenuItem kcLanguageMenuItem;
     static GridPane mainPane;
     static GridPane upperPane;
     static GridPane connectPane;
