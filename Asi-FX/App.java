@@ -1335,10 +1335,10 @@ class Texts {
     static String APPLICATION_LANGUAGE;
     static String SL_LANGUAGE;
     static String EN_LANGUAGE;
-    final static String DE = "de";
-    final static String JP = "jp";
-    final static String CN = "cn";
-    final static String RU = "ru";
+    static String DE_LANGUAGE;
+    static String JP_LANGUAGE;
+    static String CN_LANGUAGE;
+    static String RU_LANGUAGE;
     static String CUSTOM_CONNECTION_PROMPT_TITLE;
     static String USERNAME_PROMPT;
     static String PASSWORD_PROMPT;
@@ -1368,10 +1368,10 @@ class Texts {
     // Default server values
     final static String EN = "en";
     final static String SL = "sl";
-    final static String SL_LANGUAGE_PACK_PATH = "language_packs/sl_app.config";
-    final static String CN_LANGUAGE_PACK_PATH = "language_packs/cn_app.config";
-    final static String RU_LANGUAGE_PACK_PATH = "language_packs/ru_app.config";
-    final static String CN_LANGUAGE_PACKB_PATH = "language_packs/cn_backend.cfg";
+    final static String DE = "de";
+    final static String JP = "jp";
+    final static String CN = "cn";
+    final static String RU = "ru";
     final static String CONFIG_FILE_NAME = "app.config";
     final static String DARK = "dark";
     final static String LIGHT = "light";
@@ -1387,15 +1387,16 @@ class Texts {
     final static String EN_LANGUAGE_PACK_PATH = "language_packs/en_app.config";
     final static String DE_LANGUAGE_PACK_PATH = "language_packs/de_app.config";
     final static String JP_LNAGUAGE_PACK_PATH = "language_packs/jp_app.config";
+    final static String SL_LANGUAGE_PACK_PATH = "language_packs/sl_app.config";
+    final static String CN_LANGUAGE_PACK_PATH = "language_packs/cn_app.config";
+    final static String RU_LANGUAGE_PACK_PATH = "language_packs/ru_app.config";
     final static String RU_LANGUAGE_PACKB_PATH = "language_packs/ru_backend.cfg";
-    static String DE_LANGUAGE;
-    static String JP_LANGUAGE;
     final static String SL_LANGUAGE_PACKB_PATH = "language_packs/sl_backend.cfg";
     final static String EN_LANGUAGE_PACKB_PATH = "language_packs/en_backend.cfg";
     final static String DE_LANGUAGE_PACKB_PATH = "language_packs/de_backend.cfg";
     final static String JP_LNAGUAGE_PACKB_PATH = "language_packs/jp_backend.cfg";
-    static String CN_LANGUAGE;
-    static String RU_LANGUAGE;
+    final static String CN_LANGUAGE_PACKB_PATH = "language_packs/cn_backend.cfg";
+
     static String FILE_TYPE_NAME;
     static String FILE_TYPE_EXTENSION;
     static String EMPTY;
