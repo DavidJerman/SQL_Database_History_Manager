@@ -29,6 +29,7 @@ import java.awt.*;
 import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -513,7 +514,7 @@ public class App extends Application {
      */
     static void setToDarkTheme() {
         Resource.menuBar.setStyle(Colors.TRUEBLACK_BG);
-        Resource.title_img.setImage(new Image(Texts.WHITE_LOGO_URL));
+        Resource.title_img.setImage(new Image((new File(Texts.ASI_FX_DIRECTORY + Texts.WHITE_LOGO_URL)).toURI().toString()));
         Resource.menu.setStyle(Colors.TRUEBLACK_BG);
         Resource.mainPane.setStyle(Colors.BLACK_BG);
         Resource.upperPane.setStyle(Colors.GRAY_BG +
@@ -573,7 +574,7 @@ public class App extends Application {
      */
     static void setToLightTheme() {
         Resource.menuBar.setStyle(Colors.BEIGE_BG);
-        Resource.title_img.setImage(new Image(Texts.BLACK_LOGO_URL));
+        Resource.title_img.setImage(new Image((new File(Texts.ASI_FX_DIRECTORY + Texts.BLACK_LOGO_URL)).toURI().toString()));
         Resource.menu.setStyle(Colors.BEIGE_BG);
         Resource.mainPane.setStyle(Colors.TRUEWHITE_BG);
         Resource.upperPane.setStyle(Colors.BEIGE_BG +
@@ -640,7 +641,7 @@ public class App extends Application {
         // Meni
         Resource.menuBar = new MenuBar();
         // Izbira nastavitve
-        Resource.title_img = new ImageView(Texts.WHITE_LOGO_URL);
+        Resource.title_img = new ImageView(new Image((new File(Texts.ASI_FX_DIRECTORY + Texts.WHITE_LOGO_URL)).toURI().toString()));
         Resource.title_img.setFitHeight(25);
         Resource.title_img.setFitWidth(50);
         Resource.menu = new Menu("", Resource.title_img);
@@ -1380,22 +1381,22 @@ class Texts {
     final static String DEFAULT_IP = "193.2.190.23";
     final static String DEFAULT_PORT = "3306";
     final static String DEFAULT_DATABASE = "remote11";
-    final static String ASI_FX_DIRECTORY = "Asi-FX/";
-    final static String WHITE_LOGO_URL = "images/database_logo_white.png";
-    final static String BLACK_LOGO_URL = "images/database_logo_black.png";
+    final static String ASI_FX_DIRECTORY = ".\\Asi-FX\\";
+    final static String WHITE_LOGO_URL = "images\\database_logo_white.png";
+    final static String BLACK_LOGO_URL = "images\\database_logo_black.png";
     final static String CONFIG_FOLDER_NAME = "config";
-    final static String EN_LANGUAGE_PACK_PATH = "language_packs/en_app.config";
-    final static String DE_LANGUAGE_PACK_PATH = "language_packs/de_app.config";
-    final static String JP_LNAGUAGE_PACK_PATH = "language_packs/jp_app.config";
-    final static String SL_LANGUAGE_PACK_PATH = "language_packs/sl_app.config";
-    final static String CN_LANGUAGE_PACK_PATH = "language_packs/cn_app.config";
-    final static String RU_LANGUAGE_PACK_PATH = "language_packs/ru_app.config";
-    final static String RU_LANGUAGE_PACKB_PATH = "language_packs/ru_backend.cfg";
-    final static String SL_LANGUAGE_PACKB_PATH = "language_packs/sl_backend.cfg";
-    final static String EN_LANGUAGE_PACKB_PATH = "language_packs/en_backend.cfg";
-    final static String DE_LANGUAGE_PACKB_PATH = "language_packs/de_backend.cfg";
-    final static String JP_LNAGUAGE_PACKB_PATH = "language_packs/jp_backend.cfg";
-    final static String CN_LANGUAGE_PACKB_PATH = "language_packs/cn_backend.cfg";
+    final static String EN_LANGUAGE_PACK_PATH = "language_packs\\en_app.config";
+    final static String DE_LANGUAGE_PACK_PATH = "language_packs\\de_app.config";
+    final static String JP_LNAGUAGE_PACK_PATH = "language_packs\\jp_app.config";
+    final static String SL_LANGUAGE_PACK_PATH = "language_packs\\sl_app.config";
+    final static String CN_LANGUAGE_PACK_PATH = "language_packs\\cn_app.config";
+    final static String RU_LANGUAGE_PACK_PATH = "language_packs\\ru_app.config";
+    final static String RU_LANGUAGE_PACKB_PATH = "language_packs\\ru_backend.cfg";
+    final static String SL_LANGUAGE_PACKB_PATH = "language_packs\\sl_backend.cfg";
+    final static String EN_LANGUAGE_PACKB_PATH = "language_packs\\en_backend.cfg";
+    final static String DE_LANGUAGE_PACKB_PATH = "language_packs\\de_backend.cfg";
+    final static String JP_LNAGUAGE_PACKB_PATH = "language_packs\\jp_backend.cfg";
+    final static String CN_LANGUAGE_PACKB_PATH = "language_packs\\cn_backend.cfg";
 
     static String FILE_TYPE_NAME;
     static String FILE_TYPE_EXTENSION;
