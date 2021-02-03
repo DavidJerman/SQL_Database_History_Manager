@@ -1058,26 +1058,18 @@ public class App extends Application {
         });
         Resource.usersIPListView.getSelectionModel().selectedItemProperty().addListener((ignored) -> {
             // Izpiše vse akcije izbranega uporabnika
-            String selectedUserIP = Resource.usersIPListView.getSelectionModel().getSelectedItem();
-            Resource.selectedIp = selectedUserIP;
+            Resource.selectedIp = Resource.usersIPListView.getSelectionModel().getSelectedItem();
             clearSelection();
             if (Resource.selectedIp != null)
-                Platform.runLater(() -> {
-                    // TODO: Napolni tabelo tabel izbranega uporabnika (IP)
-                });
+                Platform.runLater(() -> populateListViewWith(Resource.tablesSelectionListView, backend.getUsersTables(Resource.selectedIp)));
         });
         Resource.usersUsernameListView.getSelectionModel().selectedItemProperty().addListener((ignored) -> {
             // Izpiše vse akcije izbranega uporabnika
             String selectedUserUsername = Resource.usersUsernameListView.getSelectionModel().getSelectedItem();
-            // TODO: Uporaba prave metode
-            if (selectedUserUsername != null) {
-                Resource.selectedIp = backend.nameToIP(selectedUserUsername);
-                clearSelection();
-                if (Resource.selectedIp != null)
-                    Platform.runLater(() -> {
-                        // TODO: Napolni tabelo tabel izbranega uporabnika (Username)
-                    });
-            }
+            Resource.selectedIp = backend.userhostToIP(selectedUserUsername);
+            clearSelection();
+            if (Resource.selectedIp != null)
+                Platform.runLater(() -> populateListViewWith(Resource.tablesSelectionListView, backend.getUsersTables(Resource.selectedIp)));
         });
 
         // Desni izbirni GridPane
@@ -1105,6 +1097,7 @@ public class App extends Application {
         Resource.tablesSelectionListView.getSelectionModel().selectedItemProperty().addListener((ignored) -> {
             if (Resource.selectedIp != null) {
                 String selectedTable = Resource.tablesSelectionListView.getSelectionModel().getSelectedItem();
+                setTableInfo(Resource.selectedTable);
                 if (selectedTable != null) {
                     setTableInfo(selectedTable);
                     setTableAuthorToLabels(Resource.selectedIp, selectedTable);
