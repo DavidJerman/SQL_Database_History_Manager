@@ -763,6 +763,36 @@ public class backend {
             ex.printStackTrace();
         }
     }
+
+    /**
+     Vrne vse tabele, s katerimi je imel izbrani uporabnik interakcije
+     @param ip IP naslov uporabnika
+     @return String[] vseh tabel, s katerimi je imel izbrani uporabnik interakcije
+     */
+    public String[] getUsersTables(String ip){
+        ResultSet resultSet = executeQuery("SELECT argument FROM mysql.general_log WHERE user_host LIKE '%" + ip + "%'AND (argument LIKE '%CREATE TABLE%' OR argument LIKE '%UPDATE%' OR argument LIKE '%DROP TABLE%' OR argument LIKE '%FROM%');");
+        ArrayList<String> allTables = new ArrayList<>(Arrays.asList(getAllTablesCurrentDatabase()));
+        ArrayList<String> ret = new ArrayList<>();
+
+        try {
+            while (resultSet.next()) {
+                for(int i = 0; i < allTables.size(); i++){
+                    int num = resultSet.getString(1).indexOf(allTables.get(i));
+
+                    if(num == -1)continue;
+
+                    ret.add(allTables.get(i));
+                    allTables.remove(i);
+                    break;
+                }
+            }
+        }catch (SQLException ignored){};
+
+        return ret.toArray(new String[0]);
+    }
+
+
+
 }
 
 
