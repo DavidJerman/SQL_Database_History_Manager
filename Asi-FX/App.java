@@ -1087,16 +1087,16 @@ public class App extends Application {
                 });
         });
         Resource.usersIPListView.getSelectionModel().selectedItemProperty().addListener((ignored) -> {
-            // Izpiše vse akcije izbranega uporabnika
+            // Izpiše vse tabele izbranega uporabnika
             Resource.selectedIp = Resource.usersIPListView.getSelectionModel().getSelectedItem();
             clearSelection();
             if (Resource.selectedIp != null)
                 Platform.runLater(() -> populateListViewWith(Resource.tablesSelectionListView, backend.getUsersTables(Resource.selectedIp)));
         });
         Resource.usersUsernameListView.getSelectionModel().selectedItemProperty().addListener((ignored) -> {
-            // Izpiše vse akcije izbranega uporabnika
+            // Izpiše vse tabele izbranega uporabnika
             String selectedUserUsername = Resource.usersUsernameListView.getSelectionModel().getSelectedItem();
-            Resource.selectedIp = backend.userhostToIP(selectedUserUsername);
+            Resource.selectedIp = backend.nameToIP(selectedUserUsername);
             clearSelection();
             if (Resource.selectedIp != null)
                 Platform.runLater(() -> populateListViewWith(Resource.tablesSelectionListView, backend.getUsersTables(Resource.selectedIp)));
