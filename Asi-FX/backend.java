@@ -45,6 +45,7 @@ public class backend {
 
     /** Konstruktor, ki kot parameter prejme samo ime jezikovne datoteke.
      * @param languageFile ime jezikovne datoteke
+     * @throws IOException če datoteka ne obstaja, potem metoda generira IOException
      */
     public backend(String languageFile) throws IOException{
         // checkConnection();
@@ -70,7 +71,7 @@ public class backend {
     /**
      Vrne metapodatke o tabeli
 
-     @param tableName
+     @param tableName ime tabele, za katero se vračajo informacije
      @return String[]{kdo ustvaril, kdaj ustvaril, kdo izbrisal, kdaj izbrisal}
      **/
     public String[] getTableInfo(String tableName){
@@ -124,7 +125,7 @@ public class backend {
      *
      * @param user uporabnik, ki si je ogledoval podatke v tabeli (treba je vnesti uporabnikov ip naslov)
      * @param table tabela, iz katere je uporabnik ogledoval podatke
-     * @return HashMap<String, String> (ključ: datum; vrednost: podatek)
+     * @return HashMap (ključ: datum; vrednost: podatek; oba sta tipa String)
      */
     public HashMap<String, String> getDataSelect(String user, String table){
         checkConnection();
@@ -182,7 +183,7 @@ public class backend {
      *
      * @param user uporabnik, ki je ažuriral podatke v tabeli (treba je vnesti uporabnikov ip naslov)
      * @param table tabela, v kateri je uporabnik ažuriral podatke
-     * @return HashMap<String, String> (ključ: datum; vrednost: podatek)
+     * @return HashMap (ključ: datum; vrednost: podatek; oba sta tipa String)
      */
     public HashMap<String, String> getDataUpdate(String user, String table){ //DELAM GAŠPER
         checkConnection();
@@ -222,7 +223,7 @@ public class backend {
      *
      * @param user uporabnik, ki je vstavljal podatke v tabelo (treba je vnesti uporabnikov ip naslov)
      * @param table tabela, v katero je uporabnik vstavljal podatke
-     * @return HashMap<String, String> (ključ: datum; vrednost: podatek)
+     * @return HashMap (ključ: datum; vrednost: podatek; oba sta tipa String)
      */
     public HashMap<String, String> getDataInsert(String user, String table){
         checkConnection();
@@ -259,7 +260,7 @@ public class backend {
      *
      * @param user uporabnik, ki je brisal podatke iz tabeli (treba je vnesti uporabnikov ip naslov)
      * @param table tabela, iz katere je uporabnik brisal podatke
-     * @return HashMap<String, String> (ključ: datum; vrednost: podatek)
+     * @return HashMap (ključ: datum; vrednost: podatek; oba sta tipa String)
      */
     public HashMap<String, String> getDataDelete(String user, String table){
         checkConnection();
@@ -411,7 +412,8 @@ public class backend {
     /**
      Vrne tabelo vseh poimenovanih uporabnikov, ki so delali z določeno tabelo
 
-     @return String array of all named users
+     @param table tabela, za katero se vrnejo vsi ip-ji uporabnikov, ki so tabelo kadarkoli uporabljali
+     @return String vseh poimenovanih uporabnikov
      **/
     public String[] getAllUsersName(String table){
         //Preveri da je nameAndIP_map ustvarjen
