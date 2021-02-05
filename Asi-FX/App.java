@@ -47,7 +47,7 @@ public class App extends Application {
     /**
      * Backend
      */
-    static backend backend;
+    static Backend backend;
     static String theme = Texts.DARK;
     static String language = Texts.SL;
 
@@ -95,28 +95,28 @@ public class App extends Application {
         try {
             switch (language) {
                 case Texts.SL:
-                    backend = new backend(Texts.ASI_FX_DIRECTORY + Texts.SL_LANGUAGE_PACKB_PATH);
+                    backend = new Backend(Texts.ASI_FX_DIRECTORY + Texts.SL_LANGUAGE_PACKB_PATH);
                     break;
                 case Texts.DE:
-                    backend = new backend(Texts.ASI_FX_DIRECTORY + Texts.DE_LANGUAGE_PACKB_PATH);
+                    backend = new Backend(Texts.ASI_FX_DIRECTORY + Texts.DE_LANGUAGE_PACKB_PATH);
                     break;
                 case Texts.JP:
-                    backend = new backend(Texts.ASI_FX_DIRECTORY + Texts.JP_LNAGUAGE_PACKB_PATH);
+                    backend = new Backend(Texts.ASI_FX_DIRECTORY + Texts.JP_LNAGUAGE_PACKB_PATH);
                     break;
                 case Texts.CN:
-                    backend = new backend(Texts.ASI_FX_DIRECTORY + Texts.CN_LANGUAGE_PACKB_PATH);
+                    backend = new Backend(Texts.ASI_FX_DIRECTORY + Texts.CN_LANGUAGE_PACKB_PATH);
                     break;
                 case Texts.RU:
-                    backend = new backend(Texts.ASI_FX_DIRECTORY + Texts.RU_LANGUAGE_PACKB_PATH);
+                    backend = new Backend(Texts.ASI_FX_DIRECTORY + Texts.RU_LANGUAGE_PACKB_PATH);
                     break;
                 case Texts.HR:
-                    backend = new backend(Texts.ASI_FX_DIRECTORY + Texts.HR_LANGUAGE_PACKB_PATH);
+                    backend = new Backend(Texts.ASI_FX_DIRECTORY + Texts.HR_LANGUAGE_PACKB_PATH);
                     break;
                 case Texts.KC:
-                    backend = new backend(Texts.ASI_FX_DIRECTORY + Texts.KC_LANGUAGE_PACKB_PATH);
+                    backend = new Backend(Texts.ASI_FX_DIRECTORY + Texts.KC_LANGUAGE_PACKB_PATH);
                     break;
                 default:
-                    backend = new backend(Texts.ASI_FX_DIRECTORY + Texts.EN_LANGUAGE_PACKB_PATH);
+                    backend = new Backend(Texts.ASI_FX_DIRECTORY + Texts.EN_LANGUAGE_PACKB_PATH);
                     break;
             }
         } catch (IOException ignored) {

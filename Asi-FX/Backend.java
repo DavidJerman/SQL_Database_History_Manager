@@ -3,15 +3,16 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.sql.*;
 import java.util.*;
-
-/**
- * Communication with the SQL database log
+//Communication with the SQL database log
+/**Razred za zajem podatkov iz dnevniške datoteke SQL podatkovne baze za aplikacijo, narejeno v sklopu projekta Projekt 1 delovne skupine Asi-FX.
  *
-@author - Rok Mlinar Vahtar, Gašper Suhadolnik
-@version - 1.2.2021
-@since - 25.1.2021
+ *
+ *
+@author Rok Mlinar Vahtar, Gašper Suhadolnik
+@version 4.2.2021
+@since 25.1.2021
 **/
-public class backend {
+public class Backend {
 
 
     Connection connection; //Povazava z SQL serverjem
@@ -23,7 +24,7 @@ public class backend {
     /**
      Privzeti konstruktor vzpostavi povezavo s podatkovno bazo in nastavi currentDatabase na privzeto vrednost
      **/
-    public backend(){
+    public Backend(){
         //checkConnection(); //vzpostavi povezavo ob kreiranju novega objekta razreda backend
         //this.currentDatabase = "remote11"; //privzeta podatkovna baza, s katero se operira, je remote11 (lahko se nastavi tudi katero drugo)
         try {
@@ -47,7 +48,7 @@ public class backend {
      * @param languageFile ime jezikovne datoteke
      * @throws IOException če datoteka ne obstaja, potem metoda generira IOException
      */
-    public backend(String languageFile) throws IOException{
+    public Backend(String languageFile) throws IOException{
         // checkConnection();
         language = new Language(languageFile);
     }
@@ -58,15 +59,12 @@ public class backend {
      @param languageFile ime jezikovne datoteke, ki se uporabi za prikaz
      @throws IOException ko je podan neobstoječ language file
      **/
-    public backend(String database, String languageFile) throws IOException{
+    public Backend(String database, String languageFile) throws IOException{
         checkConnection(); //vzpostavi povezavo z bazo ob kreiranju objekta
         changeDatabase(database);
         this.currentDatabase = database; //nastavi bazo podatkov na tisto, kjer
         language = new Language(languageFile);
     }
-
-
-
 
     /**
      Vrne metapodatke o tabeli
