@@ -12,6 +12,7 @@ Pomembne povezave: [navodila](https://ekm.vegova.si/ekm1/main/wiki/index.php?cid
 ---
 ### Changelog:
 
+_razvojne verzije_
 - `25. 1. 2021:`
   - `ustvarjena mapa tega projekta, ustvarjen je ta dokument`
   - `spisano ogrodje za razred backend.java, dodajanje nekaterih privatnih funkcij`
@@ -53,6 +54,16 @@ Pomembne povezave: [navodila](https://ekm.vegova.si/ekm1/main/wiki/index.php?cid
 - `2. 2. 2021:`
   - `Grafični del: `
     - `dodajanje nove funkcionalnost: jezikovni paketi`
+    - `dodan meni za spreminjanje jezika`
   - `back-end:`
     - `dodajanje nove funkcionalnosti: jezikovni paket`
     - `dodan nov razred: Language`
+  - `podprti jeziki: slovenščina, angleščina, nemščina, ruščina, japonščina, kitajščina`
+---
+_verzija 1.0_
+- `3. 2. 2021:`
+  - `dodano polnjenje lista tabel za izbranega uporabnika`
+  - `dodana podprta jezika: hrvaščina, mistični jezik`
+  - `manjši popravki`
+- `4. 2. 2021:`
+  - `manjši popravki pri prikazu podatkov`
