@@ -39,7 +39,7 @@ import java.util.Scanner;
  * Grafični vmesnik aplikacije oz. front-end
  *
  * @author David Jerman
- * @version 2021.02.03
+ * @version 2021.02.07
  * @since 2021.01.25
  */
 public class App extends Application {
