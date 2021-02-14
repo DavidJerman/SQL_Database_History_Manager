@@ -9,9 +9,15 @@ V tej mapi se nahaja delo/koda projekta **Projekt 1** skupine Asi-FX.
 
 Pomembne povezave: [navodila](https://ekm.vegova.si/ekm1/main/wiki/index.php?cidReq=201314RSO04&id_session=26&gidReq=0&gradebook=0&origin=&action=showpage&title=opredelitev_projekta&group_id=0), [skupine](https://ekm.vegova.si/ekm1/main/wiki/index.php?cidReq=201314RSO04&id_session=26&gidReq=0&gradebook=0&origin=&action=showpage&title=projekt_1&group_id=0)
 
----
-### Changelog:
+###Dokumentacija:
+[**Razredni diagram**](https://gitlab.vegova.si/SerhioN/podjetje-sqmalsys/-/blob/Asi-FX/Asi-FX/dokumentacija/Razredni_Diagram/RazredniDiagram.png) se kot slika (.png) nahaja v mapi _dokumentacija/Razredni_Diagram/_.  
+[**Dokumentacija**](https://gitlab.vegova.si/SerhioN/podjetje-sqmalsys/-/tree/Asi-FX/Asi-FX/dokumentacija/Dokumentacija) metod v razredu se nahaja v dokumentih v mapi _dokumentacija/Dokumentacija/_.  
+_Opomba: priporočen je prenos in ekstrakcija arhivske datoteke **dokumentacija_web.zip**, saj se v njej nahajajo tudi javascript datoteke, ki omogočajo pravilno delovanje prikaza dokumentacije, ki jo je treba odpreti z brskalnikom._
 
+
+
+---
+### Changelog:  
 _razvojne verzije_
 - `25. 1. 2021:`
   - `ustvarjena mapa tega projekta, ustvarjen je ta dokument`
