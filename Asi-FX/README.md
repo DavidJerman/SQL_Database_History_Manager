@@ -13,7 +13,7 @@ Pomembne povezave: [navodila](https://ekm.vegova.si/ekm1/main/wiki/index.php?cid
 
 [**Razredni diagram**](https://gitlab.vegova.si/SerhioN/podjetje-sqmalsys/-/blob/Asi-FX/Asi-FX/dokumentacija/Razredni_Diagram/RazredniDiagram.png) se kot slika (.png) nahaja v mapi _dokumentacija/Razredni_Diagram/_.  
 [**Dokumentacija**](https://gitlab.vegova.si/SerhioN/podjetje-sqmalsys/-/tree/Asi-FX/Asi-FX/dokumentacija/Dokumentacija) metod v razredu se nahaja v dokumentih v mapi _dokumentacija/Dokumentacija/_.  
-_Opomba: priporočen je prenos in ekstrakcija arhivske datoteke **dokumentacija_web.zip**, saj se v njej nahajajo tudi javascript datoteke, ki omogočajo pravilno delovanje prikaza dokumentacije, ki jo je treba odpreti z brskalnikom._
+_Opomba: priporočen je prenos in ekstrakcija arhivske datoteke [**dokumentacija_web.zip**](https://gitlab.vegova.si/SerhioN/podjetje-sqmalsys/-/raw/Asi-FX/Asi-FX/dokumentacija/Dokumentacija/dokumentacija_web.zip), saj se v njej nahajajo tudi javascript datoteke, ki omogočajo pravilno delovanje prikaza dokumentacije, ki jo je treba odpreti z brskalnikom._
 
 
 
