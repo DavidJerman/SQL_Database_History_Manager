@@ -1,18 +1,5 @@
-# Podjetje SQMalSys
+**A copy of the school project - SQL Database History Manager**
 
-tim project 1 :  sql + java + UI
+The aim of this program was to allow the user to view the history of actions performed on the selected database. I was responsible for the making of the GUI/font-end, while other members of the Asi-FX team were responsible for the making of the application backend.
 
-vsem timom skupen repozitorij; ker je vse organizirano na demokratični osnovi, naj bo tako organiziran tudi vaš način dela s tem repozitorijem: 
-
-ideje za razločevanje : veje, podgrupe/te morajo biti vidne vsem/ - pobude razrešuje upravljalec sam ali s prenosom
-nadzora
-
-Kakorkoli, ob zaključku so vsi oddani predlogi v tem repozitoriju, prav tako pa celoten doprinos vsakega posamznika.
-
-Opis in nadaljna navodila/priporočila so v WIki tečaja predmeta RSO04.
-
-a
--
-swiizzzzzci
--
-uporabili bomo mapo + branch z našim imenom
+The whole project was written in Java, using libraries such as JavaFX, SQL etc.
